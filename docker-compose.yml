@@ -1,0 +1,46 @@
+version: "3.2"
+services:
+  zero:
+    image: dgraph/dgraph:v23.0.0-rc1-arm64
+    volumes:
+      - /tmp/data:/dgraph
+    ports:
+      - 5080:5080
+      - 6080:6080
+    restart: on-failure
+    command: dgraph zero --my=zero:5080
+  alpha:
+    image: dgraph/dgraph:v23.0.0-rc1-arm64
+    volumes:
+      - /tmp/data:/dgraph
+    ports:
+      - 8080:8080
+      - 9080:9080
+    restart: on-failure
+    environment: 
+      DGRAPH_ALPHA_GRAPHQL: 'lambda-url=http://dgraph_lambda:8686/graphql-worker'
+    command: dgraph alpha  --graphql "lambda_url=http://dgraph_lambda:8686/graphql-worker" --my=alpha:7080 --zero=zero:5080 --security whitelist=10.0.0.0/8,172.0.0.0/8,192.168.0.0/16,127.0.0.1
+  # dgraph:
+  #   image: dgraph/dgraph:v23.0.0-rc1-arm64
+  #   command: 
+    # environment: 
+    #   DGRAPH_ALPHA_GRAPHQL: 'lambda-url=http://dgraph_lambda:8686/graphql-worker'
+  #   ports:
+  #     - "8080:8080"
+  #     - "9080:9080"
+  #     - "8000:8000"
+  #   volumes:
+  #     - dgraph:/dgraph
+
+  dgraph_lambda:
+    image: dgraph/dgraph-lambda:latest
+
+    ports:
+      - "8686:8686"
+    environment:
+      DGRAPH_URL: http://alpha:8080
+    volumes:
+      - ./gql/script.js:/app/script/script.js:ro
+
+volumes:
+  dgraph: {}

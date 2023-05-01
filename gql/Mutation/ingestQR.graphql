@@ -1,0 +1,3 @@
+mutation {
+    ingestQR (qr: "0xdeadbeef")
+}

@@ -1,0 +1,46 @@
+type Query {
+    exampleLambda(exampleStringInput: String!): String! @lambda
+}
+
+type Mutation {
+    ingestQR(qr: String!): String! @lambda
+}
+
+
+type Plant {
+    id: ID!
+    xid: String
+    crop_name: String! @search
+    repeater: Boolean! @search
+    nutrient_type: String! @search
+    germinated_date: DateTime
+    transferred_date: DateTime
+    harvested_date: DateTime
+}
+
+# Abstract meta parameters for a crop.
+type Crop {
+    id: ID!
+    xid: String
+    name: String!
+    required_module_type: String!
+    repeater: Boolean!
+    days_harvestable: Int!
+    days_from_transfer_to_first_harvest: Int!
+    harvests_per_week: Int!
+}
+
+type Seed {
+    qr: String!
+}
+
+type Drawer {
+    gridLocation: Location!
+    cropAssignment: Crop
+    stock: Int
+}
+
+type Location {
+    x: Int!
+    y: Int!
+}
