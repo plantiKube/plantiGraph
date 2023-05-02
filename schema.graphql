@@ -6,6 +6,24 @@ type Mutation {
     ingestQR(qr: String!): String! @lambda
 }
 
+type DeploymentMap {
+    modules: [Module]
+}
+
+type Module {
+    id: ID!
+    shelves: [Shelf]
+    totalNumberOfSites: Int! @lambda
+}
+
+type Shelf {
+    sites: [Site]
+}
+
+type Site {
+    id: ID!
+    ocupant: Plant
+}
 
 type Plant {
     id: ID!

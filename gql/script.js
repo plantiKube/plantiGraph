@@ -9,7 +9,14 @@ async function ingestQR({args}) {
     return "TODO: parse qr and activate"
 }
 
+async function aggregateNumSites({args}){
+    numSites = 27
+    console.log("number of sites: ", numSites)
+    return numSites
+}
+
 self.addGraphQLResolvers({
     "Query.exampleLambda": exampleLambda,
-    "Mutation.ingestQR": ingestQR
+    "Mutation.ingestQR": ingestQR,
+    "Module.totalNumberOfSites": aggregateNumSites
 })
