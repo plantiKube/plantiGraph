@@ -10,12 +10,12 @@ type Mutation {
 type Plant {
     id: ID!
     xid: String
-    crop_name: String! @search
+    cropName: String! @search
     repeater: Boolean! @search
-    nutrient_type: String! @search
-    germinated_date: DateTime
-    transferred_date: DateTime
-    harvested_date: DateTime
+    nutrientType: String! @search
+    germinatedDate: DateTime
+    transferredDate: DateTime
+    harvestedDate: DateTime
 }
 
 # Abstract meta parameters for a crop.
@@ -43,4 +43,8 @@ type Drawer {
 type Location {
     x: Int!
     y: Int!
+}
+
+type GerminationTray {
+    sitesAvailable: Int!
 }
