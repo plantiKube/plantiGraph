@@ -19,9 +19,11 @@
     "@graphql-codegen/typescript-react-apollo": "^3.3.7"
   },
   "scripts": {
-    "codegen": "graphql-codegen --config codegen.ts"
+    "codegen": "graphql-codegen",
+    "run-apollo-single-query": "ts-node apolloClientOneShot.ts"
   },
   "dependencies": {
+    "@apollo/client": "^3.7.14",
     "graphql-request": "^6.0.0"
   }
 }
