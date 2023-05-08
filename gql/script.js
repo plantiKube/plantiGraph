@@ -15,6 +15,7 @@ async function aggregateNumSites({args}){
     return numSites
 }
 
+
 self.addGraphQLResolvers({
     "Query.exampleLambda": exampleLambda,
     "Mutation.ingestQR": ingestQR,

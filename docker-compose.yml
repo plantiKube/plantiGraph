@@ -41,6 +41,7 @@ services:
       DGRAPH_URL: http://alpha:8080
     volumes:
       - ./gql/script.js:/app/script/script.js:ro
+      - ./gql/purescript:/app/script/purescript
 
 volumes:
   dgraph: {}
