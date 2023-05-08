@@ -1,0 +1,8 @@
+query WheresChuck {
+    querySite {
+        id
+        ocupant {
+            xid
+        }
+    }
+}

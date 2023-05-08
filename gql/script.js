@@ -1,3 +1,5 @@
+// const gqlIndex = require("./codegen/index.js")
+// const request = require('graphql-request')
 
 async function exampleLambda({args, dql}) {
     console.log(args)
@@ -12,9 +14,9 @@ async function ingestQR({args}) {
 async function aggregateNumSites({args}){
     numSites = 27
     console.log("number of sites: ", numSites)
+
     return numSites
 }
-
 
 self.addGraphQLResolvers({
     "Query.exampleLambda": exampleLambda,

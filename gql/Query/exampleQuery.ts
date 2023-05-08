@@ -1,7 +1,7 @@
 import gql from 'graphql-tag';
 
 export const exampleQuery = gql`
-query {
+query ExampleQuery {
   exampleLambda (exampleStringInput:"gahhhh")
 }
 `;

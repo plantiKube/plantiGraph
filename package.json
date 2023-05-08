@@ -1,5 +1,6 @@
 {
   "name": "plantiGraph",
+  "module": "es2022",
   "version": "1.0.0",
   "main": "index.js",
   "repository": "git@github.com:plantiKube/plantiGraph.git",
@@ -8,16 +9,19 @@
   "devDependencies": {
     "@graphql-codegen/add": "^4.0.1",
     "@graphql-codegen/cli": "3.3.1",
+    "@graphql-codegen/client-preset": "3.0.1",
+    "@graphql-codegen/introspection": "3.0.1",
     "@graphql-codegen/named-operations-object": "^2.3.1",
     "@graphql-codegen/near-operation-file-preset": "^2.5.0",
     "@graphql-codegen/typescript": "^3.0.4",
     "@graphql-codegen/typescript-graphql-request": "^4.5.9",
     "@graphql-codegen/typescript-operations": "^3.0.4",
-    "@graphql-codegen/typescript-react-apollo": "^3.3.7",
-    "@graphql-codegen/introspection": "3.0.1",
-    "@graphql-codegen/client-preset": "3.0.1"
+    "@graphql-codegen/typescript-react-apollo": "^3.3.7"
   },
   "scripts": {
     "codegen": "graphql-codegen --config codegen.ts"
+  },
+  "dependencies": {
+    "graphql-request": "^6.0.0"
   }
 }
