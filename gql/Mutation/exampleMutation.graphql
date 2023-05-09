@@ -1,0 +1,16 @@
+mutation HelloDavid {
+    addModule (input:{
+        shelves: {
+            sites:
+            {
+                ocupant: {
+                    xid: "helloDavid"
+                }
+            }
+        }
+    }) {
+        module {
+            id
+        }
+    }
+}

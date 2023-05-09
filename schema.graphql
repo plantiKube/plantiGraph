@@ -21,6 +21,7 @@ type CropIntentionsList {
 type CropIntention {
     crop: Crop!
     harvestPerWeek: Int!
+
 }
 
 type GrowPlate {
