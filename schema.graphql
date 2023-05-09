@@ -21,12 +21,10 @@ type CropIntentionsList {
 type CropIntention {
     crop: Crop!
     harvestPerWeek: Int!
-
 }
 
 type GrowPlate {
     rawNetCupReading: Int
-
 }
 
 # name something like `SignalCluster` rather than `SignalTable` ..
@@ -55,7 +53,7 @@ enum SignalType {
     HARVEST
 }
 
-type DeploymentMap {
+type ModuleMap {
     modules: [Module]
 }
 
@@ -63,15 +61,25 @@ type Module {
     id: ID!
     shelves: [Shelf]
     totalNumberOfSites: Int! @lambda
+    nutrientMix: NutrientMix
+}
+
+enum NutrientMix {
+    A
+    B
 }
 
 type Shelf {
+    id: ID!
     sites: [Site]
+    numSites: Int! @lambda
+    verticalClearanceHeightToNextShelf: Int!
 }
 
 type Site {
     id: ID!
-    occupant: Plant
+    xid: String! @id
+    occupant: Plant @hasInverse(field: location)
 }
 
 type Plant {
@@ -83,6 +91,7 @@ type Plant {
     germinatedDate: DateTime
     transferredDate: DateTime
     harvestedDate: DateTime
+    location: Site @hasInverse(field: occupant)
 }
 
 # Abstract meta parameters for a crop.
@@ -114,10 +123,12 @@ type Location {
 
 # All of our plants start their lives in the nursery.
 type Nursery {
+    id: ID!
     GerminationTrays: [GerminationTray!]!
 #    totalSitesAvailable: Int! @lambda TODO: this lambda function should count the number of sites available in all of the germination trays.
 }
 
 type GerminationTray {
+    id: ID!
     sitesAvailable: Int!
 }

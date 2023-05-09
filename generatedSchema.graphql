@@ -45,26 +45,36 @@ enum SignalType {
 	HARVEST
 }
 
-type DeploymentMap {
+type ModuleMap {
 	modules(filter: ModuleFilter, first: Int, offset: Int): [Module]
 	modulesAggregate(filter: ModuleFilter): ModuleAggregateResult
 }
 
 type Module {
 	id: ID!
-	shelves(filter: ShelfFilter, first: Int, offset: Int): [Shelf]
+	shelves(filter: ShelfFilter, order: ShelfOrder, first: Int, offset: Int): [Shelf]
 	totalNumberOfSites: Int! @lambda
+	nutrientMix: NutrientMix
 	shelvesAggregate(filter: ShelfFilter): ShelfAggregateResult
 }
 
+enum NutrientMix {
+	A
+	B
+}
+
 type Shelf {
-	sites(filter: SiteFilter, first: Int, offset: Int): [Site]
+	id: ID!
+	sites(filter: SiteFilter, order: SiteOrder, first: Int, offset: Int): [Site]
+	numSites: Int! @lambda
+	verticalClearanceHeightToNextShelf: Int!
 	sitesAggregate(filter: SiteFilter): SiteAggregateResult
 }
 
 type Site {
 	id: ID!
-	occupant(filter: PlantFilter): Plant
+	xid: String! @id
+	occupant(filter: PlantFilter): Plant @hasInverse(field: location)
 }
 
 type Plant {
@@ -76,6 +86,7 @@ type Plant {
 	germinatedDate: DateTime
 	transferredDate: DateTime
 	harvestedDate: DateTime
+	location(filter: SiteFilter): Site @hasInverse(field: occupant)
 }
 
 type Crop {
@@ -104,7 +115,14 @@ type Location {
 	y: Int!
 }
 
+type Nursery {
+	id: ID!
+	GerminationTrays(filter: GerminationTrayFilter, order: GerminationTrayOrder, first: Int, offset: Int): [GerminationTray!]!
+	GerminationTraysAggregate(filter: GerminationTrayFilter): GerminationTrayAggregateResult
+}
+
 type GerminationTray {
+	id: ID!
 	sitesAvailable: Int!
 }
 
@@ -389,11 +407,6 @@ type AddCropPayload {
 	numUids: Int
 }
 
-type AddDeploymentMapPayload {
-	deploymentMap(filter: DeploymentMapFilter, first: Int, offset: Int): [DeploymentMap]
-	numUids: Int
-}
-
 type AddDrawerPayload {
 	drawer(filter: DrawerFilter, order: DrawerOrder, first: Int, offset: Int): [Drawer]
 	numUids: Int
@@ -414,8 +427,18 @@ type AddLocationPayload {
 	numUids: Int
 }
 
+type AddModuleMapPayload {
+	moduleMap(filter: ModuleMapFilter, first: Int, offset: Int): [ModuleMap]
+	numUids: Int
+}
+
 type AddModulePayload {
 	module(filter: ModuleFilter, first: Int, offset: Int): [Module]
+	numUids: Int
+}
+
+type AddNurseryPayload {
+	nursery(filter: NurseryFilter, first: Int, offset: Int): [Nursery]
 	numUids: Int
 }
 
@@ -430,7 +453,7 @@ type AddSeedPayload {
 }
 
 type AddShelfPayload {
-	shelf(filter: ShelfFilter, first: Int, offset: Int): [Shelf]
+	shelf(filter: ShelfFilter, order: ShelfOrder, first: Int, offset: Int): [Shelf]
 	numUids: Int
 }
 
@@ -445,7 +468,7 @@ type AddSignalTablePayload {
 }
 
 type AddSitePayload {
-	site(filter: SiteFilter, first: Int, offset: Int): [Site]
+	site(filter: SiteFilter, order: SiteOrder, first: Int, offset: Int): [Site]
 	numUids: Int
 }
 
@@ -501,12 +524,6 @@ type DeleteCropPayload {
 	numUids: Int
 }
 
-type DeleteDeploymentMapPayload {
-	deploymentMap(filter: DeploymentMapFilter, first: Int, offset: Int): [DeploymentMap]
-	msg: String
-	numUids: Int
-}
-
 type DeleteDrawerPayload {
 	drawer(filter: DrawerFilter, order: DrawerOrder, first: Int, offset: Int): [Drawer]
 	msg: String
@@ -531,8 +548,20 @@ type DeleteLocationPayload {
 	numUids: Int
 }
 
+type DeleteModuleMapPayload {
+	moduleMap(filter: ModuleMapFilter, first: Int, offset: Int): [ModuleMap]
+	msg: String
+	numUids: Int
+}
+
 type DeleteModulePayload {
 	module(filter: ModuleFilter, first: Int, offset: Int): [Module]
+	msg: String
+	numUids: Int
+}
+
+type DeleteNurseryPayload {
+	nursery(filter: NurseryFilter, first: Int, offset: Int): [Nursery]
 	msg: String
 	numUids: Int
 }
@@ -550,7 +579,7 @@ type DeleteSeedPayload {
 }
 
 type DeleteShelfPayload {
-	shelf(filter: ShelfFilter, first: Int, offset: Int): [Shelf]
+	shelf(filter: ShelfFilter, order: ShelfOrder, first: Int, offset: Int): [Shelf]
 	msg: String
 	numUids: Int
 }
@@ -568,13 +597,9 @@ type DeleteSignalTablePayload {
 }
 
 type DeleteSitePayload {
-	site(filter: SiteFilter, first: Int, offset: Int): [Site]
+	site(filter: SiteFilter, order: SiteOrder, first: Int, offset: Int): [Site]
 	msg: String
 	numUids: Int
-}
-
-type DeploymentMapAggregateResult {
-	count: Int
 }
 
 type DrawerAggregateResult {
@@ -617,6 +642,14 @@ type ModuleAggregateResult {
 	count: Int
 }
 
+type ModuleMapAggregateResult {
+	count: Int
+}
+
+type NurseryAggregateResult {
+	count: Int
+}
+
 type PlantAggregateResult {
 	count: Int
 	xidMin: String
@@ -641,6 +674,10 @@ type SeedAggregateResult {
 
 type ShelfAggregateResult {
 	count: Int
+	verticalClearanceHeightToNextShelfMin: Int
+	verticalClearanceHeightToNextShelfMax: Int
+	verticalClearanceHeightToNextShelfSum: Int
+	verticalClearanceHeightToNextShelfAvg: Float
 }
 
 type SignalAggregateResult {
@@ -677,6 +714,8 @@ type SignalTableAggregateResult {
 
 type SiteAggregateResult {
 	count: Int
+	xidMin: String
+	xidMax: String
 }
 
 type UpdateCropIntentionPayload {
@@ -691,11 +730,6 @@ type UpdateCropIntentionsListPayload {
 
 type UpdateCropPayload {
 	crop(filter: CropFilter, order: CropOrder, first: Int, offset: Int): [Crop]
-	numUids: Int
-}
-
-type UpdateDeploymentMapPayload {
-	deploymentMap(filter: DeploymentMapFilter, first: Int, offset: Int): [DeploymentMap]
 	numUids: Int
 }
 
@@ -719,8 +753,18 @@ type UpdateLocationPayload {
 	numUids: Int
 }
 
+type UpdateModuleMapPayload {
+	moduleMap(filter: ModuleMapFilter, first: Int, offset: Int): [ModuleMap]
+	numUids: Int
+}
+
 type UpdateModulePayload {
 	module(filter: ModuleFilter, first: Int, offset: Int): [Module]
+	numUids: Int
+}
+
+type UpdateNurseryPayload {
+	nursery(filter: NurseryFilter, first: Int, offset: Int): [Nursery]
 	numUids: Int
 }
 
@@ -735,7 +779,7 @@ type UpdateSeedPayload {
 }
 
 type UpdateShelfPayload {
-	shelf(filter: ShelfFilter, first: Int, offset: Int): [Shelf]
+	shelf(filter: ShelfFilter, order: ShelfOrder, first: Int, offset: Int): [Shelf]
 	numUids: Int
 }
 
@@ -750,7 +794,7 @@ type UpdateSignalTablePayload {
 }
 
 type UpdateSitePayload {
-	site(filter: SiteFilter, first: Int, offset: Int): [Site]
+	site(filter: SiteFilter, order: SiteOrder, first: Int, offset: Int): [Site]
 	numUids: Int
 }
 
@@ -788,10 +832,6 @@ enum CropOrderable {
 	days_harvestable
 	days_from_transfer_to_first_harvest
 	harvests_per_week
-}
-
-enum DeploymentMapHasFilter {
-	modules
 }
 
 enum DrawerHasFilter {
@@ -832,6 +872,15 @@ enum LocationOrderable {
 
 enum ModuleHasFilter {
 	shelves
+	nutrientMix
+}
+
+enum ModuleMapHasFilter {
+	modules
+}
+
+enum NurseryHasFilter {
+	GerminationTrays
 }
 
 enum PlantHasFilter {
@@ -842,6 +891,7 @@ enum PlantHasFilter {
 	germinatedDate
 	transferredDate
 	harvestedDate
+	location
 }
 
 enum PlantOrderable {
@@ -863,6 +913,11 @@ enum SeedOrderable {
 
 enum ShelfHasFilter {
 	sites
+	verticalClearanceHeightToNextShelf
+}
+
+enum ShelfOrderable {
+	verticalClearanceHeightToNextShelf
 }
 
 enum SignalHasFilter {
@@ -895,7 +950,12 @@ enum SignalTableHasFilter {
 }
 
 enum SiteHasFilter {
+	xid
 	occupant
+}
+
+enum SiteOrderable {
+	xid
 }
 
 #######################
@@ -921,10 +981,6 @@ input AddCropIntentionsListInput {
 	cropIntentions: [CropIntentionRef!]!
 }
 
-input AddDeploymentMapInput {
-	modules: [ModuleRef]
-}
-
 input AddDrawerInput {
 	gridLocation: LocationRef!
 	cropAssignment: CropRef
@@ -946,6 +1002,15 @@ input AddLocationInput {
 
 input AddModuleInput {
 	shelves: [ShelfRef]
+	nutrientMix: NutrientMix
+}
+
+input AddModuleMapInput {
+	modules: [ModuleRef]
+}
+
+input AddNurseryInput {
+	GerminationTrays: [GerminationTrayRef!]!
 }
 
 input AddPlantInput {
@@ -956,6 +1021,7 @@ input AddPlantInput {
 	germinatedDate: DateTime
 	transferredDate: DateTime
 	harvestedDate: DateTime
+	location: SiteRef
 }
 
 input AddSeedInput {
@@ -964,6 +1030,7 @@ input AddSeedInput {
 
 input AddShelfInput {
 	sites: [SiteRef]
+	verticalClearanceHeightToNextShelf: Int!
 }
 
 input AddSignalInput {
@@ -984,6 +1051,7 @@ input AddSignalTableInput {
 }
 
 input AddSiteInput {
+	xid: String!
 	occupant: PlantRef
 }
 
@@ -1060,21 +1128,6 @@ input CropRef {
 	harvests_per_week: Int
 }
 
-input DeploymentMapFilter {
-	has: [DeploymentMapHasFilter]
-	and: [DeploymentMapFilter]
-	or: [DeploymentMapFilter]
-	not: DeploymentMapFilter
-}
-
-input DeploymentMapPatch {
-	modules: [ModuleRef]
-}
-
-input DeploymentMapRef {
-	modules: [ModuleRef]
-}
-
 input DrawerFilter {
 	has: [DrawerHasFilter]
 	and: [DrawerFilter]
@@ -1101,6 +1154,7 @@ input DrawerRef {
 }
 
 input GerminationTrayFilter {
+	id: [ID!]
 	has: [GerminationTrayHasFilter]
 	and: [GerminationTrayFilter]
 	or: [GerminationTrayFilter]
@@ -1118,6 +1172,7 @@ input GerminationTrayPatch {
 }
 
 input GerminationTrayRef {
+	id: ID
 	sitesAvailable: Int
 }
 
@@ -1173,13 +1228,47 @@ input ModuleFilter {
 	not: ModuleFilter
 }
 
+input ModuleMapFilter {
+	has: [ModuleMapHasFilter]
+	and: [ModuleMapFilter]
+	or: [ModuleMapFilter]
+	not: ModuleMapFilter
+}
+
+input ModuleMapPatch {
+	modules: [ModuleRef]
+}
+
+input ModuleMapRef {
+	modules: [ModuleRef]
+}
+
 input ModulePatch {
 	shelves: [ShelfRef]
+	nutrientMix: NutrientMix
 }
 
 input ModuleRef {
 	id: ID
 	shelves: [ShelfRef]
+	nutrientMix: NutrientMix
+}
+
+input NurseryFilter {
+	id: [ID!]
+	has: [NurseryHasFilter]
+	and: [NurseryFilter]
+	or: [NurseryFilter]
+	not: NurseryFilter
+}
+
+input NurseryPatch {
+	GerminationTrays: [GerminationTrayRef!]
+}
+
+input NurseryRef {
+	id: ID
+	GerminationTrays: [GerminationTrayRef!]
 }
 
 input PlantFilter {
@@ -1207,6 +1296,7 @@ input PlantPatch {
 	germinatedDate: DateTime
 	transferredDate: DateTime
 	harvestedDate: DateTime
+	location: SiteRef
 }
 
 input PlantRef {
@@ -1218,6 +1308,7 @@ input PlantRef {
 	germinatedDate: DateTime
 	transferredDate: DateTime
 	harvestedDate: DateTime
+	location: SiteRef
 }
 
 input SeedFilter {
@@ -1242,18 +1333,28 @@ input SeedRef {
 }
 
 input ShelfFilter {
+	id: [ID!]
 	has: [ShelfHasFilter]
 	and: [ShelfFilter]
 	or: [ShelfFilter]
 	not: ShelfFilter
 }
 
+input ShelfOrder {
+	asc: ShelfOrderable
+	desc: ShelfOrderable
+	then: ShelfOrder
+}
+
 input ShelfPatch {
 	sites: [SiteRef]
+	verticalClearanceHeightToNextShelf: Int
 }
 
 input ShelfRef {
+	id: ID
 	sites: [SiteRef]
+	verticalClearanceHeightToNextShelf: Int
 }
 
 input SignalFilter {
@@ -1312,10 +1413,17 @@ input SignalTableRef {
 
 input SiteFilter {
 	id: [ID!]
+	xid: StringHashFilter
 	has: [SiteHasFilter]
 	and: [SiteFilter]
 	or: [SiteFilter]
 	not: SiteFilter
+}
+
+input SiteOrder {
+	asc: SiteOrderable
+	desc: SiteOrderable
+	then: SiteOrder
 }
 
 input SitePatch {
@@ -1324,6 +1432,7 @@ input SitePatch {
 
 input SiteRef {
 	id: ID
+	xid: String
 	occupant: PlantRef
 }
 
@@ -1343,12 +1452,6 @@ input UpdateCropIntentionsListInput {
 	filter: CropIntentionsListFilter!
 	set: CropIntentionsListPatch
 	remove: CropIntentionsListPatch
-}
-
-input UpdateDeploymentMapInput {
-	filter: DeploymentMapFilter!
-	set: DeploymentMapPatch
-	remove: DeploymentMapPatch
 }
 
 input UpdateDrawerInput {
@@ -1379,6 +1482,18 @@ input UpdateModuleInput {
 	filter: ModuleFilter!
 	set: ModulePatch
 	remove: ModulePatch
+}
+
+input UpdateModuleMapInput {
+	filter: ModuleMapFilter!
+	set: ModuleMapPatch
+	remove: ModuleMapPatch
+}
+
+input UpdateNurseryInput {
+	filter: NurseryFilter!
+	set: NurseryPatch
+	remove: NurseryPatch
 }
 
 input UpdatePlantInput {
@@ -1434,15 +1549,16 @@ type Query {
 	aggregateSignalTable(filter: SignalTableFilter): SignalTableAggregateResult
 	querySignal(filter: SignalFilter, order: SignalOrder, first: Int, offset: Int): [Signal]
 	aggregateSignal(filter: SignalFilter): SignalAggregateResult
-	queryDeploymentMap(filter: DeploymentMapFilter, first: Int, offset: Int): [DeploymentMap]
-	aggregateDeploymentMap(filter: DeploymentMapFilter): DeploymentMapAggregateResult
+	queryModuleMap(filter: ModuleMapFilter, first: Int, offset: Int): [ModuleMap]
+	aggregateModuleMap(filter: ModuleMapFilter): ModuleMapAggregateResult
 	getModule(id: ID!): Module
 	queryModule(filter: ModuleFilter, first: Int, offset: Int): [Module]
 	aggregateModule(filter: ModuleFilter): ModuleAggregateResult
-	queryShelf(filter: ShelfFilter, first: Int, offset: Int): [Shelf]
+	getShelf(id: ID!): Shelf
+	queryShelf(filter: ShelfFilter, order: ShelfOrder, first: Int, offset: Int): [Shelf]
 	aggregateShelf(filter: ShelfFilter): ShelfAggregateResult
-	getSite(id: ID!): Site
-	querySite(filter: SiteFilter, first: Int, offset: Int): [Site]
+	getSite(id: ID, xid: String): Site
+	querySite(filter: SiteFilter, order: SiteOrder, first: Int, offset: Int): [Site]
 	aggregateSite(filter: SiteFilter): SiteAggregateResult
 	getPlant(id: ID!): Plant
 	queryPlant(filter: PlantFilter, order: PlantOrder, first: Int, offset: Int): [Plant]
@@ -1456,6 +1572,10 @@ type Query {
 	aggregateDrawer(filter: DrawerFilter): DrawerAggregateResult
 	queryLocation(filter: LocationFilter, order: LocationOrder, first: Int, offset: Int): [Location]
 	aggregateLocation(filter: LocationFilter): LocationAggregateResult
+	getNursery(id: ID!): Nursery
+	queryNursery(filter: NurseryFilter, first: Int, offset: Int): [Nursery]
+	aggregateNursery(filter: NurseryFilter): NurseryAggregateResult
+	getGerminationTray(id: ID!): GerminationTray
 	queryGerminationTray(filter: GerminationTrayFilter, order: GerminationTrayOrder, first: Int, offset: Int): [GerminationTray]
 	aggregateGerminationTray(filter: GerminationTrayFilter): GerminationTrayAggregateResult
 }
@@ -1481,16 +1601,16 @@ type Mutation {
 	addSignal(input: [AddSignalInput!]!): AddSignalPayload
 	updateSignal(input: UpdateSignalInput!): UpdateSignalPayload
 	deleteSignal(filter: SignalFilter!): DeleteSignalPayload
-	addDeploymentMap(input: [AddDeploymentMapInput!]!): AddDeploymentMapPayload
-	updateDeploymentMap(input: UpdateDeploymentMapInput!): UpdateDeploymentMapPayload
-	deleteDeploymentMap(filter: DeploymentMapFilter!): DeleteDeploymentMapPayload
+	addModuleMap(input: [AddModuleMapInput!]!): AddModuleMapPayload
+	updateModuleMap(input: UpdateModuleMapInput!): UpdateModuleMapPayload
+	deleteModuleMap(filter: ModuleMapFilter!): DeleteModuleMapPayload
 	addModule(input: [AddModuleInput!]!): AddModulePayload
 	updateModule(input: UpdateModuleInput!): UpdateModulePayload
 	deleteModule(filter: ModuleFilter!): DeleteModulePayload
 	addShelf(input: [AddShelfInput!]!): AddShelfPayload
 	updateShelf(input: UpdateShelfInput!): UpdateShelfPayload
 	deleteShelf(filter: ShelfFilter!): DeleteShelfPayload
-	addSite(input: [AddSiteInput!]!): AddSitePayload
+	addSite(input: [AddSiteInput!]!, upsert: Boolean): AddSitePayload
 	updateSite(input: UpdateSiteInput!): UpdateSitePayload
 	deleteSite(filter: SiteFilter!): DeleteSitePayload
 	addPlant(input: [AddPlantInput!]!): AddPlantPayload
@@ -1508,6 +1628,9 @@ type Mutation {
 	addLocation(input: [AddLocationInput!]!): AddLocationPayload
 	updateLocation(input: UpdateLocationInput!): UpdateLocationPayload
 	deleteLocation(filter: LocationFilter!): DeleteLocationPayload
+	addNursery(input: [AddNurseryInput!]!): AddNurseryPayload
+	updateNursery(input: UpdateNurseryInput!): UpdateNurseryPayload
+	deleteNursery(filter: NurseryFilter!): DeleteNurseryPayload
 	addGerminationTray(input: [AddGerminationTrayInput!]!): AddGerminationTrayPayload
 	updateGerminationTray(input: UpdateGerminationTrayInput!): UpdateGerminationTrayPayload
 	deleteGerminationTray(filter: GerminationTrayFilter!): DeleteGerminationTrayPayload
