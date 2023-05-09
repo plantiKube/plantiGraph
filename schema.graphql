@@ -112,6 +112,12 @@ type Location {
     y: Int!
 }
 
+# All of our plants start their lives in the nursery.
+type Nursery {
+    GerminationTrays: [GerminationTray!]!
+#    totalSitesAvailable: Int! @lambda TODO: this lambda function should count the number of sites available in all of the germination trays.
+}
+
 type GerminationTray {
     sitesAvailable: Int!
 }

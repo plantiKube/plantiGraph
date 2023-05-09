@@ -27,3 +27,11 @@ client
             }
         });
     });
+
+
+client
+    .request<WheresChuckQuery, WheresChuckQueryVariables>(WheresChuckDocument, {})
+    .then(( data ) =>{
+        console.log("another");
+        console.log(data?.querySite?.[0]?.id);
+    });
