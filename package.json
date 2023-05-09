@@ -20,7 +20,8 @@
   },
   "scripts": {
     "codegen": "graphql-codegen",
-    "run-apollo-single-query": "ts-node apolloClientOneShot.ts"
+    "run-apollo-single-query": "ts-node apollo-client/apolloClientOneShot.ts",
+    "run-graphql-request": "ts-node graphql-request/simpleExample.ts"
   },
   "dependencies": {
     "@apollo/client": "^3.7.14",
