@@ -138,6 +138,24 @@ export type AddGerminationTrayPayloadGerminationTrayArgs = {
   order?: InputMaybe<GerminationTrayOrder>;
 };
 
+export type AddGrowPlateInput = {
+  rawNetCupReading?: InputMaybe<Scalars['Int']>;
+};
+
+export type AddGrowPlatePayload = {
+  __typename?: 'AddGrowPlatePayload';
+  growPlate?: Maybe<Array<Maybe<GrowPlate>>>;
+  numUids?: Maybe<Scalars['Int']>;
+};
+
+
+export type AddGrowPlatePayloadGrowPlateArgs = {
+  filter?: InputMaybe<GrowPlateFilter>;
+  first?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order?: InputMaybe<GrowPlateOrder>;
+};
+
 export type AddLocationInput = {
   x: Scalars['Int'];
   y: Scalars['Int'];
@@ -278,7 +296,7 @@ export type AddSignalTablePayloadSignalTableArgs = {
 };
 
 export type AddSiteInput = {
-  ocupant?: InputMaybe<PlantRef>;
+  occupant?: InputMaybe<PlantRef>;
 };
 
 export type AddSitePayload = {
@@ -605,6 +623,21 @@ export type DeleteGerminationTrayPayloadGerminationTrayArgs = {
   order?: InputMaybe<GerminationTrayOrder>;
 };
 
+export type DeleteGrowPlatePayload = {
+  __typename?: 'DeleteGrowPlatePayload';
+  growPlate?: Maybe<Array<Maybe<GrowPlate>>>;
+  msg?: Maybe<Scalars['String']>;
+  numUids?: Maybe<Scalars['Int']>;
+};
+
+
+export type DeleteGrowPlatePayloadGrowPlateArgs = {
+  filter?: InputMaybe<GrowPlateFilter>;
+  first?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order?: InputMaybe<GrowPlateOrder>;
+};
+
 export type DeleteLocationPayload = {
   __typename?: 'DeleteLocationPayload';
   location?: Maybe<Array<Maybe<Location>>>;
@@ -913,6 +946,49 @@ export type GerminationTrayRef = {
   sitesAvailable?: InputMaybe<Scalars['Int']>;
 };
 
+export type GrowPlate = {
+  __typename?: 'GrowPlate';
+  rawNetCupReading?: Maybe<Scalars['Int']>;
+};
+
+export type GrowPlateAggregateResult = {
+  __typename?: 'GrowPlateAggregateResult';
+  count?: Maybe<Scalars['Int']>;
+  rawNetCupReadingAvg?: Maybe<Scalars['Float']>;
+  rawNetCupReadingMax?: Maybe<Scalars['Int']>;
+  rawNetCupReadingMin?: Maybe<Scalars['Int']>;
+  rawNetCupReadingSum?: Maybe<Scalars['Int']>;
+};
+
+export type GrowPlateFilter = {
+  and?: InputMaybe<Array<InputMaybe<GrowPlateFilter>>>;
+  has?: InputMaybe<Array<InputMaybe<GrowPlateHasFilter>>>;
+  not?: InputMaybe<GrowPlateFilter>;
+  or?: InputMaybe<Array<InputMaybe<GrowPlateFilter>>>;
+};
+
+export enum GrowPlateHasFilter {
+  RawNetCupReading = 'rawNetCupReading'
+}
+
+export type GrowPlateOrder = {
+  asc?: InputMaybe<GrowPlateOrderable>;
+  desc?: InputMaybe<GrowPlateOrderable>;
+  then?: InputMaybe<GrowPlateOrder>;
+};
+
+export enum GrowPlateOrderable {
+  RawNetCupReading = 'rawNetCupReading'
+}
+
+export type GrowPlatePatch = {
+  rawNetCupReading?: InputMaybe<Scalars['Int']>;
+};
+
+export type GrowPlateRef = {
+  rawNetCupReading?: InputMaybe<Scalars['Int']>;
+};
+
 export enum HttpMethod {
   Delete = 'DELETE',
   Get = 'GET',
@@ -1076,6 +1152,7 @@ export type Mutation = {
   addDeploymentMap?: Maybe<AddDeploymentMapPayload>;
   addDrawer?: Maybe<AddDrawerPayload>;
   addGerminationTray?: Maybe<AddGerminationTrayPayload>;
+  addGrowPlate?: Maybe<AddGrowPlatePayload>;
   addLocation?: Maybe<AddLocationPayload>;
   addModule?: Maybe<AddModulePayload>;
   addPlant?: Maybe<AddPlantPayload>;
@@ -1090,6 +1167,7 @@ export type Mutation = {
   deleteDeploymentMap?: Maybe<DeleteDeploymentMapPayload>;
   deleteDrawer?: Maybe<DeleteDrawerPayload>;
   deleteGerminationTray?: Maybe<DeleteGerminationTrayPayload>;
+  deleteGrowPlate?: Maybe<DeleteGrowPlatePayload>;
   deleteLocation?: Maybe<DeleteLocationPayload>;
   deleteModule?: Maybe<DeleteModulePayload>;
   deletePlant?: Maybe<DeletePlantPayload>;
@@ -1105,6 +1183,7 @@ export type Mutation = {
   updateDeploymentMap?: Maybe<UpdateDeploymentMapPayload>;
   updateDrawer?: Maybe<UpdateDrawerPayload>;
   updateGerminationTray?: Maybe<UpdateGerminationTrayPayload>;
+  updateGrowPlate?: Maybe<UpdateGrowPlatePayload>;
   updateLocation?: Maybe<UpdateLocationPayload>;
   updateModule?: Maybe<UpdateModulePayload>;
   updatePlant?: Maybe<UpdatePlantPayload>;
@@ -1143,6 +1222,11 @@ export type MutationAddDrawerArgs = {
 
 export type MutationAddGerminationTrayArgs = {
   input: Array<AddGerminationTrayInput>;
+};
+
+
+export type MutationAddGrowPlateArgs = {
+  input: Array<AddGrowPlateInput>;
 };
 
 
@@ -1213,6 +1297,11 @@ export type MutationDeleteDrawerArgs = {
 
 export type MutationDeleteGerminationTrayArgs = {
   filter: GerminationTrayFilter;
+};
+
+
+export type MutationDeleteGrowPlateArgs = {
+  filter: GrowPlateFilter;
 };
 
 
@@ -1288,6 +1377,11 @@ export type MutationUpdateDrawerArgs = {
 
 export type MutationUpdateGerminationTrayArgs = {
   input: UpdateGerminationTrayInput;
+};
+
+
+export type MutationUpdateGrowPlateArgs = {
+  input: UpdateGrowPlateInput;
 };
 
 
@@ -1471,6 +1565,7 @@ export type Query = {
   aggregateDeploymentMap?: Maybe<DeploymentMapAggregateResult>;
   aggregateDrawer?: Maybe<DrawerAggregateResult>;
   aggregateGerminationTray?: Maybe<GerminationTrayAggregateResult>;
+  aggregateGrowPlate?: Maybe<GrowPlateAggregateResult>;
   aggregateLocation?: Maybe<LocationAggregateResult>;
   aggregateModule?: Maybe<ModuleAggregateResult>;
   aggregatePlant?: Maybe<PlantAggregateResult>;
@@ -1490,6 +1585,7 @@ export type Query = {
   queryDeploymentMap?: Maybe<Array<Maybe<DeploymentMap>>>;
   queryDrawer?: Maybe<Array<Maybe<Drawer>>>;
   queryGerminationTray?: Maybe<Array<Maybe<GerminationTray>>>;
+  queryGrowPlate?: Maybe<Array<Maybe<GrowPlate>>>;
   queryLocation?: Maybe<Array<Maybe<Location>>>;
   queryModule?: Maybe<Array<Maybe<Module>>>;
   queryPlant?: Maybe<Array<Maybe<Plant>>>;
@@ -1534,6 +1630,11 @@ export type QueryAggregateDrawerArgs = {
 
 export type QueryAggregateGerminationTrayArgs = {
   filter?: InputMaybe<GerminationTrayFilter>;
+};
+
+
+export type QueryAggregateGrowPlateArgs = {
+  filter?: InputMaybe<GrowPlateFilter>;
 };
 
 
@@ -1645,6 +1746,14 @@ export type QueryQueryGerminationTrayArgs = {
   first?: InputMaybe<Scalars['Int']>;
   offset?: InputMaybe<Scalars['Int']>;
   order?: InputMaybe<GerminationTrayOrder>;
+};
+
+
+export type QueryQueryGrowPlateArgs = {
+  filter?: InputMaybe<GrowPlateFilter>;
+  first?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order?: InputMaybe<GrowPlateOrder>;
 };
 
 
@@ -1949,11 +2058,11 @@ export enum SignalType {
 export type Site = {
   __typename?: 'Site';
   id: Scalars['ID'];
-  ocupant?: Maybe<Plant>;
+  occupant?: Maybe<Plant>;
 };
 
 
-export type SiteOcupantArgs = {
+export type SiteOccupantArgs = {
   filter?: InputMaybe<PlantFilter>;
 };
 
@@ -1971,16 +2080,16 @@ export type SiteFilter = {
 };
 
 export enum SiteHasFilter {
-  Ocupant = 'ocupant'
+  Occupant = 'occupant'
 }
 
 export type SitePatch = {
-  ocupant?: InputMaybe<PlantRef>;
+  occupant?: InputMaybe<PlantRef>;
 };
 
 export type SiteRef = {
   id?: InputMaybe<Scalars['ID']>;
-  ocupant?: InputMaybe<PlantRef>;
+  occupant?: InputMaybe<PlantRef>;
 };
 
 export type StringExactFilter = {
@@ -2133,6 +2242,26 @@ export type UpdateGerminationTrayPayloadGerminationTrayArgs = {
   first?: InputMaybe<Scalars['Int']>;
   offset?: InputMaybe<Scalars['Int']>;
   order?: InputMaybe<GerminationTrayOrder>;
+};
+
+export type UpdateGrowPlateInput = {
+  filter: GrowPlateFilter;
+  remove?: InputMaybe<GrowPlatePatch>;
+  set?: InputMaybe<GrowPlatePatch>;
+};
+
+export type UpdateGrowPlatePayload = {
+  __typename?: 'UpdateGrowPlatePayload';
+  growPlate?: Maybe<Array<Maybe<GrowPlate>>>;
+  numUids?: Maybe<Scalars['Int']>;
+};
+
+
+export type UpdateGrowPlatePayloadGrowPlateArgs = {
+  filter?: InputMaybe<GrowPlateFilter>;
+  first?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order?: InputMaybe<GrowPlateOrder>;
 };
 
 export type UpdateLocationInput = {
@@ -2318,10 +2447,10 @@ export type ExampleLambdaQuery = { __typename?: 'Query', exampleLambda: string }
 export type WheresChuckQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type WheresChuckQuery = { __typename?: 'Query', querySite?: Array<{ __typename?: 'Site', id: string, ocupant?: { __typename?: 'Plant', xid?: string | null } | null } | null> | null };
+export type WheresChuckQuery = { __typename?: 'Query', querySite?: Array<{ __typename?: 'Site', id: string, occupant?: { __typename?: 'Plant', xid?: string | null } | null } | null> | null };
 
 
-export const HelloDavidDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"HelloDavid"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"addModule"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"shelves"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"sites"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"ocupant"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"xid"},"value":{"kind":"StringValue","value":"helloDavid","block":false}}]}}]}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"module"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]}}]} as unknown as DocumentNode<HelloDavidMutation, HelloDavidMutationVariables>;
+export const HelloDavidDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"HelloDavid"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"addModule"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"shelves"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"sites"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"occupant"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"xid"},"value":{"kind":"StringValue","value":"helloDavid","block":false}}]}}]}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"module"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]}}]} as unknown as DocumentNode<HelloDavidMutation, HelloDavidMutationVariables>;
 export const IngestQrDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"IngestQR"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"ingestQR"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"qr"},"value":{"kind":"StringValue","value":"0xdeadbeef","block":false}}]}]}}]} as unknown as DocumentNode<IngestQrMutation, IngestQrMutationVariables>;
 export const ExampleLambdaDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"ExampleLambda"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"exampleLambda"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"exampleStringInput"},"value":{"kind":"StringValue","value":"gahhhh","block":false}}]}]}}]} as unknown as DocumentNode<ExampleLambdaQuery, ExampleLambdaQueryVariables>;
-export const WheresChuckDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"WheresChuck"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"querySite"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"ocupant"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"xid"}}]}}]}}]}}]} as unknown as DocumentNode<WheresChuckQuery, WheresChuckQueryVariables>;
+export const WheresChuckDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"WheresChuck"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"querySite"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"occupant"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"xid"}}]}}]}}]}}]} as unknown as DocumentNode<WheresChuckQuery, WheresChuckQueryVariables>;

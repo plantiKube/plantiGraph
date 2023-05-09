@@ -17,6 +17,10 @@ type CropIntention {
 	harvestPerWeek: Int!
 }
 
+type GrowPlate {
+	rawNetCupReading: Int
+}
+
 type SignalTable {
 	signals(filter: SignalFilter, order: SignalOrder, first: Int, offset: Int): [Signal!]!
 	signalsAggregate(filter: SignalFilter): SignalAggregateResult
@@ -60,7 +64,7 @@ type Shelf {
 
 type Site {
 	id: ID!
-	ocupant(filter: PlantFilter): Plant
+	occupant(filter: PlantFilter): Plant
 }
 
 type Plant {
@@ -400,6 +404,11 @@ type AddGerminationTrayPayload {
 	numUids: Int
 }
 
+type AddGrowPlatePayload {
+	growPlate(filter: GrowPlateFilter, order: GrowPlateOrder, first: Int, offset: Int): [GrowPlate]
+	numUids: Int
+}
+
 type AddLocationPayload {
 	location(filter: LocationFilter, order: LocationOrder, first: Int, offset: Int): [Location]
 	numUids: Int
@@ -510,6 +519,12 @@ type DeleteGerminationTrayPayload {
 	numUids: Int
 }
 
+type DeleteGrowPlatePayload {
+	growPlate(filter: GrowPlateFilter, order: GrowPlateOrder, first: Int, offset: Int): [GrowPlate]
+	msg: String
+	numUids: Int
+}
+
 type DeleteLocationPayload {
 	location(filter: LocationFilter, order: LocationOrder, first: Int, offset: Int): [Location]
 	msg: String
@@ -576,6 +591,14 @@ type GerminationTrayAggregateResult {
 	sitesAvailableMax: Int
 	sitesAvailableSum: Int
 	sitesAvailableAvg: Float
+}
+
+type GrowPlateAggregateResult {
+	count: Int
+	rawNetCupReadingMin: Int
+	rawNetCupReadingMax: Int
+	rawNetCupReadingSum: Int
+	rawNetCupReadingAvg: Float
 }
 
 type LocationAggregateResult {
@@ -686,6 +709,11 @@ type UpdateGerminationTrayPayload {
 	numUids: Int
 }
 
+type UpdateGrowPlatePayload {
+	growPlate(filter: GrowPlateFilter, order: GrowPlateOrder, first: Int, offset: Int): [GrowPlate]
+	numUids: Int
+}
+
 type UpdateLocationPayload {
 	location(filter: LocationFilter, order: LocationOrder, first: Int, offset: Int): [Location]
 	numUids: Int
@@ -784,6 +812,14 @@ enum GerminationTrayOrderable {
 	sitesAvailable
 }
 
+enum GrowPlateHasFilter {
+	rawNetCupReading
+}
+
+enum GrowPlateOrderable {
+	rawNetCupReading
+}
+
 enum LocationHasFilter {
 	x
 	y
@@ -859,7 +895,7 @@ enum SignalTableHasFilter {
 }
 
 enum SiteHasFilter {
-	ocupant
+	occupant
 }
 
 #######################
@@ -897,6 +933,10 @@ input AddDrawerInput {
 
 input AddGerminationTrayInput {
 	sitesAvailable: Int!
+}
+
+input AddGrowPlateInput {
+	rawNetCupReading: Int
 }
 
 input AddLocationInput {
@@ -944,7 +984,7 @@ input AddSignalTableInput {
 }
 
 input AddSiteInput {
-	ocupant: PlantRef
+	occupant: PlantRef
 }
 
 input CropFilter {
@@ -1079,6 +1119,27 @@ input GerminationTrayPatch {
 
 input GerminationTrayRef {
 	sitesAvailable: Int
+}
+
+input GrowPlateFilter {
+	has: [GrowPlateHasFilter]
+	and: [GrowPlateFilter]
+	or: [GrowPlateFilter]
+	not: GrowPlateFilter
+}
+
+input GrowPlateOrder {
+	asc: GrowPlateOrderable
+	desc: GrowPlateOrderable
+	then: GrowPlateOrder
+}
+
+input GrowPlatePatch {
+	rawNetCupReading: Int
+}
+
+input GrowPlateRef {
+	rawNetCupReading: Int
 }
 
 input LocationFilter {
@@ -1258,12 +1319,12 @@ input SiteFilter {
 }
 
 input SitePatch {
-	ocupant: PlantRef
+	occupant: PlantRef
 }
 
 input SiteRef {
 	id: ID
-	ocupant: PlantRef
+	occupant: PlantRef
 }
 
 input UpdateCropInput {
@@ -1300,6 +1361,12 @@ input UpdateGerminationTrayInput {
 	filter: GerminationTrayFilter!
 	set: GerminationTrayPatch
 	remove: GerminationTrayPatch
+}
+
+input UpdateGrowPlateInput {
+	filter: GrowPlateFilter!
+	set: GrowPlatePatch
+	remove: GrowPlatePatch
 }
 
 input UpdateLocationInput {
@@ -1361,6 +1428,8 @@ type Query {
 	aggregateCropIntentionsList(filter: CropIntentionsListFilter): CropIntentionsListAggregateResult
 	queryCropIntention(filter: CropIntentionFilter, order: CropIntentionOrder, first: Int, offset: Int): [CropIntention]
 	aggregateCropIntention(filter: CropIntentionFilter): CropIntentionAggregateResult
+	queryGrowPlate(filter: GrowPlateFilter, order: GrowPlateOrder, first: Int, offset: Int): [GrowPlate]
+	aggregateGrowPlate(filter: GrowPlateFilter): GrowPlateAggregateResult
 	querySignalTable(filter: SignalTableFilter, first: Int, offset: Int): [SignalTable]
 	aggregateSignalTable(filter: SignalTableFilter): SignalTableAggregateResult
 	querySignal(filter: SignalFilter, order: SignalOrder, first: Int, offset: Int): [Signal]
@@ -1403,6 +1472,9 @@ type Mutation {
 	addCropIntention(input: [AddCropIntentionInput!]!): AddCropIntentionPayload
 	updateCropIntention(input: UpdateCropIntentionInput!): UpdateCropIntentionPayload
 	deleteCropIntention(filter: CropIntentionFilter!): DeleteCropIntentionPayload
+	addGrowPlate(input: [AddGrowPlateInput!]!): AddGrowPlatePayload
+	updateGrowPlate(input: UpdateGrowPlateInput!): UpdateGrowPlatePayload
+	deleteGrowPlate(filter: GrowPlateFilter!): DeleteGrowPlatePayload
 	addSignalTable(input: [AddSignalTableInput!]!): AddSignalTablePayload
 	updateSignalTable(input: UpdateSignalTableInput!): UpdateSignalTablePayload
 	deleteSignalTable(filter: SignalTableFilter!): DeleteSignalTablePayload

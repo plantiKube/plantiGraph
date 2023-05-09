@@ -71,7 +71,7 @@ type Shelf {
 
 type Site {
     id: ID!
-    ocupant: Plant
+    occupant: Plant
 }
 
 type Plant {
