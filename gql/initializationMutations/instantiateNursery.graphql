@@ -1,0 +1,47 @@
+mutation InstantiateNursery {
+    addNursery
+    (
+        input:
+        {
+            xid: "helloPlantiii",
+            GerminationTrays:
+            [
+                {
+                    sitesAvailable: 18
+                },
+                {
+                    sitesAvailable: 18
+                },
+                {
+                    sitesAvailable: 18
+                },
+                {
+                    sitesAvailable: 18
+                },
+                {
+                    sitesAvailable: 18
+                },
+                {
+                    sitesAvailable: 18
+                },
+                {
+                    sitesAvailable: 18
+                },
+                {
+                    sitesAvailable: 18
+                }
+            ]
+        }
+    )
+    {
+        nursery
+        {
+            id
+            xid
+            GerminationTrays
+            {
+                sitesAvailable
+            }
+        }
+    }
+}

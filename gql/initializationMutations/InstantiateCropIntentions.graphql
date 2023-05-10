@@ -1,0 +1,34 @@
+mutation InstantiateCropIntentions {
+    addCropIntentionsList
+    (
+        input:
+        {
+            cropIntentions:
+            [
+                {
+                    crop:
+                    {
+                        name: "arugi"
+                        xid: "adfaj"
+                        required_module_type: "nutA"
+                        repeater: true
+                        days_harvestable: 5
+                        days_from_transfer_to_first_harvest: 6
+                    }
+                    harvestPerWeek: 3
+                }
+            ]
+        }
+    )
+    {
+        numUids
+        cropIntentionsList {
+            cropIntentions {
+                crop {
+                    required_module_type
+                    repeater
+                }
+            }
+        }
+    }
+}
