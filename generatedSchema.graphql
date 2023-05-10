@@ -46,14 +46,17 @@ enum SignalType {
 }
 
 type ModuleMap {
-	modules(filter: ModuleFilter, first: Int, offset: Int): [Module]
+	id: ID!
+	xid: String! @id
+	modules(filter: ModuleFilter, order: ModuleOrder, first: Int, offset: Int): [Module]
 	modulesAggregate(filter: ModuleFilter): ModuleAggregateResult
 }
 
 type Module {
 	id: ID!
+	xid: String! @id
 	instantiationTemplateUsed: ModuleType!
-	shelves(filter: ShelfFilter, order: ShelfOrder, first: Int, offset: Int): [Shelf]
+	shelves(filter: ShelfFilter, order: ShelfOrder, first: Int, offset: Int): [Shelf] @hasInverse(field: parentModule)
 	totalNumberOfSites: Int! @lambda
 	nutrientMix: NutrientMix
 	shelvesAggregate(filter: ShelfFilter): ShelfAggregateResult
@@ -76,9 +79,11 @@ enum NutrientMix {
 
 type Shelf {
 	id: ID!
+	xid: String! @id
 	sites(filter: SiteFilter, order: SiteOrder, first: Int, offset: Int): [Site]
 	numSites: Int! @lambda
 	verticalClearanceHeightToNextShelf: Int!
+	parentModule(filter: ModuleFilter): Module @hasInverse(field: shelves)
 	sitesAggregate(filter: SiteFilter): SiteAggregateResult
 }
 
@@ -90,7 +95,7 @@ type Site {
 
 type Plant {
 	id: ID!
-	xid: String
+	xid: String! @id
 	cropName: String! @search
 	repeater: Boolean! @search
 	nutrientType: String! @search
@@ -441,12 +446,12 @@ type AddLocationPayload {
 }
 
 type AddModuleMapPayload {
-	moduleMap(filter: ModuleMapFilter, first: Int, offset: Int): [ModuleMap]
+	moduleMap(filter: ModuleMapFilter, order: ModuleMapOrder, first: Int, offset: Int): [ModuleMap]
 	numUids: Int
 }
 
 type AddModulePayload {
-	module(filter: ModuleFilter, first: Int, offset: Int): [Module]
+	module(filter: ModuleFilter, order: ModuleOrder, first: Int, offset: Int): [Module]
 	numUids: Int
 }
 
@@ -558,13 +563,13 @@ type DeleteLocationPayload {
 }
 
 type DeleteModuleMapPayload {
-	moduleMap(filter: ModuleMapFilter, first: Int, offset: Int): [ModuleMap]
+	moduleMap(filter: ModuleMapFilter, order: ModuleMapOrder, first: Int, offset: Int): [ModuleMap]
 	msg: String
 	numUids: Int
 }
 
 type DeleteModulePayload {
-	module(filter: ModuleFilter, first: Int, offset: Int): [Module]
+	module(filter: ModuleFilter, order: ModuleOrder, first: Int, offset: Int): [Module]
 	msg: String
 	numUids: Int
 }
@@ -649,10 +654,14 @@ type LocationAggregateResult {
 
 type ModuleAggregateResult {
 	count: Int
+	xidMin: String
+	xidMax: String
 }
 
 type ModuleMapAggregateResult {
 	count: Int
+	xidMin: String
+	xidMax: String
 }
 
 type NurseryAggregateResult {
@@ -685,6 +694,8 @@ type SeedAggregateResult {
 
 type ShelfAggregateResult {
 	count: Int
+	xidMin: String
+	xidMax: String
 	verticalClearanceHeightToNextShelfMin: Int
 	verticalClearanceHeightToNextShelfMax: Int
 	verticalClearanceHeightToNextShelfSum: Int
@@ -765,12 +776,12 @@ type UpdateLocationPayload {
 }
 
 type UpdateModuleMapPayload {
-	moduleMap(filter: ModuleMapFilter, first: Int, offset: Int): [ModuleMap]
+	moduleMap(filter: ModuleMapFilter, order: ModuleMapOrder, first: Int, offset: Int): [ModuleMap]
 	numUids: Int
 }
 
 type UpdateModulePayload {
-	module(filter: ModuleFilter, first: Int, offset: Int): [Module]
+	module(filter: ModuleFilter, order: ModuleOrder, first: Int, offset: Int): [Module]
 	numUids: Int
 }
 
@@ -881,13 +892,23 @@ enum LocationOrderable {
 }
 
 enum ModuleHasFilter {
+	xid
 	instantiationTemplateUsed
 	shelves
 	nutrientMix
 }
 
 enum ModuleMapHasFilter {
+	xid
 	modules
+}
+
+enum ModuleMapOrderable {
+	xid
+}
+
+enum ModuleOrderable {
+	xid
 }
 
 enum NurseryHasFilter {
@@ -928,11 +949,14 @@ enum SeedOrderable {
 }
 
 enum ShelfHasFilter {
+	xid
 	sites
 	verticalClearanceHeightToNextShelf
+	parentModule
 }
 
 enum ShelfOrderable {
+	xid
 	verticalClearanceHeightToNextShelf
 }
 
@@ -1017,12 +1041,14 @@ input AddLocationInput {
 }
 
 input AddModuleInput {
+	xid: String!
 	instantiationTemplateUsed: ModuleType!
 	shelves: [ShelfRef]
 	nutrientMix: NutrientMix
 }
 
 input AddModuleMapInput {
+	xid: String!
 	modules: [ModuleRef]
 }
 
@@ -1032,7 +1058,7 @@ input AddNurseryInput {
 }
 
 input AddPlantInput {
-	xid: String
+	xid: String!
 	cropName: String!
 	repeater: Boolean!
 	nutrientType: String!
@@ -1047,8 +1073,10 @@ input AddSeedInput {
 }
 
 input AddShelfInput {
+	xid: String!
 	sites: [SiteRef]
 	verticalClearanceHeightToNextShelf: Int!
+	parentModule: ModuleRef
 }
 
 input AddSignalInput {
@@ -1240,6 +1268,7 @@ input LocationRef {
 
 input ModuleFilter {
 	id: [ID!]
+	xid: StringHashFilter
 	has: [ModuleHasFilter]
 	and: [ModuleFilter]
 	or: [ModuleFilter]
@@ -1247,10 +1276,18 @@ input ModuleFilter {
 }
 
 input ModuleMapFilter {
+	id: [ID!]
+	xid: StringHashFilter
 	has: [ModuleMapHasFilter]
 	and: [ModuleMapFilter]
 	or: [ModuleMapFilter]
 	not: ModuleMapFilter
+}
+
+input ModuleMapOrder {
+	asc: ModuleMapOrderable
+	desc: ModuleMapOrderable
+	then: ModuleMapOrder
 }
 
 input ModuleMapPatch {
@@ -1258,7 +1295,15 @@ input ModuleMapPatch {
 }
 
 input ModuleMapRef {
+	id: ID
+	xid: String
 	modules: [ModuleRef]
+}
+
+input ModuleOrder {
+	asc: ModuleOrderable
+	desc: ModuleOrderable
+	then: ModuleOrder
 }
 
 input ModulePatch {
@@ -1269,6 +1314,7 @@ input ModulePatch {
 
 input ModuleRef {
 	id: ID
+	xid: String
 	instantiationTemplateUsed: ModuleType
 	shelves: [ShelfRef]
 	nutrientMix: NutrientMix
@@ -1301,6 +1347,7 @@ input NurseryRef {
 
 input PlantFilter {
 	id: [ID!]
+	xid: StringHashFilter
 	cropName: StringTermFilter
 	repeater: Boolean
 	nutrientType: StringTermFilter
@@ -1317,7 +1364,6 @@ input PlantOrder {
 }
 
 input PlantPatch {
-	xid: String
 	cropName: String
 	repeater: Boolean
 	nutrientType: String
@@ -1362,6 +1408,7 @@ input SeedRef {
 
 input ShelfFilter {
 	id: [ID!]
+	xid: StringHashFilter
 	has: [ShelfHasFilter]
 	and: [ShelfFilter]
 	or: [ShelfFilter]
@@ -1377,12 +1424,15 @@ input ShelfOrder {
 input ShelfPatch {
 	sites: [SiteRef]
 	verticalClearanceHeightToNextShelf: Int
+	parentModule: ModuleRef
 }
 
 input ShelfRef {
 	id: ID
+	xid: String
 	sites: [SiteRef]
 	verticalClearanceHeightToNextShelf: Int
+	parentModule: ModuleRef
 }
 
 input SignalFilter {
@@ -1577,18 +1627,19 @@ type Query {
 	aggregateSignalTable(filter: SignalTableFilter): SignalTableAggregateResult
 	querySignal(filter: SignalFilter, order: SignalOrder, first: Int, offset: Int): [Signal]
 	aggregateSignal(filter: SignalFilter): SignalAggregateResult
-	queryModuleMap(filter: ModuleMapFilter, first: Int, offset: Int): [ModuleMap]
+	getModuleMap(id: ID, xid: String): ModuleMap
+	queryModuleMap(filter: ModuleMapFilter, order: ModuleMapOrder, first: Int, offset: Int): [ModuleMap]
 	aggregateModuleMap(filter: ModuleMapFilter): ModuleMapAggregateResult
-	getModule(id: ID!): Module
-	queryModule(filter: ModuleFilter, first: Int, offset: Int): [Module]
+	getModule(id: ID, xid: String): Module
+	queryModule(filter: ModuleFilter, order: ModuleOrder, first: Int, offset: Int): [Module]
 	aggregateModule(filter: ModuleFilter): ModuleAggregateResult
-	getShelf(id: ID!): Shelf
+	getShelf(id: ID, xid: String): Shelf
 	queryShelf(filter: ShelfFilter, order: ShelfOrder, first: Int, offset: Int): [Shelf]
 	aggregateShelf(filter: ShelfFilter): ShelfAggregateResult
 	getSite(id: ID, xid: String): Site
 	querySite(filter: SiteFilter, order: SiteOrder, first: Int, offset: Int): [Site]
 	aggregateSite(filter: SiteFilter): SiteAggregateResult
-	getPlant(id: ID!): Plant
+	getPlant(id: ID, xid: String): Plant
 	queryPlant(filter: PlantFilter, order: PlantOrder, first: Int, offset: Int): [Plant]
 	aggregatePlant(filter: PlantFilter): PlantAggregateResult
 	getCrop(id: ID, xid: String): Crop
@@ -1629,19 +1680,19 @@ type Mutation {
 	addSignal(input: [AddSignalInput!]!): AddSignalPayload
 	updateSignal(input: UpdateSignalInput!): UpdateSignalPayload
 	deleteSignal(filter: SignalFilter!): DeleteSignalPayload
-	addModuleMap(input: [AddModuleMapInput!]!): AddModuleMapPayload
+	addModuleMap(input: [AddModuleMapInput!]!, upsert: Boolean): AddModuleMapPayload
 	updateModuleMap(input: UpdateModuleMapInput!): UpdateModuleMapPayload
 	deleteModuleMap(filter: ModuleMapFilter!): DeleteModuleMapPayload
-	addModule(input: [AddModuleInput!]!): AddModulePayload
+	addModule(input: [AddModuleInput!]!, upsert: Boolean): AddModulePayload
 	updateModule(input: UpdateModuleInput!): UpdateModulePayload
 	deleteModule(filter: ModuleFilter!): DeleteModulePayload
-	addShelf(input: [AddShelfInput!]!): AddShelfPayload
+	addShelf(input: [AddShelfInput!]!, upsert: Boolean): AddShelfPayload
 	updateShelf(input: UpdateShelfInput!): UpdateShelfPayload
 	deleteShelf(filter: ShelfFilter!): DeleteShelfPayload
 	addSite(input: [AddSiteInput!]!, upsert: Boolean): AddSitePayload
 	updateSite(input: UpdateSiteInput!): UpdateSitePayload
 	deleteSite(filter: SiteFilter!): DeleteSitePayload
-	addPlant(input: [AddPlantInput!]!): AddPlantPayload
+	addPlant(input: [AddPlantInput!]!, upsert: Boolean): AddPlantPayload
 	updatePlant(input: UpdatePlantInput!): UpdatePlantPayload
 	deletePlant(filter: PlantFilter!): DeletePlantPayload
 	addCrop(input: [AddCropInput!]!, upsert: Boolean): AddCropPayload

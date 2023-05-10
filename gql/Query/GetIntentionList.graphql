@@ -7,4 +7,14 @@ query GetIntentionList {
             harvestPerWeek
         }
     }
+    queryModuleMap {
+        modules {
+            id
+            instantiationTemplateUsed
+            shelves {
+                id
+            }
+            totalNumberOfSites
+        }
+    }
 }
