@@ -1,0 +1,10 @@
+query GetIntentionList {
+    queryCropIntentionsList {
+        cropIntentions {
+            crop {
+                id xid name required_module_type
+            }
+            harvestPerWeek
+        }
+    }
+}

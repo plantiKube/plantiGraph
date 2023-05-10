@@ -54,14 +54,28 @@ enum SignalType {
 }
 
 type ModuleMap {
+    id: ID!
+    xid: String! @id
     modules: [Module]
 }
 
 type Module {
     id: ID!
+    xid: String! @id
+    instantiationTemplateUsed: ModuleType!
     shelves: [Shelf]
     totalNumberOfSites: Int! @lambda
     nutrientMix: NutrientMix
+}
+
+enum ModuleType {
+    DWC_12in_NutrientMixA
+    DWC_12in_NutrientMixB
+    DWC_24in_NutrientMixA
+    DWC_24in_NutrientMixB
+    DWC_36in_NutrientMixA
+    DWC_36in_NutrientMixB
+    VINING
 }
 
 enum NutrientMix {
@@ -71,9 +85,11 @@ enum NutrientMix {
 
 type Shelf {
     id: ID!
+    xid: String! @id
     sites: [Site]
     numSites: Int! @lambda
     verticalClearanceHeightToNextShelf: Int!
+    parentModule: Module @hasInverse(field: shelves)
 }
 
 type Site {
@@ -84,7 +100,7 @@ type Site {
 
 type Plant {
     id: ID!
-    xid: String
+    xid: String! @id
     cropName: String! @search
     repeater: Boolean! @search
     nutrientType: String! @search
@@ -97,13 +113,12 @@ type Plant {
 # Abstract meta parameters for a crop.
 type Crop {
     id: ID!
-    xid: String
+    xid: String! @id
     name: String!
     required_module_type: String!
     repeater: Boolean!
     days_harvestable: Int!
     days_from_transfer_to_first_harvest: Int!
-    harvests_per_week: Int!
 }
 
 type Seed {
@@ -124,6 +139,7 @@ type Location {
 # All of our plants start their lives in the nursery.
 type Nursery {
     id: ID!
+    xid: String! @id
     GerminationTrays: [GerminationTray!]!
 #    totalSitesAvailable: Int! @lambda TODO: this lambda function should count the number of sites available in all of the germination trays.
 }
@@ -131,4 +147,5 @@ type Nursery {
 type GerminationTray {
     id: ID!
     sitesAvailable: Int!
+    sites: [Site!]!
 }

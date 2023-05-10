@@ -83,23 +83,6 @@ export type AddCropPayloadCropArgs = {
   order?: InputMaybe<CropOrder>;
 };
 
-export type AddDeploymentMapInput = {
-  modules?: InputMaybe<Array<InputMaybe<ModuleRef>>>;
-};
-
-export type AddDeploymentMapPayload = {
-  __typename?: 'AddDeploymentMapPayload';
-  deploymentMap?: Maybe<Array<Maybe<DeploymentMap>>>;
-  numUids?: Maybe<Scalars['Int']>;
-};
-
-
-export type AddDeploymentMapPayloadDeploymentMapArgs = {
-  filter?: InputMaybe<DeploymentMapFilter>;
-  first?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
-};
-
 export type AddDrawerInput = {
   cropAssignment?: InputMaybe<CropRef>;
   gridLocation: LocationRef;
@@ -176,7 +159,25 @@ export type AddLocationPayloadLocationArgs = {
 };
 
 export type AddModuleInput = {
+  nutrientMix?: InputMaybe<NutrientMix>;
   shelves?: InputMaybe<Array<InputMaybe<ShelfRef>>>;
+};
+
+export type AddModuleMapInput = {
+  modules?: InputMaybe<Array<InputMaybe<ModuleRef>>>;
+};
+
+export type AddModuleMapPayload = {
+  __typename?: 'AddModuleMapPayload';
+  moduleMap?: Maybe<Array<Maybe<ModuleMap>>>;
+  numUids?: Maybe<Scalars['Int']>;
+};
+
+
+export type AddModuleMapPayloadModuleMapArgs = {
+  filter?: InputMaybe<ModuleMapFilter>;
+  first?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
 };
 
 export type AddModulePayload = {
@@ -192,10 +193,28 @@ export type AddModulePayloadModuleArgs = {
   offset?: InputMaybe<Scalars['Int']>;
 };
 
+export type AddNurseryInput = {
+  GerminationTrays: Array<GerminationTrayRef>;
+};
+
+export type AddNurseryPayload = {
+  __typename?: 'AddNurseryPayload';
+  numUids?: Maybe<Scalars['Int']>;
+  nursery?: Maybe<Array<Maybe<Nursery>>>;
+};
+
+
+export type AddNurseryPayloadNurseryArgs = {
+  filter?: InputMaybe<NurseryFilter>;
+  first?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+};
+
 export type AddPlantInput = {
   cropName: Scalars['String'];
   germinatedDate?: InputMaybe<Scalars['DateTime']>;
   harvestedDate?: InputMaybe<Scalars['DateTime']>;
+  location?: InputMaybe<SiteRef>;
   nutrientType: Scalars['String'];
   repeater: Scalars['Boolean'];
   transferredDate?: InputMaybe<Scalars['DateTime']>;
@@ -236,6 +255,7 @@ export type AddSeedPayloadSeedArgs = {
 
 export type AddShelfInput = {
   sites?: InputMaybe<Array<InputMaybe<SiteRef>>>;
+  verticalClearanceHeightToNextShelf: Scalars['Int'];
 };
 
 export type AddShelfPayload = {
@@ -249,6 +269,7 @@ export type AddShelfPayloadShelfArgs = {
   filter?: InputMaybe<ShelfFilter>;
   first?: InputMaybe<Scalars['Int']>;
   offset?: InputMaybe<Scalars['Int']>;
+  order?: InputMaybe<ShelfOrder>;
 };
 
 export type AddSignalInput = {
@@ -297,6 +318,7 @@ export type AddSignalTablePayloadSignalTableArgs = {
 
 export type AddSiteInput = {
   occupant?: InputMaybe<PlantRef>;
+  xid: Scalars['String'];
 };
 
 export type AddSitePayload = {
@@ -310,6 +332,7 @@ export type AddSitePayloadSiteArgs = {
   filter?: InputMaybe<SiteFilter>;
   first?: InputMaybe<Scalars['Int']>;
   offset?: InputMaybe<Scalars['Int']>;
+  order?: InputMaybe<SiteOrder>;
 };
 
 export type AuthRule = {
@@ -579,20 +602,6 @@ export type DeleteCropPayloadCropArgs = {
   order?: InputMaybe<CropOrder>;
 };
 
-export type DeleteDeploymentMapPayload = {
-  __typename?: 'DeleteDeploymentMapPayload';
-  deploymentMap?: Maybe<Array<Maybe<DeploymentMap>>>;
-  msg?: Maybe<Scalars['String']>;
-  numUids?: Maybe<Scalars['Int']>;
-};
-
-
-export type DeleteDeploymentMapPayloadDeploymentMapArgs = {
-  filter?: InputMaybe<DeploymentMapFilter>;
-  first?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
-};
-
 export type DeleteDrawerPayload = {
   __typename?: 'DeleteDrawerPayload';
   drawer?: Maybe<Array<Maybe<Drawer>>>;
@@ -653,6 +662,20 @@ export type DeleteLocationPayloadLocationArgs = {
   order?: InputMaybe<LocationOrder>;
 };
 
+export type DeleteModuleMapPayload = {
+  __typename?: 'DeleteModuleMapPayload';
+  moduleMap?: Maybe<Array<Maybe<ModuleMap>>>;
+  msg?: Maybe<Scalars['String']>;
+  numUids?: Maybe<Scalars['Int']>;
+};
+
+
+export type DeleteModuleMapPayloadModuleMapArgs = {
+  filter?: InputMaybe<ModuleMapFilter>;
+  first?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+};
+
 export type DeleteModulePayload = {
   __typename?: 'DeleteModulePayload';
   module?: Maybe<Array<Maybe<Module>>>;
@@ -663,6 +686,20 @@ export type DeleteModulePayload = {
 
 export type DeleteModulePayloadModuleArgs = {
   filter?: InputMaybe<ModuleFilter>;
+  first?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+};
+
+export type DeleteNurseryPayload = {
+  __typename?: 'DeleteNurseryPayload';
+  msg?: Maybe<Scalars['String']>;
+  numUids?: Maybe<Scalars['Int']>;
+  nursery?: Maybe<Array<Maybe<Nursery>>>;
+};
+
+
+export type DeleteNurseryPayloadNurseryArgs = {
+  filter?: InputMaybe<NurseryFilter>;
   first?: InputMaybe<Scalars['Int']>;
   offset?: InputMaybe<Scalars['Int']>;
 };
@@ -709,6 +746,7 @@ export type DeleteShelfPayloadShelfArgs = {
   filter?: InputMaybe<ShelfFilter>;
   first?: InputMaybe<Scalars['Int']>;
   offset?: InputMaybe<Scalars['Int']>;
+  order?: InputMaybe<ShelfOrder>;
 };
 
 export type DeleteSignalPayload = {
@@ -752,48 +790,7 @@ export type DeleteSitePayloadSiteArgs = {
   filter?: InputMaybe<SiteFilter>;
   first?: InputMaybe<Scalars['Int']>;
   offset?: InputMaybe<Scalars['Int']>;
-};
-
-export type DeploymentMap = {
-  __typename?: 'DeploymentMap';
-  modules?: Maybe<Array<Maybe<Module>>>;
-  modulesAggregate?: Maybe<ModuleAggregateResult>;
-};
-
-
-export type DeploymentMapModulesArgs = {
-  filter?: InputMaybe<ModuleFilter>;
-  first?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
-};
-
-
-export type DeploymentMapModulesAggregateArgs = {
-  filter?: InputMaybe<ModuleFilter>;
-};
-
-export type DeploymentMapAggregateResult = {
-  __typename?: 'DeploymentMapAggregateResult';
-  count?: Maybe<Scalars['Int']>;
-};
-
-export type DeploymentMapFilter = {
-  and?: InputMaybe<Array<InputMaybe<DeploymentMapFilter>>>;
-  has?: InputMaybe<Array<InputMaybe<DeploymentMapHasFilter>>>;
-  not?: InputMaybe<DeploymentMapFilter>;
-  or?: InputMaybe<Array<InputMaybe<DeploymentMapFilter>>>;
-};
-
-export enum DeploymentMapHasFilter {
-  Modules = 'modules'
-}
-
-export type DeploymentMapPatch = {
-  modules?: InputMaybe<Array<InputMaybe<ModuleRef>>>;
-};
-
-export type DeploymentMapRef = {
-  modules?: InputMaybe<Array<InputMaybe<ModuleRef>>>;
+  order?: InputMaybe<SiteOrder>;
 };
 
 export enum DgraphIndex {
@@ -905,6 +902,7 @@ export type GenerateQueryParams = {
 
 export type GerminationTray = {
   __typename?: 'GerminationTray';
+  id: Scalars['ID'];
   sitesAvailable: Scalars['Int'];
 };
 
@@ -920,6 +918,7 @@ export type GerminationTrayAggregateResult = {
 export type GerminationTrayFilter = {
   and?: InputMaybe<Array<InputMaybe<GerminationTrayFilter>>>;
   has?: InputMaybe<Array<InputMaybe<GerminationTrayHasFilter>>>;
+  id?: InputMaybe<Array<Scalars['ID']>>;
   not?: InputMaybe<GerminationTrayFilter>;
   or?: InputMaybe<Array<InputMaybe<GerminationTrayFilter>>>;
 };
@@ -943,6 +942,7 @@ export type GerminationTrayPatch = {
 };
 
 export type GerminationTrayRef = {
+  id?: InputMaybe<Scalars['ID']>;
   sitesAvailable?: InputMaybe<Scalars['Int']>;
 };
 
@@ -1092,6 +1092,7 @@ export enum Mode {
 export type Module = {
   __typename?: 'Module';
   id: Scalars['ID'];
+  nutrientMix?: Maybe<NutrientMix>;
   shelves?: Maybe<Array<Maybe<Shelf>>>;
   shelvesAggregate?: Maybe<ShelfAggregateResult>;
   totalNumberOfSites: Scalars['Int'];
@@ -1102,6 +1103,7 @@ export type ModuleShelvesArgs = {
   filter?: InputMaybe<ShelfFilter>;
   first?: InputMaybe<Scalars['Int']>;
   offset?: InputMaybe<Scalars['Int']>;
+  order?: InputMaybe<ShelfOrder>;
 };
 
 
@@ -1123,15 +1125,60 @@ export type ModuleFilter = {
 };
 
 export enum ModuleHasFilter {
+  NutrientMix = 'nutrientMix',
   Shelves = 'shelves'
 }
 
+export type ModuleMap = {
+  __typename?: 'ModuleMap';
+  modules?: Maybe<Array<Maybe<Module>>>;
+  modulesAggregate?: Maybe<ModuleAggregateResult>;
+};
+
+
+export type ModuleMapModulesArgs = {
+  filter?: InputMaybe<ModuleFilter>;
+  first?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+};
+
+
+export type ModuleMapModulesAggregateArgs = {
+  filter?: InputMaybe<ModuleFilter>;
+};
+
+export type ModuleMapAggregateResult = {
+  __typename?: 'ModuleMapAggregateResult';
+  count?: Maybe<Scalars['Int']>;
+};
+
+export type ModuleMapFilter = {
+  and?: InputMaybe<Array<InputMaybe<ModuleMapFilter>>>;
+  has?: InputMaybe<Array<InputMaybe<ModuleMapHasFilter>>>;
+  not?: InputMaybe<ModuleMapFilter>;
+  or?: InputMaybe<Array<InputMaybe<ModuleMapFilter>>>;
+};
+
+export enum ModuleMapHasFilter {
+  Modules = 'modules'
+}
+
+export type ModuleMapPatch = {
+  modules?: InputMaybe<Array<InputMaybe<ModuleRef>>>;
+};
+
+export type ModuleMapRef = {
+  modules?: InputMaybe<Array<InputMaybe<ModuleRef>>>;
+};
+
 export type ModulePatch = {
+  nutrientMix?: InputMaybe<NutrientMix>;
   shelves?: InputMaybe<Array<InputMaybe<ShelfRef>>>;
 };
 
 export type ModuleRef = {
   id?: InputMaybe<Scalars['ID']>;
+  nutrientMix?: InputMaybe<NutrientMix>;
   shelves?: InputMaybe<Array<InputMaybe<ShelfRef>>>;
 };
 
@@ -1149,12 +1196,13 @@ export type Mutation = {
   addCrop?: Maybe<AddCropPayload>;
   addCropIntention?: Maybe<AddCropIntentionPayload>;
   addCropIntentionsList?: Maybe<AddCropIntentionsListPayload>;
-  addDeploymentMap?: Maybe<AddDeploymentMapPayload>;
   addDrawer?: Maybe<AddDrawerPayload>;
   addGerminationTray?: Maybe<AddGerminationTrayPayload>;
   addGrowPlate?: Maybe<AddGrowPlatePayload>;
   addLocation?: Maybe<AddLocationPayload>;
   addModule?: Maybe<AddModulePayload>;
+  addModuleMap?: Maybe<AddModuleMapPayload>;
+  addNursery?: Maybe<AddNurseryPayload>;
   addPlant?: Maybe<AddPlantPayload>;
   addSeed?: Maybe<AddSeedPayload>;
   addShelf?: Maybe<AddShelfPayload>;
@@ -1164,12 +1212,13 @@ export type Mutation = {
   deleteCrop?: Maybe<DeleteCropPayload>;
   deleteCropIntention?: Maybe<DeleteCropIntentionPayload>;
   deleteCropIntentionsList?: Maybe<DeleteCropIntentionsListPayload>;
-  deleteDeploymentMap?: Maybe<DeleteDeploymentMapPayload>;
   deleteDrawer?: Maybe<DeleteDrawerPayload>;
   deleteGerminationTray?: Maybe<DeleteGerminationTrayPayload>;
   deleteGrowPlate?: Maybe<DeleteGrowPlatePayload>;
   deleteLocation?: Maybe<DeleteLocationPayload>;
   deleteModule?: Maybe<DeleteModulePayload>;
+  deleteModuleMap?: Maybe<DeleteModuleMapPayload>;
+  deleteNursery?: Maybe<DeleteNurseryPayload>;
   deletePlant?: Maybe<DeletePlantPayload>;
   deleteSeed?: Maybe<DeleteSeedPayload>;
   deleteShelf?: Maybe<DeleteShelfPayload>;
@@ -1180,12 +1229,13 @@ export type Mutation = {
   updateCrop?: Maybe<UpdateCropPayload>;
   updateCropIntention?: Maybe<UpdateCropIntentionPayload>;
   updateCropIntentionsList?: Maybe<UpdateCropIntentionsListPayload>;
-  updateDeploymentMap?: Maybe<UpdateDeploymentMapPayload>;
   updateDrawer?: Maybe<UpdateDrawerPayload>;
   updateGerminationTray?: Maybe<UpdateGerminationTrayPayload>;
   updateGrowPlate?: Maybe<UpdateGrowPlatePayload>;
   updateLocation?: Maybe<UpdateLocationPayload>;
   updateModule?: Maybe<UpdateModulePayload>;
+  updateModuleMap?: Maybe<UpdateModuleMapPayload>;
+  updateNursery?: Maybe<UpdateNurseryPayload>;
   updatePlant?: Maybe<UpdatePlantPayload>;
   updateSeed?: Maybe<UpdateSeedPayload>;
   updateShelf?: Maybe<UpdateShelfPayload>;
@@ -1207,11 +1257,6 @@ export type MutationAddCropIntentionArgs = {
 
 export type MutationAddCropIntentionsListArgs = {
   input: Array<AddCropIntentionsListInput>;
-};
-
-
-export type MutationAddDeploymentMapArgs = {
-  input: Array<AddDeploymentMapInput>;
 };
 
 
@@ -1237,6 +1282,16 @@ export type MutationAddLocationArgs = {
 
 export type MutationAddModuleArgs = {
   input: Array<AddModuleInput>;
+};
+
+
+export type MutationAddModuleMapArgs = {
+  input: Array<AddModuleMapInput>;
+};
+
+
+export type MutationAddNurseryArgs = {
+  input: Array<AddNurseryInput>;
 };
 
 
@@ -1267,6 +1322,7 @@ export type MutationAddSignalTableArgs = {
 
 export type MutationAddSiteArgs = {
   input: Array<AddSiteInput>;
+  upsert?: InputMaybe<Scalars['Boolean']>;
 };
 
 
@@ -1282,11 +1338,6 @@ export type MutationDeleteCropIntentionArgs = {
 
 export type MutationDeleteCropIntentionsListArgs = {
   filter: CropIntentionsListFilter;
-};
-
-
-export type MutationDeleteDeploymentMapArgs = {
-  filter: DeploymentMapFilter;
 };
 
 
@@ -1312,6 +1363,16 @@ export type MutationDeleteLocationArgs = {
 
 export type MutationDeleteModuleArgs = {
   filter: ModuleFilter;
+};
+
+
+export type MutationDeleteModuleMapArgs = {
+  filter: ModuleMapFilter;
+};
+
+
+export type MutationDeleteNurseryArgs = {
+  filter: NurseryFilter;
 };
 
 
@@ -1365,11 +1426,6 @@ export type MutationUpdateCropIntentionsListArgs = {
 };
 
 
-export type MutationUpdateDeploymentMapArgs = {
-  input: UpdateDeploymentMapInput;
-};
-
-
 export type MutationUpdateDrawerArgs = {
   input: UpdateDrawerInput;
 };
@@ -1392,6 +1448,16 @@ export type MutationUpdateLocationArgs = {
 
 export type MutationUpdateModuleArgs = {
   input: UpdateModuleInput;
+};
+
+
+export type MutationUpdateModuleMapArgs = {
+  input: UpdateModuleMapInput;
+};
+
+
+export type MutationUpdateNurseryArgs = {
+  input: UpdateNurseryInput;
 };
 
 
@@ -1429,16 +1495,73 @@ export type NearFilter = {
   distance: Scalars['Float'];
 };
 
+export type Nursery = {
+  __typename?: 'Nursery';
+  GerminationTrays: Array<GerminationTray>;
+  GerminationTraysAggregate?: Maybe<GerminationTrayAggregateResult>;
+  id: Scalars['ID'];
+};
+
+
+export type NurseryGerminationTraysArgs = {
+  filter?: InputMaybe<GerminationTrayFilter>;
+  first?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order?: InputMaybe<GerminationTrayOrder>;
+};
+
+
+export type NurseryGerminationTraysAggregateArgs = {
+  filter?: InputMaybe<GerminationTrayFilter>;
+};
+
+export type NurseryAggregateResult = {
+  __typename?: 'NurseryAggregateResult';
+  count?: Maybe<Scalars['Int']>;
+};
+
+export type NurseryFilter = {
+  and?: InputMaybe<Array<InputMaybe<NurseryFilter>>>;
+  has?: InputMaybe<Array<InputMaybe<NurseryHasFilter>>>;
+  id?: InputMaybe<Array<Scalars['ID']>>;
+  not?: InputMaybe<NurseryFilter>;
+  or?: InputMaybe<Array<InputMaybe<NurseryFilter>>>;
+};
+
+export enum NurseryHasFilter {
+  GerminationTrays = 'GerminationTrays'
+}
+
+export type NurseryPatch = {
+  GerminationTrays?: InputMaybe<Array<GerminationTrayRef>>;
+};
+
+export type NurseryRef = {
+  GerminationTrays?: InputMaybe<Array<GerminationTrayRef>>;
+  id?: InputMaybe<Scalars['ID']>;
+};
+
+export enum NutrientMix {
+  A = 'A',
+  B = 'B'
+}
+
 export type Plant = {
   __typename?: 'Plant';
   cropName: Scalars['String'];
   germinatedDate?: Maybe<Scalars['DateTime']>;
   harvestedDate?: Maybe<Scalars['DateTime']>;
   id: Scalars['ID'];
+  location?: Maybe<Site>;
   nutrientType: Scalars['String'];
   repeater: Scalars['Boolean'];
   transferredDate?: Maybe<Scalars['DateTime']>;
   xid?: Maybe<Scalars['String']>;
+};
+
+
+export type PlantLocationArgs = {
+  filter?: InputMaybe<SiteFilter>;
 };
 
 export type PlantAggregateResult = {
@@ -1473,6 +1596,7 @@ export enum PlantHasFilter {
   CropName = 'cropName',
   GerminatedDate = 'germinatedDate',
   HarvestedDate = 'harvestedDate',
+  Location = 'location',
   NutrientType = 'nutrientType',
   Repeater = 'repeater',
   TransferredDate = 'transferredDate',
@@ -1498,6 +1622,7 @@ export type PlantPatch = {
   cropName?: InputMaybe<Scalars['String']>;
   germinatedDate?: InputMaybe<Scalars['DateTime']>;
   harvestedDate?: InputMaybe<Scalars['DateTime']>;
+  location?: InputMaybe<SiteRef>;
   nutrientType?: InputMaybe<Scalars['String']>;
   repeater?: InputMaybe<Scalars['Boolean']>;
   transferredDate?: InputMaybe<Scalars['DateTime']>;
@@ -1509,6 +1634,7 @@ export type PlantRef = {
   germinatedDate?: InputMaybe<Scalars['DateTime']>;
   harvestedDate?: InputMaybe<Scalars['DateTime']>;
   id?: InputMaybe<Scalars['ID']>;
+  location?: InputMaybe<SiteRef>;
   nutrientType?: InputMaybe<Scalars['String']>;
   repeater?: InputMaybe<Scalars['Boolean']>;
   transferredDate?: InputMaybe<Scalars['DateTime']>;
@@ -1562,12 +1688,13 @@ export type Query = {
   aggregateCrop?: Maybe<CropAggregateResult>;
   aggregateCropIntention?: Maybe<CropIntentionAggregateResult>;
   aggregateCropIntentionsList?: Maybe<CropIntentionsListAggregateResult>;
-  aggregateDeploymentMap?: Maybe<DeploymentMapAggregateResult>;
   aggregateDrawer?: Maybe<DrawerAggregateResult>;
   aggregateGerminationTray?: Maybe<GerminationTrayAggregateResult>;
   aggregateGrowPlate?: Maybe<GrowPlateAggregateResult>;
   aggregateLocation?: Maybe<LocationAggregateResult>;
   aggregateModule?: Maybe<ModuleAggregateResult>;
+  aggregateModuleMap?: Maybe<ModuleMapAggregateResult>;
+  aggregateNursery?: Maybe<NurseryAggregateResult>;
   aggregatePlant?: Maybe<PlantAggregateResult>;
   aggregateSeed?: Maybe<SeedAggregateResult>;
   aggregateShelf?: Maybe<ShelfAggregateResult>;
@@ -1576,18 +1703,22 @@ export type Query = {
   aggregateSite?: Maybe<SiteAggregateResult>;
   exampleLambda: Scalars['String'];
   getCrop?: Maybe<Crop>;
+  getGerminationTray?: Maybe<GerminationTray>;
   getModule?: Maybe<Module>;
+  getNursery?: Maybe<Nursery>;
   getPlant?: Maybe<Plant>;
+  getShelf?: Maybe<Shelf>;
   getSite?: Maybe<Site>;
   queryCrop?: Maybe<Array<Maybe<Crop>>>;
   queryCropIntention?: Maybe<Array<Maybe<CropIntention>>>;
   queryCropIntentionsList?: Maybe<Array<Maybe<CropIntentionsList>>>;
-  queryDeploymentMap?: Maybe<Array<Maybe<DeploymentMap>>>;
   queryDrawer?: Maybe<Array<Maybe<Drawer>>>;
   queryGerminationTray?: Maybe<Array<Maybe<GerminationTray>>>;
   queryGrowPlate?: Maybe<Array<Maybe<GrowPlate>>>;
   queryLocation?: Maybe<Array<Maybe<Location>>>;
   queryModule?: Maybe<Array<Maybe<Module>>>;
+  queryModuleMap?: Maybe<Array<Maybe<ModuleMap>>>;
+  queryNursery?: Maybe<Array<Maybe<Nursery>>>;
   queryPlant?: Maybe<Array<Maybe<Plant>>>;
   querySeed?: Maybe<Array<Maybe<Seed>>>;
   queryShelf?: Maybe<Array<Maybe<Shelf>>>;
@@ -1618,11 +1749,6 @@ export type QueryAggregateCropIntentionsListArgs = {
 };
 
 
-export type QueryAggregateDeploymentMapArgs = {
-  filter?: InputMaybe<DeploymentMapFilter>;
-};
-
-
 export type QueryAggregateDrawerArgs = {
   filter?: InputMaybe<DrawerFilter>;
 };
@@ -1645,6 +1771,16 @@ export type QueryAggregateLocationArgs = {
 
 export type QueryAggregateModuleArgs = {
   filter?: InputMaybe<ModuleFilter>;
+};
+
+
+export type QueryAggregateModuleMapArgs = {
+  filter?: InputMaybe<ModuleMapFilter>;
+};
+
+
+export type QueryAggregateNurseryArgs = {
+  filter?: InputMaybe<NurseryFilter>;
 };
 
 
@@ -1688,7 +1824,17 @@ export type QueryGetCropArgs = {
 };
 
 
+export type QueryGetGerminationTrayArgs = {
+  id: Scalars['ID'];
+};
+
+
 export type QueryGetModuleArgs = {
+  id: Scalars['ID'];
+};
+
+
+export type QueryGetNurseryArgs = {
   id: Scalars['ID'];
 };
 
@@ -1698,8 +1844,14 @@ export type QueryGetPlantArgs = {
 };
 
 
-export type QueryGetSiteArgs = {
+export type QueryGetShelfArgs = {
   id: Scalars['ID'];
+};
+
+
+export type QueryGetSiteArgs = {
+  id?: InputMaybe<Scalars['ID']>;
+  xid?: InputMaybe<Scalars['String']>;
 };
 
 
@@ -1721,13 +1873,6 @@ export type QueryQueryCropIntentionArgs = {
 
 export type QueryQueryCropIntentionsListArgs = {
   filter?: InputMaybe<CropIntentionsListFilter>;
-  first?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
-};
-
-
-export type QueryQueryDeploymentMapArgs = {
-  filter?: InputMaybe<DeploymentMapFilter>;
   first?: InputMaybe<Scalars['Int']>;
   offset?: InputMaybe<Scalars['Int']>;
 };
@@ -1772,6 +1917,20 @@ export type QueryQueryModuleArgs = {
 };
 
 
+export type QueryQueryModuleMapArgs = {
+  filter?: InputMaybe<ModuleMapFilter>;
+  first?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+};
+
+
+export type QueryQueryNurseryArgs = {
+  filter?: InputMaybe<NurseryFilter>;
+  first?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+};
+
+
 export type QueryQueryPlantArgs = {
   filter?: InputMaybe<PlantFilter>;
   first?: InputMaybe<Scalars['Int']>;
@@ -1792,6 +1951,7 @@ export type QueryQueryShelfArgs = {
   filter?: InputMaybe<ShelfFilter>;
   first?: InputMaybe<Scalars['Int']>;
   offset?: InputMaybe<Scalars['Int']>;
+  order?: InputMaybe<ShelfOrder>;
 };
 
 
@@ -1814,6 +1974,7 @@ export type QueryQuerySiteArgs = {
   filter?: InputMaybe<SiteFilter>;
   first?: InputMaybe<Scalars['Int']>;
   offset?: InputMaybe<Scalars['Int']>;
+  order?: InputMaybe<SiteOrder>;
 };
 
 export type Seed = {
@@ -1859,8 +2020,11 @@ export type SeedRef = {
 
 export type Shelf = {
   __typename?: 'Shelf';
+  id: Scalars['ID'];
+  numSites: Scalars['Int'];
   sites?: Maybe<Array<Maybe<Site>>>;
   sitesAggregate?: Maybe<SiteAggregateResult>;
+  verticalClearanceHeightToNextShelf: Scalars['Int'];
 };
 
 
@@ -1868,6 +2032,7 @@ export type ShelfSitesArgs = {
   filter?: InputMaybe<SiteFilter>;
   first?: InputMaybe<Scalars['Int']>;
   offset?: InputMaybe<Scalars['Int']>;
+  order?: InputMaybe<SiteOrder>;
 };
 
 
@@ -1878,25 +2043,44 @@ export type ShelfSitesAggregateArgs = {
 export type ShelfAggregateResult = {
   __typename?: 'ShelfAggregateResult';
   count?: Maybe<Scalars['Int']>;
+  verticalClearanceHeightToNextShelfAvg?: Maybe<Scalars['Float']>;
+  verticalClearanceHeightToNextShelfMax?: Maybe<Scalars['Int']>;
+  verticalClearanceHeightToNextShelfMin?: Maybe<Scalars['Int']>;
+  verticalClearanceHeightToNextShelfSum?: Maybe<Scalars['Int']>;
 };
 
 export type ShelfFilter = {
   and?: InputMaybe<Array<InputMaybe<ShelfFilter>>>;
   has?: InputMaybe<Array<InputMaybe<ShelfHasFilter>>>;
+  id?: InputMaybe<Array<Scalars['ID']>>;
   not?: InputMaybe<ShelfFilter>;
   or?: InputMaybe<Array<InputMaybe<ShelfFilter>>>;
 };
 
 export enum ShelfHasFilter {
-  Sites = 'sites'
+  Sites = 'sites',
+  VerticalClearanceHeightToNextShelf = 'verticalClearanceHeightToNextShelf'
+}
+
+export type ShelfOrder = {
+  asc?: InputMaybe<ShelfOrderable>;
+  desc?: InputMaybe<ShelfOrderable>;
+  then?: InputMaybe<ShelfOrder>;
+};
+
+export enum ShelfOrderable {
+  VerticalClearanceHeightToNextShelf = 'verticalClearanceHeightToNextShelf'
 }
 
 export type ShelfPatch = {
   sites?: InputMaybe<Array<InputMaybe<SiteRef>>>;
+  verticalClearanceHeightToNextShelf?: InputMaybe<Scalars['Int']>;
 };
 
 export type ShelfRef = {
+  id?: InputMaybe<Scalars['ID']>;
   sites?: InputMaybe<Array<InputMaybe<SiteRef>>>;
+  verticalClearanceHeightToNextShelf?: InputMaybe<Scalars['Int']>;
 };
 
 export type Signal = {
@@ -2059,6 +2243,7 @@ export type Site = {
   __typename?: 'Site';
   id: Scalars['ID'];
   occupant?: Maybe<Plant>;
+  xid: Scalars['String'];
 };
 
 
@@ -2069,6 +2254,8 @@ export type SiteOccupantArgs = {
 export type SiteAggregateResult = {
   __typename?: 'SiteAggregateResult';
   count?: Maybe<Scalars['Int']>;
+  xidMax?: Maybe<Scalars['String']>;
+  xidMin?: Maybe<Scalars['String']>;
 };
 
 export type SiteFilter = {
@@ -2077,10 +2264,22 @@ export type SiteFilter = {
   id?: InputMaybe<Array<Scalars['ID']>>;
   not?: InputMaybe<SiteFilter>;
   or?: InputMaybe<Array<InputMaybe<SiteFilter>>>;
+  xid?: InputMaybe<StringHashFilter>;
 };
 
 export enum SiteHasFilter {
-  Occupant = 'occupant'
+  Occupant = 'occupant',
+  Xid = 'xid'
+}
+
+export type SiteOrder = {
+  asc?: InputMaybe<SiteOrderable>;
+  desc?: InputMaybe<SiteOrderable>;
+  then?: InputMaybe<SiteOrder>;
+};
+
+export enum SiteOrderable {
+  Xid = 'xid'
 }
 
 export type SitePatch = {
@@ -2090,6 +2289,7 @@ export type SitePatch = {
 export type SiteRef = {
   id?: InputMaybe<Scalars['ID']>;
   occupant?: InputMaybe<PlantRef>;
+  xid?: InputMaybe<Scalars['String']>;
 };
 
 export type StringExactFilter = {
@@ -2185,25 +2385,6 @@ export type UpdateCropPayloadCropArgs = {
   order?: InputMaybe<CropOrder>;
 };
 
-export type UpdateDeploymentMapInput = {
-  filter: DeploymentMapFilter;
-  remove?: InputMaybe<DeploymentMapPatch>;
-  set?: InputMaybe<DeploymentMapPatch>;
-};
-
-export type UpdateDeploymentMapPayload = {
-  __typename?: 'UpdateDeploymentMapPayload';
-  deploymentMap?: Maybe<Array<Maybe<DeploymentMap>>>;
-  numUids?: Maybe<Scalars['Int']>;
-};
-
-
-export type UpdateDeploymentMapPayloadDeploymentMapArgs = {
-  filter?: InputMaybe<DeploymentMapFilter>;
-  first?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
-};
-
 export type UpdateDrawerInput = {
   filter: DrawerFilter;
   remove?: InputMaybe<DrawerPatch>;
@@ -2290,6 +2471,25 @@ export type UpdateModuleInput = {
   set?: InputMaybe<ModulePatch>;
 };
 
+export type UpdateModuleMapInput = {
+  filter: ModuleMapFilter;
+  remove?: InputMaybe<ModuleMapPatch>;
+  set?: InputMaybe<ModuleMapPatch>;
+};
+
+export type UpdateModuleMapPayload = {
+  __typename?: 'UpdateModuleMapPayload';
+  moduleMap?: Maybe<Array<Maybe<ModuleMap>>>;
+  numUids?: Maybe<Scalars['Int']>;
+};
+
+
+export type UpdateModuleMapPayloadModuleMapArgs = {
+  filter?: InputMaybe<ModuleMapFilter>;
+  first?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+};
+
 export type UpdateModulePayload = {
   __typename?: 'UpdateModulePayload';
   module?: Maybe<Array<Maybe<Module>>>;
@@ -2299,6 +2499,25 @@ export type UpdateModulePayload = {
 
 export type UpdateModulePayloadModuleArgs = {
   filter?: InputMaybe<ModuleFilter>;
+  first?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+};
+
+export type UpdateNurseryInput = {
+  filter: NurseryFilter;
+  remove?: InputMaybe<NurseryPatch>;
+  set?: InputMaybe<NurseryPatch>;
+};
+
+export type UpdateNurseryPayload = {
+  __typename?: 'UpdateNurseryPayload';
+  numUids?: Maybe<Scalars['Int']>;
+  nursery?: Maybe<Array<Maybe<Nursery>>>;
+};
+
+
+export type UpdateNurseryPayloadNurseryArgs = {
+  filter?: InputMaybe<NurseryFilter>;
   first?: InputMaybe<Scalars['Int']>;
   offset?: InputMaybe<Scalars['Int']>;
 };
@@ -2360,6 +2579,7 @@ export type UpdateShelfPayloadShelfArgs = {
   filter?: InputMaybe<ShelfFilter>;
   first?: InputMaybe<Scalars['Int']>;
   offset?: InputMaybe<Scalars['Int']>;
+  order?: InputMaybe<ShelfOrder>;
 };
 
 export type UpdateSignalInput = {
@@ -2418,6 +2638,7 @@ export type UpdateSitePayloadSiteArgs = {
   filter?: InputMaybe<SiteFilter>;
   first?: InputMaybe<Scalars['Int']>;
   offset?: InputMaybe<Scalars['Int']>;
+  order?: InputMaybe<SiteOrder>;
 };
 
 export type WithinFilter = {
@@ -2439,6 +2660,11 @@ export type IngestQrMutationVariables = Exact<{ [key: string]: never; }>;
 
 export type IngestQrMutation = { __typename?: 'Mutation', ingestQR: string };
 
+export type GetIntentionListQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetIntentionListQuery = { __typename?: 'Query', queryCropIntentionsList?: Array<{ __typename?: 'CropIntentionsList', cropIntentions: Array<{ __typename?: 'CropIntention', harvestPerWeek: number, crop: { __typename?: 'Crop', id: string, xid?: string | null, name: string, required_module_type: string } }> } | null> | null };
+
 export type ExampleLambdaQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -2452,5 +2678,6 @@ export type WheresChuckQuery = { __typename?: 'Query', querySite?: Array<{ __typ
 
 export const HelloDavidDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"HelloDavid"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"addModule"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"shelves"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"sites"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"occupant"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"xid"},"value":{"kind":"StringValue","value":"helloDavid","block":false}}]}}]}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"module"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]}}]} as unknown as DocumentNode<HelloDavidMutation, HelloDavidMutationVariables>;
 export const IngestQrDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"IngestQR"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"ingestQR"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"qr"},"value":{"kind":"StringValue","value":"0xdeadbeef","block":false}}]}]}}]} as unknown as DocumentNode<IngestQrMutation, IngestQrMutationVariables>;
+export const GetIntentionListDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetIntentionList"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"queryCropIntentionsList"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"cropIntentions"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"crop"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"xid"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"required_module_type"}}]}},{"kind":"Field","name":{"kind":"Name","value":"harvestPerWeek"}}]}}]}}]}}]} as unknown as DocumentNode<GetIntentionListQuery, GetIntentionListQueryVariables>;
 export const ExampleLambdaDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"ExampleLambda"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"exampleLambda"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"exampleStringInput"},"value":{"kind":"StringValue","value":"gahhhh","block":false}}]}]}}]} as unknown as DocumentNode<ExampleLambdaQuery, ExampleLambdaQueryVariables>;
 export const WheresChuckDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"WheresChuck"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"querySite"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"occupant"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"xid"}}]}}]}}]}}]} as unknown as DocumentNode<WheresChuckQuery, WheresChuckQueryVariables>;

@@ -52,10 +52,21 @@ type ModuleMap {
 
 type Module {
 	id: ID!
+	instantiationTemplateUsed: ModuleType!
 	shelves(filter: ShelfFilter, order: ShelfOrder, first: Int, offset: Int): [Shelf]
 	totalNumberOfSites: Int! @lambda
 	nutrientMix: NutrientMix
 	shelvesAggregate(filter: ShelfFilter): ShelfAggregateResult
+}
+
+enum ModuleType {
+	DWC_12in_NutrientMixA
+	DWC_12in_NutrientMixB
+	DWC_24in_NutrientMixA
+	DWC_24in_NutrientMixB
+	DWC_36in_NutrientMixA
+	DWC_36in_NutrientMixB
+	VINING
 }
 
 enum NutrientMix {
@@ -91,13 +102,12 @@ type Plant {
 
 type Crop {
 	id: ID!
-	xid: String
+	xid: String! @id
 	name: String!
 	required_module_type: String!
 	repeater: Boolean!
 	days_harvestable: Int!
 	days_from_transfer_to_first_harvest: Int!
-	harvests_per_week: Int!
 }
 
 type Seed {
@@ -117,6 +127,7 @@ type Location {
 
 type Nursery {
 	id: ID!
+	xid: String! @id
 	GerminationTrays(filter: GerminationTrayFilter, order: GerminationTrayOrder, first: Int, offset: Int): [GerminationTray!]!
 	GerminationTraysAggregate(filter: GerminationTrayFilter): GerminationTrayAggregateResult
 }
@@ -124,6 +135,8 @@ type Nursery {
 type GerminationTray {
 	id: ID!
 	sitesAvailable: Int!
+	sites(filter: SiteFilter, order: SiteOrder, first: Int, offset: Int): [Site!]!
+	sitesAggregate(filter: SiteFilter): SiteAggregateResult
 }
 
 #######################
@@ -438,7 +451,7 @@ type AddModulePayload {
 }
 
 type AddNurseryPayload {
-	nursery(filter: NurseryFilter, first: Int, offset: Int): [Nursery]
+	nursery(filter: NurseryFilter, order: NurseryOrder, first: Int, offset: Int): [Nursery]
 	numUids: Int
 }
 
@@ -488,10 +501,6 @@ type CropAggregateResult {
 	days_from_transfer_to_first_harvestMax: Int
 	days_from_transfer_to_first_harvestSum: Int
 	days_from_transfer_to_first_harvestAvg: Float
-	harvests_per_weekMin: Int
-	harvests_per_weekMax: Int
-	harvests_per_weekSum: Int
-	harvests_per_weekAvg: Float
 }
 
 type CropIntentionAggregateResult {
@@ -561,7 +570,7 @@ type DeleteModulePayload {
 }
 
 type DeleteNurseryPayload {
-	nursery(filter: NurseryFilter, first: Int, offset: Int): [Nursery]
+	nursery(filter: NurseryFilter, order: NurseryOrder, first: Int, offset: Int): [Nursery]
 	msg: String
 	numUids: Int
 }
@@ -648,6 +657,8 @@ type ModuleMapAggregateResult {
 
 type NurseryAggregateResult {
 	count: Int
+	xidMin: String
+	xidMax: String
 }
 
 type PlantAggregateResult {
@@ -764,7 +775,7 @@ type UpdateModulePayload {
 }
 
 type UpdateNurseryPayload {
-	nursery(filter: NurseryFilter, first: Int, offset: Int): [Nursery]
+	nursery(filter: NurseryFilter, order: NurseryOrder, first: Int, offset: Int): [Nursery]
 	numUids: Int
 }
 
@@ -809,7 +820,6 @@ enum CropHasFilter {
 	repeater
 	days_harvestable
 	days_from_transfer_to_first_harvest
-	harvests_per_week
 }
 
 enum CropIntentionHasFilter {
@@ -831,7 +841,6 @@ enum CropOrderable {
 	required_module_type
 	days_harvestable
 	days_from_transfer_to_first_harvest
-	harvests_per_week
 }
 
 enum DrawerHasFilter {
@@ -846,6 +855,7 @@ enum DrawerOrderable {
 
 enum GerminationTrayHasFilter {
 	sitesAvailable
+	sites
 }
 
 enum GerminationTrayOrderable {
@@ -871,6 +881,7 @@ enum LocationOrderable {
 }
 
 enum ModuleHasFilter {
+	instantiationTemplateUsed
 	shelves
 	nutrientMix
 }
@@ -880,7 +891,12 @@ enum ModuleMapHasFilter {
 }
 
 enum NurseryHasFilter {
+	xid
 	GerminationTrays
+}
+
+enum NurseryOrderable {
+	xid
 }
 
 enum PlantHasFilter {
@@ -963,13 +979,12 @@ enum SiteOrderable {
 #######################
 
 input AddCropInput {
-	xid: String
+	xid: String!
 	name: String!
 	required_module_type: String!
 	repeater: Boolean!
 	days_harvestable: Int!
 	days_from_transfer_to_first_harvest: Int!
-	harvests_per_week: Int!
 }
 
 input AddCropIntentionInput {
@@ -989,6 +1004,7 @@ input AddDrawerInput {
 
 input AddGerminationTrayInput {
 	sitesAvailable: Int!
+	sites: [SiteRef!]!
 }
 
 input AddGrowPlateInput {
@@ -1001,6 +1017,7 @@ input AddLocationInput {
 }
 
 input AddModuleInput {
+	instantiationTemplateUsed: ModuleType!
 	shelves: [ShelfRef]
 	nutrientMix: NutrientMix
 }
@@ -1010,6 +1027,7 @@ input AddModuleMapInput {
 }
 
 input AddNurseryInput {
+	xid: String!
 	GerminationTrays: [GerminationTrayRef!]!
 }
 
@@ -1057,6 +1075,7 @@ input AddSiteInput {
 
 input CropFilter {
 	id: [ID!]
+	xid: StringHashFilter
 	has: [CropHasFilter]
 	and: [CropFilter]
 	or: [CropFilter]
@@ -1108,13 +1127,11 @@ input CropOrder {
 }
 
 input CropPatch {
-	xid: String
 	name: String
 	required_module_type: String
 	repeater: Boolean
 	days_harvestable: Int
 	days_from_transfer_to_first_harvest: Int
-	harvests_per_week: Int
 }
 
 input CropRef {
@@ -1125,7 +1142,6 @@ input CropRef {
 	repeater: Boolean
 	days_harvestable: Int
 	days_from_transfer_to_first_harvest: Int
-	harvests_per_week: Int
 }
 
 input DrawerFilter {
@@ -1169,11 +1185,13 @@ input GerminationTrayOrder {
 
 input GerminationTrayPatch {
 	sitesAvailable: Int
+	sites: [SiteRef!]
 }
 
 input GerminationTrayRef {
 	id: ID
 	sitesAvailable: Int
+	sites: [SiteRef!]
 }
 
 input GrowPlateFilter {
@@ -1244,22 +1262,31 @@ input ModuleMapRef {
 }
 
 input ModulePatch {
+	instantiationTemplateUsed: ModuleType
 	shelves: [ShelfRef]
 	nutrientMix: NutrientMix
 }
 
 input ModuleRef {
 	id: ID
+	instantiationTemplateUsed: ModuleType
 	shelves: [ShelfRef]
 	nutrientMix: NutrientMix
 }
 
 input NurseryFilter {
 	id: [ID!]
+	xid: StringHashFilter
 	has: [NurseryHasFilter]
 	and: [NurseryFilter]
 	or: [NurseryFilter]
 	not: NurseryFilter
+}
+
+input NurseryOrder {
+	asc: NurseryOrderable
+	desc: NurseryOrderable
+	then: NurseryOrder
 }
 
 input NurseryPatch {
@@ -1268,6 +1295,7 @@ input NurseryPatch {
 
 input NurseryRef {
 	id: ID
+	xid: String
 	GerminationTrays: [GerminationTrayRef!]
 }
 
@@ -1563,7 +1591,7 @@ type Query {
 	getPlant(id: ID!): Plant
 	queryPlant(filter: PlantFilter, order: PlantOrder, first: Int, offset: Int): [Plant]
 	aggregatePlant(filter: PlantFilter): PlantAggregateResult
-	getCrop(id: ID!): Crop
+	getCrop(id: ID, xid: String): Crop
 	queryCrop(filter: CropFilter, order: CropOrder, first: Int, offset: Int): [Crop]
 	aggregateCrop(filter: CropFilter): CropAggregateResult
 	querySeed(filter: SeedFilter, order: SeedOrder, first: Int, offset: Int): [Seed]
@@ -1572,8 +1600,8 @@ type Query {
 	aggregateDrawer(filter: DrawerFilter): DrawerAggregateResult
 	queryLocation(filter: LocationFilter, order: LocationOrder, first: Int, offset: Int): [Location]
 	aggregateLocation(filter: LocationFilter): LocationAggregateResult
-	getNursery(id: ID!): Nursery
-	queryNursery(filter: NurseryFilter, first: Int, offset: Int): [Nursery]
+	getNursery(id: ID, xid: String): Nursery
+	queryNursery(filter: NurseryFilter, order: NurseryOrder, first: Int, offset: Int): [Nursery]
 	aggregateNursery(filter: NurseryFilter): NurseryAggregateResult
 	getGerminationTray(id: ID!): GerminationTray
 	queryGerminationTray(filter: GerminationTrayFilter, order: GerminationTrayOrder, first: Int, offset: Int): [GerminationTray]
@@ -1616,7 +1644,7 @@ type Mutation {
 	addPlant(input: [AddPlantInput!]!): AddPlantPayload
 	updatePlant(input: UpdatePlantInput!): UpdatePlantPayload
 	deletePlant(filter: PlantFilter!): DeletePlantPayload
-	addCrop(input: [AddCropInput!]!): AddCropPayload
+	addCrop(input: [AddCropInput!]!, upsert: Boolean): AddCropPayload
 	updateCrop(input: UpdateCropInput!): UpdateCropPayload
 	deleteCrop(filter: CropFilter!): DeleteCropPayload
 	addSeed(input: [AddSeedInput!]!): AddSeedPayload
@@ -1628,7 +1656,7 @@ type Mutation {
 	addLocation(input: [AddLocationInput!]!): AddLocationPayload
 	updateLocation(input: UpdateLocationInput!): UpdateLocationPayload
 	deleteLocation(filter: LocationFilter!): DeleteLocationPayload
-	addNursery(input: [AddNurseryInput!]!): AddNurseryPayload
+	addNursery(input: [AddNurseryInput!]!, upsert: Boolean): AddNurseryPayload
 	updateNursery(input: UpdateNurseryInput!): UpdateNurseryPayload
 	deleteNursery(filter: NurseryFilter!): DeleteNurseryPayload
 	addGerminationTray(input: [AddGerminationTrayInput!]!): AddGerminationTrayPayload
