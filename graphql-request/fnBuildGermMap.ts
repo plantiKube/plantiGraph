@@ -3,13 +3,13 @@ import { GraphQLClient } from "graphql-request";
 import {
     GetIntentionListDocument,
     GetIntentionListQuery,
-    GetIntentionListQueryVariables
+    GetIntentionListQueryVariables, ModuleType
 } from "../operations";
 
 import { pipe } from "fp-ts/function";
+import {fnBuildGermMap} from "./functionalModules/buildGermMap";
 
 const client = new GraphQLClient("http://localhost:8080/graphql", { fetch });
-
 
 client
     .request<GetIntentionListQuery, GetIntentionListQueryVariables>(GetIntentionListDocument, {})
@@ -30,6 +30,7 @@ client
         console.log(one, two); // 16, 16
 
 
+        fnBuildGermMap(data);
 
         // ok so we have desired crop harvests per week and module map.
         //

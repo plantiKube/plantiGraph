@@ -152,6 +152,6 @@ type Nursery {
 type GerminationTray {
     id: ID!
     xid: String! @id
-    sitesAvailable: Int!
+    # sitesAvailable: Int! @lambda
     sites: [Site!]!
 }
