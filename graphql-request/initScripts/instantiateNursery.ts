@@ -1,7 +1,7 @@
 import {
     CreateGermTrayDocument,
     CreateGermTrayMutation,
-    CreateGermTrayMutationVariables,
+    CreateGermTrayMutationVariables, GerminationTrayRef,
     InstantiateNurseryDocument,
     InstantiateNurseryMutation, InstantiateNurseryMutationVariables,
     SignalType,
@@ -15,6 +15,11 @@ import {GraphQLClient} from "graphql-request";
 export const instantiateNurseryEffect = () => {
 
     const client = new GraphQLClient("http://localhost:8080/graphql", {fetch});
+
+    // Ok we're going to build our germTraysArray
+
+    const desiredGerminationTrays: Array<GerminationTrayRef> = new Array<GerminationTrayRef>();
+
 
     client.request<InstantiateNurseryMutation, InstantiateNurseryMutationVariables>
     (
