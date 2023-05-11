@@ -31,20 +31,24 @@ type GrowPlate {
 # .. to illustrate it's a graph now and not an array?
 # They are in some sense isometric semantic vectors so perhaps this is irrelevant.
 type SignalTable {
+    id: ID!
+    xid: String! @id
     signals: [Signal!]!
 }
 
 type Signal {
-    signalDate: DateTime!
+    id: ID!
+    xid: String! @id
+    signalDate: DateTime! @search
     signalType: SignalType!
-    plantName: String!
+    plantName: String
     plantId: String # this should be elsewhere in the structure.
     targetMessage: String
     algoString: String
     daysToGerminate: Int
     growTime: Int
     maxHarvTime: Int
-    moduleType: String!
+    moduleType: String
 }
 
 enum SignalType {
@@ -95,6 +99,7 @@ type Shelf {
 type Site {
     id: ID!
     xid: String! @id
+    signal: Signal
     occupant: Plant @hasInverse(field: location)
 }
 
@@ -146,6 +151,7 @@ type Nursery {
 
 type GerminationTray {
     id: ID!
+    xid: String! @id
     sitesAvailable: Int!
     sites: [Site!]!
 }
