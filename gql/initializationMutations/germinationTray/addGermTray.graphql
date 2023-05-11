@@ -1,9 +1,9 @@
-mutation createGermTray($sitesInput: [SiteRef!]!) {
+mutation createGermTray($xidInput: String!, $sitesInput: [SiteRef!]!) {
     addGerminationTray
     (
         input:
         {
-            xid: "floopiedabest"
+            xid: $xidInput
             sites: $sitesInput
         }
     )

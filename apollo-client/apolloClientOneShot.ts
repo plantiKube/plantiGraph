@@ -1,6 +1,6 @@
 import fetch from "cross-fetch";
 import { ApolloClient, InMemoryCache, HttpLink } from "@apollo/client";
-import {HelloDavidDocument, WheresChuckDocument} from "../operations";
+import {WheresChuckDocument} from "../operations";
 
 
 const client = new ApolloClient({
@@ -15,15 +15,3 @@ client
     },
   })
   .then(({ data }) => console.log(data.querySite));
-
-
-client.mutate({
-    mutation: HelloDavidDocument,
-    variables: {}
-})
-.then(({ data }) => {
-        console.log(data);
-        console.log("another line");
-
-    }
-);

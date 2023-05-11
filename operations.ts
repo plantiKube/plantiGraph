@@ -104,7 +104,7 @@ export type AddDrawerPayloadDrawerArgs = {
 
 export type AddGerminationTrayInput = {
   sites: Array<SiteRef>;
-  sitesAvailable: Scalars['Int'];
+  xid: Scalars['String'];
 };
 
 export type AddGerminationTrayPayload = {
@@ -286,12 +286,13 @@ export type AddSignalInput = {
   daysToGerminate?: InputMaybe<Scalars['Int']>;
   growTime?: InputMaybe<Scalars['Int']>;
   maxHarvTime?: InputMaybe<Scalars['Int']>;
-  moduleType: Scalars['String'];
+  moduleType?: InputMaybe<Scalars['String']>;
   plantId?: InputMaybe<Scalars['String']>;
-  plantName: Scalars['String'];
+  plantName?: InputMaybe<Scalars['String']>;
   signalDate: Scalars['DateTime'];
   signalType: SignalType;
   targetMessage?: InputMaybe<Scalars['String']>;
+  xid: Scalars['String'];
 };
 
 export type AddSignalPayload = {
@@ -310,6 +311,7 @@ export type AddSignalPayloadSignalArgs = {
 
 export type AddSignalTableInput = {
   signals: Array<SignalRef>;
+  xid: Scalars['String'];
 };
 
 export type AddSignalTablePayload = {
@@ -323,10 +325,12 @@ export type AddSignalTablePayloadSignalTableArgs = {
   filter?: InputMaybe<SignalTableFilter>;
   first?: InputMaybe<Scalars['Int']>;
   offset?: InputMaybe<Scalars['Int']>;
+  order?: InputMaybe<SignalTableOrder>;
 };
 
 export type AddSiteInput = {
   occupant?: InputMaybe<PlantRef>;
+  signal?: InputMaybe<SignalRef>;
   xid: Scalars['String'];
 };
 
@@ -779,6 +783,7 @@ export type DeleteSignalTablePayloadSignalTableArgs = {
   filter?: InputMaybe<SignalTableFilter>;
   first?: InputMaybe<Scalars['Int']>;
   offset?: InputMaybe<Scalars['Int']>;
+  order?: InputMaybe<SignalTableOrder>;
 };
 
 export type DeleteSitePayload = {
@@ -908,7 +913,7 @@ export type GerminationTray = {
   id: Scalars['ID'];
   sites: Array<Site>;
   sitesAggregate?: Maybe<SiteAggregateResult>;
-  sitesAvailable: Scalars['Int'];
+  xid: Scalars['String'];
 };
 
 
@@ -927,10 +932,8 @@ export type GerminationTraySitesAggregateArgs = {
 export type GerminationTrayAggregateResult = {
   __typename?: 'GerminationTrayAggregateResult';
   count?: Maybe<Scalars['Int']>;
-  sitesAvailableAvg?: Maybe<Scalars['Float']>;
-  sitesAvailableMax?: Maybe<Scalars['Int']>;
-  sitesAvailableMin?: Maybe<Scalars['Int']>;
-  sitesAvailableSum?: Maybe<Scalars['Int']>;
+  xidMax?: Maybe<Scalars['String']>;
+  xidMin?: Maybe<Scalars['String']>;
 };
 
 export type GerminationTrayFilter = {
@@ -939,11 +942,12 @@ export type GerminationTrayFilter = {
   id?: InputMaybe<Array<Scalars['ID']>>;
   not?: InputMaybe<GerminationTrayFilter>;
   or?: InputMaybe<Array<InputMaybe<GerminationTrayFilter>>>;
+  xid?: InputMaybe<StringHashFilter>;
 };
 
 export enum GerminationTrayHasFilter {
   Sites = 'sites',
-  SitesAvailable = 'sitesAvailable'
+  Xid = 'xid'
 }
 
 export type GerminationTrayOrder = {
@@ -953,18 +957,17 @@ export type GerminationTrayOrder = {
 };
 
 export enum GerminationTrayOrderable {
-  SitesAvailable = 'sitesAvailable'
+  Xid = 'xid'
 }
 
 export type GerminationTrayPatch = {
   sites?: InputMaybe<Array<SiteRef>>;
-  sitesAvailable?: InputMaybe<Scalars['Int']>;
 };
 
 export type GerminationTrayRef = {
   id?: InputMaybe<Scalars['ID']>;
   sites?: InputMaybe<Array<SiteRef>>;
-  sitesAvailable?: InputMaybe<Scalars['Int']>;
+  xid?: InputMaybe<Scalars['String']>;
 };
 
 export type GrowPlate = {
@@ -1339,6 +1342,7 @@ export type MutationAddDrawerArgs = {
 
 export type MutationAddGerminationTrayArgs = {
   input: Array<AddGerminationTrayInput>;
+  upsert?: InputMaybe<Scalars['Boolean']>;
 };
 
 
@@ -1389,11 +1393,13 @@ export type MutationAddShelfArgs = {
 
 export type MutationAddSignalArgs = {
   input: Array<AddSignalInput>;
+  upsert?: InputMaybe<Scalars['Boolean']>;
 };
 
 
 export type MutationAddSignalTableArgs = {
   input: Array<AddSignalTableInput>;
+  upsert?: InputMaybe<Scalars['Boolean']>;
 };
 
 
@@ -1802,6 +1808,8 @@ export type Query = {
   getNursery?: Maybe<Nursery>;
   getPlant?: Maybe<Plant>;
   getShelf?: Maybe<Shelf>;
+  getSignal?: Maybe<Signal>;
+  getSignalTable?: Maybe<SignalTable>;
   getSite?: Maybe<Site>;
   queryCrop?: Maybe<Array<Maybe<Crop>>>;
   queryCropIntention?: Maybe<Array<Maybe<CropIntention>>>;
@@ -1920,7 +1928,8 @@ export type QueryGetCropArgs = {
 
 
 export type QueryGetGerminationTrayArgs = {
-  id: Scalars['ID'];
+  id?: InputMaybe<Scalars['ID']>;
+  xid?: InputMaybe<Scalars['String']>;
 };
 
 
@@ -1949,6 +1958,18 @@ export type QueryGetPlantArgs = {
 
 
 export type QueryGetShelfArgs = {
+  id?: InputMaybe<Scalars['ID']>;
+  xid?: InputMaybe<Scalars['String']>;
+};
+
+
+export type QueryGetSignalArgs = {
+  id?: InputMaybe<Scalars['ID']>;
+  xid?: InputMaybe<Scalars['String']>;
+};
+
+
+export type QueryGetSignalTableArgs = {
   id?: InputMaybe<Scalars['ID']>;
   xid?: InputMaybe<Scalars['String']>;
 };
@@ -2075,6 +2096,7 @@ export type QueryQuerySignalTableArgs = {
   filter?: InputMaybe<SignalTableFilter>;
   first?: InputMaybe<Scalars['Int']>;
   offset?: InputMaybe<Scalars['Int']>;
+  order?: InputMaybe<SignalTableOrder>;
 };
 
 
@@ -2212,13 +2234,15 @@ export type Signal = {
   algoString?: Maybe<Scalars['String']>;
   daysToGerminate?: Maybe<Scalars['Int']>;
   growTime?: Maybe<Scalars['Int']>;
+  id: Scalars['ID'];
   maxHarvTime?: Maybe<Scalars['Int']>;
-  moduleType: Scalars['String'];
+  moduleType?: Maybe<Scalars['String']>;
   plantId?: Maybe<Scalars['String']>;
-  plantName: Scalars['String'];
+  plantName?: Maybe<Scalars['String']>;
   signalDate: Scalars['DateTime'];
   signalType: SignalType;
   targetMessage?: Maybe<Scalars['String']>;
+  xid: Scalars['String'];
 };
 
 export type SignalAggregateResult = {
@@ -2248,13 +2272,18 @@ export type SignalAggregateResult = {
   signalDateMin?: Maybe<Scalars['DateTime']>;
   targetMessageMax?: Maybe<Scalars['String']>;
   targetMessageMin?: Maybe<Scalars['String']>;
+  xidMax?: Maybe<Scalars['String']>;
+  xidMin?: Maybe<Scalars['String']>;
 };
 
 export type SignalFilter = {
   and?: InputMaybe<Array<InputMaybe<SignalFilter>>>;
   has?: InputMaybe<Array<InputMaybe<SignalHasFilter>>>;
+  id?: InputMaybe<Array<Scalars['ID']>>;
   not?: InputMaybe<SignalFilter>;
   or?: InputMaybe<Array<InputMaybe<SignalFilter>>>;
+  signalDate?: InputMaybe<DateTimeFilter>;
+  xid?: InputMaybe<StringHashFilter>;
 };
 
 export enum SignalHasFilter {
@@ -2267,7 +2296,8 @@ export enum SignalHasFilter {
   PlantName = 'plantName',
   SignalDate = 'signalDate',
   SignalType = 'signalType',
-  TargetMessage = 'targetMessage'
+  TargetMessage = 'targetMessage',
+  Xid = 'xid'
 }
 
 export type SignalOrder = {
@@ -2285,7 +2315,8 @@ export enum SignalOrderable {
   PlantId = 'plantId',
   PlantName = 'plantName',
   SignalDate = 'signalDate',
-  TargetMessage = 'targetMessage'
+  TargetMessage = 'targetMessage',
+  Xid = 'xid'
 }
 
 export type SignalPatch = {
@@ -2305,6 +2336,7 @@ export type SignalRef = {
   algoString?: InputMaybe<Scalars['String']>;
   daysToGerminate?: InputMaybe<Scalars['Int']>;
   growTime?: InputMaybe<Scalars['Int']>;
+  id?: InputMaybe<Scalars['ID']>;
   maxHarvTime?: InputMaybe<Scalars['Int']>;
   moduleType?: InputMaybe<Scalars['String']>;
   plantId?: InputMaybe<Scalars['String']>;
@@ -2312,12 +2344,15 @@ export type SignalRef = {
   signalDate?: InputMaybe<Scalars['DateTime']>;
   signalType?: InputMaybe<SignalType>;
   targetMessage?: InputMaybe<Scalars['String']>;
+  xid?: InputMaybe<Scalars['String']>;
 };
 
 export type SignalTable = {
   __typename?: 'SignalTable';
+  id: Scalars['ID'];
   signals: Array<Signal>;
   signalsAggregate?: Maybe<SignalAggregateResult>;
+  xid: Scalars['String'];
 };
 
 
@@ -2336,17 +2371,32 @@ export type SignalTableSignalsAggregateArgs = {
 export type SignalTableAggregateResult = {
   __typename?: 'SignalTableAggregateResult';
   count?: Maybe<Scalars['Int']>;
+  xidMax?: Maybe<Scalars['String']>;
+  xidMin?: Maybe<Scalars['String']>;
 };
 
 export type SignalTableFilter = {
   and?: InputMaybe<Array<InputMaybe<SignalTableFilter>>>;
   has?: InputMaybe<Array<InputMaybe<SignalTableHasFilter>>>;
+  id?: InputMaybe<Array<Scalars['ID']>>;
   not?: InputMaybe<SignalTableFilter>;
   or?: InputMaybe<Array<InputMaybe<SignalTableFilter>>>;
+  xid?: InputMaybe<StringHashFilter>;
 };
 
 export enum SignalTableHasFilter {
-  Signals = 'signals'
+  Signals = 'signals',
+  Xid = 'xid'
+}
+
+export type SignalTableOrder = {
+  asc?: InputMaybe<SignalTableOrderable>;
+  desc?: InputMaybe<SignalTableOrderable>;
+  then?: InputMaybe<SignalTableOrder>;
+};
+
+export enum SignalTableOrderable {
+  Xid = 'xid'
 }
 
 export type SignalTablePatch = {
@@ -2354,7 +2404,9 @@ export type SignalTablePatch = {
 };
 
 export type SignalTableRef = {
+  id?: InputMaybe<Scalars['ID']>;
   signals?: InputMaybe<Array<SignalRef>>;
+  xid?: InputMaybe<Scalars['String']>;
 };
 
 export enum SignalType {
@@ -2367,12 +2419,18 @@ export type Site = {
   __typename?: 'Site';
   id: Scalars['ID'];
   occupant?: Maybe<Plant>;
+  signal?: Maybe<Signal>;
   xid: Scalars['String'];
 };
 
 
 export type SiteOccupantArgs = {
   filter?: InputMaybe<PlantFilter>;
+};
+
+
+export type SiteSignalArgs = {
+  filter?: InputMaybe<SignalFilter>;
 };
 
 export type SiteAggregateResult = {
@@ -2393,6 +2451,7 @@ export type SiteFilter = {
 
 export enum SiteHasFilter {
   Occupant = 'occupant',
+  Signal = 'signal',
   Xid = 'xid'
 }
 
@@ -2408,11 +2467,13 @@ export enum SiteOrderable {
 
 export type SitePatch = {
   occupant?: InputMaybe<PlantRef>;
+  signal?: InputMaybe<SignalRef>;
 };
 
 export type SiteRef = {
   id?: InputMaybe<Scalars['ID']>;
   occupant?: InputMaybe<PlantRef>;
+  signal?: InputMaybe<SignalRef>;
   xid?: InputMaybe<Scalars['String']>;
 };
 
@@ -2746,6 +2807,7 @@ export type UpdateSignalTablePayloadSignalTableArgs = {
   filter?: InputMaybe<SignalTableFilter>;
   first?: InputMaybe<Scalars['Int']>;
   offset?: InputMaybe<Scalars['Int']>;
+  order?: InputMaybe<SignalTableOrder>;
 };
 
 export type UpdateSiteInput = {
@@ -2809,10 +2871,18 @@ export type InstantiateCropIntentionsMutationVariables = Exact<{ [key: string]: 
 
 export type InstantiateCropIntentionsMutation = { __typename?: 'Mutation', addCropIntentionsList?: { __typename?: 'AddCropIntentionsListPayload', numUids?: number | null, cropIntentionsList?: Array<{ __typename?: 'CropIntentionsList', cropIntentions: Array<{ __typename?: 'CropIntention', crop: { __typename?: 'Crop', required_module_type: string, repeater: boolean } }> } | null> | null } | null };
 
+export type CreateGermTrayMutationVariables = Exact<{
+  xidInput: Scalars['String'];
+  sitesInput: Array<SiteRef> | SiteRef;
+}>;
+
+
+export type CreateGermTrayMutation = { __typename?: 'Mutation', addGerminationTray?: { __typename?: 'AddGerminationTrayPayload', germinationTray?: Array<{ __typename?: 'GerminationTray', id: string, xid: string, sites: Array<{ __typename?: 'Site', xid: string, signal?: { __typename?: 'Signal', xid: string, signalDate: any } | null }> } | null> | null } | null };
+
 export type InstantiateNurseryMutationVariables = Exact<{ [key: string]: never; }>;
 
 
-export type InstantiateNurseryMutation = { __typename?: 'Mutation', addNursery?: { __typename?: 'AddNurseryPayload', nursery?: Array<{ __typename?: 'Nursery', id: string, xid: string, GerminationTrays: Array<{ __typename?: 'GerminationTray', sitesAvailable: number }> } | null> | null } | null };
+export type InstantiateNurseryMutation = { __typename?: 'Mutation', addNursery?: { __typename?: 'AddNurseryPayload', nursery?: Array<{ __typename?: 'Nursery', id: string, xid: string, GerminationTrays: Array<{ __typename?: 'GerminationTray', xid: string }> } | null> | null } | null };
 
 
 export const IngestQrDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"IngestQR"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"ingestQR"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"qr"},"value":{"kind":"StringValue","value":"0xdeadbeef","block":false}}]}]}}]} as unknown as DocumentNode<IngestQrMutation, IngestQrMutationVariables>;
@@ -2821,4 +2891,5 @@ export const ExampleLambdaDocument = {"kind":"Document","definitions":[{"kind":"
 export const WheresChuckDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"WheresChuck"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"querySite"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"occupant"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"xid"}}]}}]}}]}}]} as unknown as DocumentNode<WheresChuckQuery, WheresChuckQueryVariables>;
 export const InstallTwoModulesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"InstallTwoModules"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"moduleInput"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"addModuleMap"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"xid"},"value":{"kind":"Variable","name":{"kind":"Name","value":"moduleInput"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"modules"},"value":{"kind":"ListValue","values":[{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"instantiationTemplateUsed"},"value":{"kind":"EnumValue","value":"DWC_12in_NutrientMixA"}},{"kind":"ObjectField","name":{"kind":"Name","value":"xid"},"value":{"kind":"Variable","name":{"kind":"Name","value":"moduleInput"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"shelves"},"value":{"kind":"ListValue","values":[{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"xid"},"value":{"kind":"Variable","name":{"kind":"Name","value":"moduleInput"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"verticalClearanceHeightToNextShelf"},"value":{"kind":"IntValue","value":"13"}},{"kind":"ObjectField","name":{"kind":"Name","value":"sites"},"value":{"kind":"ListValue","values":[{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"xid"},"value":{"kind":"Variable","name":{"kind":"Name","value":"moduleInput"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"occupant"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"xid"},"value":{"kind":"Variable","name":{"kind":"Name","value":"moduleInput"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"cropName"},"value":{"kind":"StringValue","value":"someCrop","block":false}},{"kind":"ObjectField","name":{"kind":"Name","value":"repeater"},"value":{"kind":"BooleanValue","value":true}},{"kind":"ObjectField","name":{"kind":"Name","value":"nutrientType"},"value":{"kind":"StringValue","value":"0.3:A|0.7:B","block":false}},{"kind":"ObjectField","name":{"kind":"Name","value":"germinatedDate"},"value":{"kind":"StringValue","value":"2023-05-09T02:45:48Z","block":false}}]}}]}]}}]}]}}]}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"moduleMap"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modules"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"xid"}},{"kind":"Field","name":{"kind":"Name","value":"shelves"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"xid"}},{"kind":"Field","name":{"kind":"Name","value":"sites"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"xid"}},{"kind":"Field","name":{"kind":"Name","value":"occupant"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"xid"}},{"kind":"Field","name":{"kind":"Name","value":"cropName"}},{"kind":"Field","name":{"kind":"Name","value":"germinatedDate"}}]}}]}}]}}]}}]}}]}}]}}]} as unknown as DocumentNode<InstallTwoModulesMutation, InstallTwoModulesMutationVariables>;
 export const InstantiateCropIntentionsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"InstantiateCropIntentions"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"addCropIntentionsList"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"cropIntentions"},"value":{"kind":"ListValue","values":[{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"crop"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"name"},"value":{"kind":"StringValue","value":"arugi","block":false}},{"kind":"ObjectField","name":{"kind":"Name","value":"xid"},"value":{"kind":"StringValue","value":"adfaj","block":false}},{"kind":"ObjectField","name":{"kind":"Name","value":"required_module_type"},"value":{"kind":"StringValue","value":"nutA","block":false}},{"kind":"ObjectField","name":{"kind":"Name","value":"repeater"},"value":{"kind":"BooleanValue","value":true}},{"kind":"ObjectField","name":{"kind":"Name","value":"days_harvestable"},"value":{"kind":"IntValue","value":"5"}},{"kind":"ObjectField","name":{"kind":"Name","value":"days_from_transfer_to_first_harvest"},"value":{"kind":"IntValue","value":"6"}}]}},{"kind":"ObjectField","name":{"kind":"Name","value":"harvestPerWeek"},"value":{"kind":"IntValue","value":"3"}}]}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"numUids"}},{"kind":"Field","name":{"kind":"Name","value":"cropIntentionsList"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"cropIntentions"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"crop"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"required_module_type"}},{"kind":"Field","name":{"kind":"Name","value":"repeater"}}]}}]}}]}}]}}]}}]} as unknown as DocumentNode<InstantiateCropIntentionsMutation, InstantiateCropIntentionsMutationVariables>;
-export const InstantiateNurseryDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"InstantiateNursery"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"addNursery"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"xid"},"value":{"kind":"StringValue","value":"helloPlantiii","block":false}},{"kind":"ObjectField","name":{"kind":"Name","value":"GerminationTrays"},"value":{"kind":"ListValue","values":[{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"sitesAvailable"},"value":{"kind":"IntValue","value":"18"}}]},{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"sitesAvailable"},"value":{"kind":"IntValue","value":"18"}}]},{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"sitesAvailable"},"value":{"kind":"IntValue","value":"18"}}]},{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"sitesAvailable"},"value":{"kind":"IntValue","value":"18"}}]},{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"sitesAvailable"},"value":{"kind":"IntValue","value":"18"}}]},{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"sitesAvailable"},"value":{"kind":"IntValue","value":"18"}}]},{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"sitesAvailable"},"value":{"kind":"IntValue","value":"18"}}]},{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"sitesAvailable"},"value":{"kind":"IntValue","value":"18"}}]}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nursery"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"xid"}},{"kind":"Field","name":{"kind":"Name","value":"GerminationTrays"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"sitesAvailable"}}]}}]}}]}}]}}]} as unknown as DocumentNode<InstantiateNurseryMutation, InstantiateNurseryMutationVariables>;
+export const CreateGermTrayDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"createGermTray"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"xidInput"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"sitesInput"}},"type":{"kind":"NonNullType","type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"SiteRef"}}}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"addGerminationTray"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"xid"},"value":{"kind":"Variable","name":{"kind":"Name","value":"xidInput"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"sites"},"value":{"kind":"Variable","name":{"kind":"Name","value":"sitesInput"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"germinationTray"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"xid"}},{"kind":"Field","name":{"kind":"Name","value":"sites"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"xid"}},{"kind":"Field","name":{"kind":"Name","value":"signal"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"xid"}},{"kind":"Field","name":{"kind":"Name","value":"signalDate"}}]}}]}}]}}]}}]}}]} as unknown as DocumentNode<CreateGermTrayMutation, CreateGermTrayMutationVariables>;
+export const InstantiateNurseryDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"InstantiateNursery"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"addNursery"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"xid"},"value":{"kind":"StringValue","value":"helloPlantiii","block":false}},{"kind":"ObjectField","name":{"kind":"Name","value":"GerminationTrays"},"value":{"kind":"ListValue","values":[]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nursery"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"xid"}},{"kind":"Field","name":{"kind":"Name","value":"GerminationTrays"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"xid"}}]}}]}}]}}]}}]} as unknown as DocumentNode<InstantiateNurseryMutation, InstantiateNurseryMutationVariables>;

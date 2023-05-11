@@ -6,30 +6,6 @@ mutation InstantiateNursery {
             xid: "helloPlantiii",
             GerminationTrays:
             [
-                {
-                    sitesAvailable: 18
-                },
-                {
-                    sitesAvailable: 18
-                },
-                {
-                    sitesAvailable: 18
-                },
-                {
-                    sitesAvailable: 18
-                },
-                {
-                    sitesAvailable: 18
-                },
-                {
-                    sitesAvailable: 18
-                },
-                {
-                    sitesAvailable: 18
-                },
-                {
-                    sitesAvailable: 18
-                }
             ]
         }
     )
@@ -40,7 +16,7 @@ mutation InstantiateNursery {
             xid
             GerminationTrays
             {
-                sitesAvailable
+                xid
             }
         }
     }
