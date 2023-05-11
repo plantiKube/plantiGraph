@@ -2,7 +2,7 @@ import {ExpandGerminationBool, instantiateNurseryEffect} from "./instantiateNurs
 import {GerminationTray, GerminationTrayRef} from "../../operations";
 
 describe('instantiateNursery runs', function () {
-    it('runs', function () {
+    it('caninstantiate', function () {
         instantiateNurseryEffect()
     });
 

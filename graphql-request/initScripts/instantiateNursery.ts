@@ -30,7 +30,10 @@ export function ExpandGerminationBool(signal: boolean): GerminationTrayRef {
             sites:
                 [
                     {
-                        signal: null
+                        signal: {
+                            signalDate: "2023-05-10T23:13:56Z",
+                            signalType: SignalType.Transfer
+                        }
                     }
                 ]
         }
@@ -42,7 +45,7 @@ export const instantiateNurseryEffect = () => {
     // Ok we're going to build our germTraysArray
 
     const desiredGerminationTrays: Array<GerminationTrayRef> = pipe(
-        [false, false, true, false, true, false, true, false, true, false, true, false, true, false, true, false],
+        [false, true, true, false, false, false, false],
         (bools) => bools.map(ExpandGerminationBool),
         )
 
@@ -52,10 +55,11 @@ export const instantiateNurseryEffect = () => {
     (
         InstantiateNurseryDocument,
         {
-            nurseryXid: "abazz",
             germTraysArray: desiredGerminationTrays
         }
     ).then((data) => {
         console.log(data)
+        const generatedId = data.addNursery.nursery["0"].id
+        console.log(generatedId)
     });
 }

@@ -1,4 +1,4 @@
-mutation InstantiateNursery($nurseryXid: String!, $germTraysArray: [GerminationTrayRef!]!) {
+mutation InstantiateNursery($germTraysArray: [GerminationTrayRef!]!) {
     addNursery(input: { GerminationTrays: $germTraysArray }) {
         nursery {
             id
