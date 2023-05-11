@@ -25,7 +25,7 @@ export const instantiateNurseryEffect = () => {
     (
         InstantiateNurseryDocument,
         {
-            nurseryXid: "abcd",
+            nurseryXid: "abcdefg",
             germTraysArray: [
                 {
                     xid: "flie223",

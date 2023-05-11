@@ -1,5 +1,5 @@
 {
-  "name": "plantiGraph",
+  "name": "planti-graph",
   "module": "es2022",
   "version": "1.0.0",
   "main": "index.js",
@@ -41,13 +41,5 @@
   "compilerOptions": {
     "module": "commonjs",
     "strict": true
-  },
-  "include": [
-    "**/*",
-    "global.d.ts"
-  ],
-  "exclude": [
-    "node_modules",
-    "**/__tests__/*"
-  ]
+  }
 }

@@ -49,3 +49,35 @@ This requires pulling the schema down from our live endpoint ==> `generatedSchem
 ```
 
 
+## Composing GraphQL queries and mutations
+
+`GraphQL Playground` is a great tool for quickly drafting queries, and getting responses from our endpoint.
+
+Inside of the `gql` folder is a variety of `*.graphql` files that contain queries and mutations that we use in our day to day flow.
+the `*.variables.json` files correspond to the variables that we pass to the queries and mutations.
+
+The contents of each of these can be copied verbatim into `GraphQL Playground` and executed against our endpoint.
+(variables json goes in the "Query Variables" tab at the bottom) 
+
+
+## Executing queries and mutations programatically.
+
+We use `graphql-request` to execute queries and mutations within `TypeScript` context.
+
+Try running the function exported by `instantiateNursery.ts` via:
+
+```bash
+jest graphql-request/initScripts/instantiateNursery.test.ts 
+```
+
+# FP (Functional Programming)
+
+We always bias towards functional programming paradigm because we are fond of maintainable code and sanity.
+
+In our current `plantiGraph` context we use `fp-ts` although the same would apply if we were speaking `Haskell`
+
+Abstractly every transformation of our datagraph follows the following flow:
+
+1. query the graph for the input data object
+2. pipe input data object through a series of transformations via `pipe` or `flow`
+3. mutate the graph with the transformed data object
