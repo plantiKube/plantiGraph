@@ -72,9 +72,12 @@ jest graphql-request/initScripts/instantiateNursery.test.ts
 
 # FP (Functional Programming)
 
-We always bias towards functional programming paradigm because we are fond of maintainable code and sanity.
+We always bias towards functional programming paradigm (and away from imperative approach) because we are fond of maintainable code and sanity.
 
 In our current `plantiGraph` context we use `fp-ts` although the same would apply if we were speaking `Haskell`
+
+.. concretely this means composing *pure functions* via `pipe` and `flow` and avoiding side effects (such that functions are atomically testable).
+[This blog post is a decent breakdown of this abstraction.](https://rlee.dev/practical-guide-to-fp-ts-part-1)
 
 Abstractly every transformation of our datagraph follows the following flow:
 
