@@ -1,11 +1,12 @@
 {
+  "nurseryXid": "1234",
   "germTraysArray":
   [
     {
-      "xid": "flie22",
+      "xid": "flie2",
       "sites":
       {
-        "xid": "s00021",
+        "xid": "s0001",
         "signal": {
           "xid": "s00001",
           "signalDate": "2023-05-10T23:13:56Z",
