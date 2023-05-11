@@ -1,0 +1,17 @@
+mutation InstantiateNursery($germTraysArray: [GerminationTrayRef!]!) {
+    addNursery(input: { xid: "gcb", GerminationTrays: $germTraysArray }) {
+        nursery {
+            id
+            xid
+            GerminationTrays {
+                sites {
+                    xid
+                    signal {
+                        xid
+                        signalType
+                    }
+                }
+            }
+        }
+    }
+}

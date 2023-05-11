@@ -7,14 +7,16 @@ import {
 } from "../operations";
 import {GraphQLClient} from "graphql-request";
 
-const client = new GraphQLClient("http://localhost:8080/graphql", {fetch});
 
-client
-    .request<CreateGermTrayMutation, CreateGermTrayMutationVariables>
+export const createGermTrayMutationEffect = () => {
+
+    const client = new GraphQLClient("http://localhost:8080/graphql", {fetch});
+
+    client.request<CreateGermTrayMutation, CreateGermTrayMutationVariables>
     (
         CreateGermTrayDocument,
         {
-            xidInput: "GxDEADBEEF2",
+            xidInput: "GxDEADBEEF23",
             sitesInput: [
                 {
                     xid: "flie2",
@@ -27,7 +29,7 @@ client
                 }
             ]
         }
-    )
-    .then((data) => {
+    ).then((data) => {
         console.log(data)
     });
+}
