@@ -1,0 +1,25 @@
+mutation createGermTray($sitesInput: [SiteRef!]!) {
+    addGerminationTray
+    (
+        input:
+        {
+            xid: "floopiedabest"
+            sites: $sitesInput
+        }
+    )
+    {
+        germinationTray
+        {
+            id
+            xid
+            sites
+            {
+                xid
+                signal {
+                    xid
+                    signalDate
+                }
+            }
+        }
+    }
+}

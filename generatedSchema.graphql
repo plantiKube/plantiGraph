@@ -22,21 +22,25 @@ type GrowPlate {
 }
 
 type SignalTable {
+	id: ID!
+	xid: String! @id
 	signals(filter: SignalFilter, order: SignalOrder, first: Int, offset: Int): [Signal!]!
 	signalsAggregate(filter: SignalFilter): SignalAggregateResult
 }
 
 type Signal {
-	signalDate: DateTime!
+	id: ID!
+	xid: String! @id
+	signalDate: DateTime! @search
 	signalType: SignalType!
-	plantName: String!
+	plantName: String
 	plantId: String
 	targetMessage: String
 	algoString: String
 	daysToGerminate: Int
 	growTime: Int
 	maxHarvTime: Int
-	moduleType: String!
+	moduleType: String
 }
 
 enum SignalType {
@@ -90,6 +94,7 @@ type Shelf {
 type Site {
 	id: ID!
 	xid: String! @id
+	signal(filter: SignalFilter): Signal
 	occupant(filter: PlantFilter): Plant @hasInverse(field: location)
 }
 
@@ -139,7 +144,7 @@ type Nursery {
 
 type GerminationTray {
 	id: ID!
-	sitesAvailable: Int!
+	xid: String! @id
 	sites(filter: SiteFilter, order: SiteOrder, first: Int, offset: Int): [Site!]!
 	sitesAggregate(filter: SiteFilter): SiteAggregateResult
 }
@@ -481,7 +486,7 @@ type AddSignalPayload {
 }
 
 type AddSignalTablePayload {
-	signalTable(filter: SignalTableFilter, first: Int, offset: Int): [SignalTable]
+	signalTable(filter: SignalTableFilter, order: SignalTableOrder, first: Int, offset: Int): [SignalTable]
 	numUids: Int
 }
 
@@ -605,7 +610,7 @@ type DeleteSignalPayload {
 }
 
 type DeleteSignalTablePayload {
-	signalTable(filter: SignalTableFilter, first: Int, offset: Int): [SignalTable]
+	signalTable(filter: SignalTableFilter, order: SignalTableOrder, first: Int, offset: Int): [SignalTable]
 	msg: String
 	numUids: Int
 }
@@ -626,10 +631,8 @@ type DrawerAggregateResult {
 
 type GerminationTrayAggregateResult {
 	count: Int
-	sitesAvailableMin: Int
-	sitesAvailableMax: Int
-	sitesAvailableSum: Int
-	sitesAvailableAvg: Float
+	xidMin: String
+	xidMax: String
 }
 
 type GrowPlateAggregateResult {
@@ -704,6 +707,8 @@ type ShelfAggregateResult {
 
 type SignalAggregateResult {
 	count: Int
+	xidMin: String
+	xidMax: String
 	signalDateMin: DateTime
 	signalDateMax: DateTime
 	plantNameMin: String
@@ -732,6 +737,8 @@ type SignalAggregateResult {
 
 type SignalTableAggregateResult {
 	count: Int
+	xidMin: String
+	xidMax: String
 }
 
 type SiteAggregateResult {
@@ -811,7 +818,7 @@ type UpdateSignalPayload {
 }
 
 type UpdateSignalTablePayload {
-	signalTable(filter: SignalTableFilter, first: Int, offset: Int): [SignalTable]
+	signalTable(filter: SignalTableFilter, order: SignalTableOrder, first: Int, offset: Int): [SignalTable]
 	numUids: Int
 }
 
@@ -865,12 +872,12 @@ enum DrawerOrderable {
 }
 
 enum GerminationTrayHasFilter {
-	sitesAvailable
+	xid
 	sites
 }
 
 enum GerminationTrayOrderable {
-	sitesAvailable
+	xid
 }
 
 enum GrowPlateHasFilter {
@@ -961,6 +968,7 @@ enum ShelfOrderable {
 }
 
 enum SignalHasFilter {
+	xid
 	signalDate
 	signalType
 	plantName
@@ -974,6 +982,7 @@ enum SignalHasFilter {
 }
 
 enum SignalOrderable {
+	xid
 	signalDate
 	plantName
 	plantId
@@ -986,11 +995,17 @@ enum SignalOrderable {
 }
 
 enum SignalTableHasFilter {
+	xid
 	signals
+}
+
+enum SignalTableOrderable {
+	xid
 }
 
 enum SiteHasFilter {
 	xid
+	signal
 	occupant
 }
 
@@ -1027,7 +1042,7 @@ input AddDrawerInput {
 }
 
 input AddGerminationTrayInput {
-	sitesAvailable: Int!
+	xid: String!
 	sites: [SiteRef!]!
 }
 
@@ -1080,24 +1095,27 @@ input AddShelfInput {
 }
 
 input AddSignalInput {
+	xid: String!
 	signalDate: DateTime!
 	signalType: SignalType!
-	plantName: String!
+	plantName: String
 	plantId: String
 	targetMessage: String
 	algoString: String
 	daysToGerminate: Int
 	growTime: Int
 	maxHarvTime: Int
-	moduleType: String!
+	moduleType: String
 }
 
 input AddSignalTableInput {
+	xid: String!
 	signals: [SignalRef!]!
 }
 
 input AddSiteInput {
 	xid: String!
+	signal: SignalRef
 	occupant: PlantRef
 }
 
@@ -1199,6 +1217,7 @@ input DrawerRef {
 
 input GerminationTrayFilter {
 	id: [ID!]
+	xid: StringHashFilter
 	has: [GerminationTrayHasFilter]
 	and: [GerminationTrayFilter]
 	or: [GerminationTrayFilter]
@@ -1212,13 +1231,12 @@ input GerminationTrayOrder {
 }
 
 input GerminationTrayPatch {
-	sitesAvailable: Int
 	sites: [SiteRef!]
 }
 
 input GerminationTrayRef {
 	id: ID
-	sitesAvailable: Int
+	xid: String
 	sites: [SiteRef!]
 }
 
@@ -1436,6 +1454,9 @@ input ShelfRef {
 }
 
 input SignalFilter {
+	id: [ID!]
+	xid: StringHashFilter
+	signalDate: DateTimeFilter
 	has: [SignalHasFilter]
 	and: [SignalFilter]
 	or: [SignalFilter]
@@ -1462,6 +1483,8 @@ input SignalPatch {
 }
 
 input SignalRef {
+	id: ID
+	xid: String
 	signalDate: DateTime
 	signalType: SignalType
 	plantName: String
@@ -1475,10 +1498,18 @@ input SignalRef {
 }
 
 input SignalTableFilter {
+	id: [ID!]
+	xid: StringHashFilter
 	has: [SignalTableHasFilter]
 	and: [SignalTableFilter]
 	or: [SignalTableFilter]
 	not: SignalTableFilter
+}
+
+input SignalTableOrder {
+	asc: SignalTableOrderable
+	desc: SignalTableOrderable
+	then: SignalTableOrder
 }
 
 input SignalTablePatch {
@@ -1486,6 +1517,8 @@ input SignalTablePatch {
 }
 
 input SignalTableRef {
+	id: ID
+	xid: String
 	signals: [SignalRef!]
 }
 
@@ -1505,12 +1538,14 @@ input SiteOrder {
 }
 
 input SitePatch {
+	signal: SignalRef
 	occupant: PlantRef
 }
 
 input SiteRef {
 	id: ID
 	xid: String
+	signal: SignalRef
 	occupant: PlantRef
 }
 
@@ -1623,8 +1658,10 @@ type Query {
 	aggregateCropIntention(filter: CropIntentionFilter): CropIntentionAggregateResult
 	queryGrowPlate(filter: GrowPlateFilter, order: GrowPlateOrder, first: Int, offset: Int): [GrowPlate]
 	aggregateGrowPlate(filter: GrowPlateFilter): GrowPlateAggregateResult
-	querySignalTable(filter: SignalTableFilter, first: Int, offset: Int): [SignalTable]
+	getSignalTable(id: ID, xid: String): SignalTable
+	querySignalTable(filter: SignalTableFilter, order: SignalTableOrder, first: Int, offset: Int): [SignalTable]
 	aggregateSignalTable(filter: SignalTableFilter): SignalTableAggregateResult
+	getSignal(id: ID, xid: String): Signal
 	querySignal(filter: SignalFilter, order: SignalOrder, first: Int, offset: Int): [Signal]
 	aggregateSignal(filter: SignalFilter): SignalAggregateResult
 	getModuleMap(id: ID, xid: String): ModuleMap
@@ -1654,7 +1691,7 @@ type Query {
 	getNursery(id: ID, xid: String): Nursery
 	queryNursery(filter: NurseryFilter, order: NurseryOrder, first: Int, offset: Int): [Nursery]
 	aggregateNursery(filter: NurseryFilter): NurseryAggregateResult
-	getGerminationTray(id: ID!): GerminationTray
+	getGerminationTray(id: ID, xid: String): GerminationTray
 	queryGerminationTray(filter: GerminationTrayFilter, order: GerminationTrayOrder, first: Int, offset: Int): [GerminationTray]
 	aggregateGerminationTray(filter: GerminationTrayFilter): GerminationTrayAggregateResult
 }
@@ -1674,10 +1711,10 @@ type Mutation {
 	addGrowPlate(input: [AddGrowPlateInput!]!): AddGrowPlatePayload
 	updateGrowPlate(input: UpdateGrowPlateInput!): UpdateGrowPlatePayload
 	deleteGrowPlate(filter: GrowPlateFilter!): DeleteGrowPlatePayload
-	addSignalTable(input: [AddSignalTableInput!]!): AddSignalTablePayload
+	addSignalTable(input: [AddSignalTableInput!]!, upsert: Boolean): AddSignalTablePayload
 	updateSignalTable(input: UpdateSignalTableInput!): UpdateSignalTablePayload
 	deleteSignalTable(filter: SignalTableFilter!): DeleteSignalTablePayload
-	addSignal(input: [AddSignalInput!]!): AddSignalPayload
+	addSignal(input: [AddSignalInput!]!, upsert: Boolean): AddSignalPayload
 	updateSignal(input: UpdateSignalInput!): UpdateSignalPayload
 	deleteSignal(filter: SignalFilter!): DeleteSignalPayload
 	addModuleMap(input: [AddModuleMapInput!]!, upsert: Boolean): AddModuleMapPayload
@@ -1710,7 +1747,7 @@ type Mutation {
 	addNursery(input: [AddNurseryInput!]!, upsert: Boolean): AddNurseryPayload
 	updateNursery(input: UpdateNurseryInput!): UpdateNurseryPayload
 	deleteNursery(filter: NurseryFilter!): DeleteNurseryPayload
-	addGerminationTray(input: [AddGerminationTrayInput!]!): AddGerminationTrayPayload
+	addGerminationTray(input: [AddGerminationTrayInput!]!, upsert: Boolean): AddGerminationTrayPayload
 	updateGerminationTray(input: UpdateGerminationTrayInput!): UpdateGerminationTrayPayload
 	deleteGerminationTray(filter: GerminationTrayFilter!): DeleteGerminationTrayPayload
 }
