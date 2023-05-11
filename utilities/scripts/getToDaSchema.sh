@@ -15,4 +15,4 @@ $( \
   | sed -e 's/^"//' -e 's/"$//' \
 ) \
 | sed 's/\\\"/\"/g' \
-> generatedSchema.graphql
+| tee generatedSchema.graphql
