@@ -3,7 +3,6 @@ mutation createGermTray($xidInput: String!, $sitesInput: [SiteRef!]!) {
     (
         input:
         {
-            xid: $xidInput
             sites: $sitesInput
         }
     )
@@ -11,12 +10,12 @@ mutation createGermTray($xidInput: String!, $sitesInput: [SiteRef!]!) {
         germinationTray
         {
             id
-            xid
+
             sites
             {
-                xid
+
                 signal {
-                    xid
+
                     signalDate
                 }
             }

@@ -32,13 +32,13 @@ type GrowPlate {
 # They are in some sense isometric semantic vectors so perhaps this is irrelevant.
 type SignalTable {
     id: ID!
-    xid: String! @id
+    
     signals: [Signal!]!
 }
 
 type Signal {
     id: ID!
-    xid: String! @id
+    
     signalDate: DateTime! @search
     signalType: SignalType!
     plantName: String
@@ -59,13 +59,13 @@ enum SignalType {
 
 type ModuleMap {
     id: ID!
-    xid: String! @id
+    
     modules: [Module]
 }
 
 type Module {
     id: ID!
-    xid: String! @id
+    
     instantiationTemplateUsed: ModuleType!
     shelves: [Shelf]
     totalNumberOfSites: Int! @lambda
@@ -89,7 +89,7 @@ enum NutrientMix {
 
 type Shelf {
     id: ID!
-    xid: String! @id
+    
     sites: [Site]
     numSites: Int! @lambda
     verticalClearanceHeightToNextShelf: Int!
@@ -98,14 +98,14 @@ type Shelf {
 
 type Site {
     id: ID!
-    xid: String! @id
+    
     signal: Signal
     occupant: Plant @hasInverse(field: location)
 }
 
 type Plant {
     id: ID!
-    xid: String! @id
+    
     cropName: String! @search
     repeater: Boolean! @search
     nutrientType: String! @search
@@ -118,7 +118,7 @@ type Plant {
 # Abstract meta parameters for a crop.
 type Crop {
     id: ID!
-    xid: String! @id
+    
     name: String!
     required_module_type: String!
     repeater: Boolean!
@@ -144,14 +144,14 @@ type Location {
 # All of our plants start their lives in the nursery.
 type Nursery {
     id: ID!
-    xid: String! @id
+    
     GerminationTrays: [GerminationTray!]!
 #    totalSitesAvailable: Int! @lambda TODO: this lambda function should count the number of sites available in all of the germination trays.
 }
 
 type GerminationTray {
     id: ID!
-    xid: String! @id
+    
     # sitesAvailable: Int! @lambda
     sites: [Site!]!
 }

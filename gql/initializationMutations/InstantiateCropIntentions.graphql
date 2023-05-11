@@ -9,7 +9,6 @@ mutation InstantiateCropIntentions {
                     crop:
                     {
                         name: "arugi"
-                        xid: "adfaj"
                         required_module_type: "nutA"
                         repeater: true
                         days_harvestable: 5

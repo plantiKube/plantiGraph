@@ -2,20 +2,15 @@ mutation InstallTwoModules ($moduleInput: String!) {
     addModuleMap
     (
         input: {
-            xid: $moduleInput
             modules:[
                 {
                     instantiationTemplateUsed: DWC_12in_NutrientMixA
-                    xid: $moduleInput
                     shelves: [
                         {
-                            xid: $moduleInput
                             verticalClearanceHeightToNextShelf: 13
                             sites: [
                                 {
-                                    xid: $moduleInput
                                     occupant: {
-                                        xid: $moduleInput
                                         cropName: "someCrop"
                                         repeater: true
                                         nutrientType: "0.3:A|0.7:B"
@@ -33,16 +28,12 @@ mutation InstallTwoModules ($moduleInput: String!) {
         moduleMap{
             modules {
                 id
-                xid
                 shelves {
                     id
-                    xid
                     sites {
                         id
-                        xid
                         occupant {
                             id
-                            xid
                             cropName
                             germinatedDate
                         }

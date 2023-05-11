@@ -1,13 +1,10 @@
 mutation InstantiateNursery($nurseryXid: String!, $germTraysArray: [GerminationTrayRef!]!) {
-    addNursery(input: { xid: $nurseryXid, GerminationTrays: $germTraysArray }) {
+    addNursery(input: { GerminationTrays: $germTraysArray }) {
         nursery {
             id
-            xid
             GerminationTrays {
                 sites {
-                    xid
                     signal {
-                        xid
                         signalType
                     }
                 }
