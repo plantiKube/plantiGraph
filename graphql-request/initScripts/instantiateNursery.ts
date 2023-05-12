@@ -5,16 +5,10 @@ import {
     InstantiateNurseryDocument,
     InstantiateNurseryMutation, InstantiateNurseryMutationVariables,
     SignalType, SiteRef,
-    WheresChuckDocument,
-    WheresChuckQuery,
-    WheresChuckQueryVariables
 } from "../../operations";
 import {GraphQLClient} from "graphql-request";
 import {pipe} from "fp-ts/function";
-import {makeBy, replicate} from "fp-ts/ReadonlyNonEmptyArray";
 import * as A from 'fp-ts/lib/Array'
-import {number} from "fp-ts";
-import * as assert from "assert";
 
 
 function ExpandSiteRef(i: number): SiteRef {

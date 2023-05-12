@@ -84,3 +84,11 @@ Abstractly every transformation of our datagraph follows the following flow:
 1. query the graph for the input data object
 2. pipe input data object through a series of transformations via `pipe` or `flow`
 3. mutate the graph with the transformed data object
+
+
+---
+
+---
+`plantiKube` ecosystem projects such as `plantiGraph` are
+</> and maintained with <3 with AGPL Licensing
+in service of self sovereign food security for all.
