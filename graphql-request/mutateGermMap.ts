@@ -19,10 +19,8 @@ export const createGermTrayMutationEffect = () => {
             xidInput: "GxDEADBEEF23",
             sitesInput: [
                 {
-                    xid: "flie2",
                     signal:
                         {
-                            xid: "s0001",
                             signalDate: "2023-05-10T23:13:56Z",
                             signalType: SignalType.Germinate
                         }
