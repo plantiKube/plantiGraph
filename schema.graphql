@@ -155,3 +155,12 @@ type GerminationTray {
     # sitesAvailable: Int! @lambda
     sites: [Site!]!
 }
+
+type SimpleBoolArray {
+    bools: [BooleanArrayElt!]!
+}
+
+type BooleanArrayElt {
+    id: ID!
+    bool: Boolean!
+}
