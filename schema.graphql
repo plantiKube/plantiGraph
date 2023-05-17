@@ -156,11 +156,51 @@ type GerminationTray {
     sites: [Site!]!
 }
 
-type SimpleBoolArray {
-    bools: [BooleanArrayElt!]!
+type WaterRoutePresets {
+    id: ID!
+
+    presets: [SolenoidsControlHandle!]!
 }
 
-type BooleanArrayElt {
-    id: ID!
-    bool: Boolean!
+# one idiosyncracy of GraphQL is the lack of ordered Lists.
+# As a workaround we store the boolean values in a string deserialize an ordered bool list
+type SolenoidsControlHandle {
+    boolArrayString: String! # acts like a []bool array. .. perhaps could proxy as a lambda and store a JSON compatible list
 }
+
+
+type PhysicalSolenoid {
+    id: ID!
+
+    outputDriveIndex: Int!
+    outputDriveAddr: IpAddr!
+
+    driveState: Boolean!
+
+    influxOutputCurrentTimeSeries: TimeSeries
+}
+
+type IpAddr {
+    addr: String!
+}
+
+type Port {
+    port: Int!
+}
+
+type Endpoint {
+    id: ID!
+
+    addr: IpAddr!
+    port: Port!
+}
+
+type TimeSeries {
+    id: ID!
+
+    addrInfluxInstance: IpAddr!
+    portInfluxInstance: Port!
+
+    streamPath: String!
+}
+
