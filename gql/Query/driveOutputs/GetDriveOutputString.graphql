@@ -1,0 +1,7 @@
+query GetDriveOutputString ($driveOutputsID:ID!) {
+    getDriveOutputsPreset (id: $driveOutputsID) {
+        id
+        boolArrayString
+        lxEndpoint {addr{addr} port{port}}
+    }
+}

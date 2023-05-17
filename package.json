@@ -14,7 +14,8 @@
     "fn-build-germ": "ts-node graphql-request/fnBuildGermMap.ts",
     "fn-adder": "ts-node graphql-request/functionalModules/adder.ts",
     "mut-germ-tray": "ts-node graphql-request/mutateGermMap.ts",
-    "osc-test": "ts-node oscManager/serialOscSender.ts"
+    "osc-test": "ts-node oscManager/serialOscSender.ts",
+    "deserialize-bits": "ts-node fn/DeserializeStringToBoolArray.ts"
   },
   "dependencies": {
     "@apollo/client": "^3.7.14",
