@@ -101,6 +101,43 @@ export type AddDrawerPayloadDrawerArgs = {
   order?: InputMaybe<DrawerOrder>;
 };
 
+export type AddDriveOutputsPresetInput = {
+  boolArrayString: Scalars['String'];
+  lxEndpoint: EndpointRef;
+};
+
+export type AddDriveOutputsPresetPayload = {
+  __typename?: 'AddDriveOutputsPresetPayload';
+  driveOutputsPreset?: Maybe<Array<Maybe<DriveOutputsPreset>>>;
+  numUids?: Maybe<Scalars['Int']>;
+};
+
+
+export type AddDriveOutputsPresetPayloadDriveOutputsPresetArgs = {
+  filter?: InputMaybe<DriveOutputsPresetFilter>;
+  first?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order?: InputMaybe<DriveOutputsPresetOrder>;
+};
+
+export type AddEndpointInput = {
+  addr: IpAddrRef;
+  port: PortRef;
+};
+
+export type AddEndpointPayload = {
+  __typename?: 'AddEndpointPayload';
+  endpoint?: Maybe<Array<Maybe<Endpoint>>>;
+  numUids?: Maybe<Scalars['Int']>;
+};
+
+
+export type AddEndpointPayloadEndpointArgs = {
+  filter?: InputMaybe<EndpointFilter>;
+  first?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+};
+
 export type AddGerminationTrayInput = {
   sites: Array<SiteRef>;
 };
@@ -134,6 +171,24 @@ export type AddGrowPlatePayloadGrowPlateArgs = {
   first?: InputMaybe<Scalars['Int']>;
   offset?: InputMaybe<Scalars['Int']>;
   order?: InputMaybe<GrowPlateOrder>;
+};
+
+export type AddIpAddrInput = {
+  addr: Scalars['String'];
+};
+
+export type AddIpAddrPayload = {
+  __typename?: 'AddIpAddrPayload';
+  ipAddr?: Maybe<Array<Maybe<IpAddr>>>;
+  numUids?: Maybe<Scalars['Int']>;
+};
+
+
+export type AddIpAddrPayloadIpAddrArgs = {
+  filter?: InputMaybe<IpAddrFilter>;
+  first?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order?: InputMaybe<IpAddrOrder>;
 };
 
 export type AddLocationInput = {
@@ -208,6 +263,27 @@ export type AddNurseryPayloadNurseryArgs = {
   offset?: InputMaybe<Scalars['Int']>;
 };
 
+export type AddPhysicalSolenoidInput = {
+  driveState: Scalars['Boolean'];
+  influxOutputCurrentTimeSeries?: InputMaybe<TimeSeriesRef>;
+  outputDriveAddr: IpAddrRef;
+  outputDriveIndex: Scalars['Int'];
+};
+
+export type AddPhysicalSolenoidPayload = {
+  __typename?: 'AddPhysicalSolenoidPayload';
+  numUids?: Maybe<Scalars['Int']>;
+  physicalSolenoid?: Maybe<Array<Maybe<PhysicalSolenoid>>>;
+};
+
+
+export type AddPhysicalSolenoidPayloadPhysicalSolenoidArgs = {
+  filter?: InputMaybe<PhysicalSolenoidFilter>;
+  first?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order?: InputMaybe<PhysicalSolenoidOrder>;
+};
+
 export type AddPlantInput = {
   cropName: Scalars['String'];
   germinatedDate?: InputMaybe<Scalars['DateTime']>;
@@ -230,6 +306,24 @@ export type AddPlantPayloadPlantArgs = {
   first?: InputMaybe<Scalars['Int']>;
   offset?: InputMaybe<Scalars['Int']>;
   order?: InputMaybe<PlantOrder>;
+};
+
+export type AddPortInput = {
+  port: Scalars['Int'];
+};
+
+export type AddPortPayload = {
+  __typename?: 'AddPortPayload';
+  numUids?: Maybe<Scalars['Int']>;
+  port?: Maybe<Array<Maybe<Port>>>;
+};
+
+
+export type AddPortPayloadPortArgs = {
+  filter?: InputMaybe<PortFilter>;
+  first?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order?: InputMaybe<PortOrder>;
 };
 
 export type AddSeedInput = {
@@ -328,6 +422,43 @@ export type AddSitePayload = {
 
 export type AddSitePayloadSiteArgs = {
   filter?: InputMaybe<SiteFilter>;
+  first?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+};
+
+export type AddTimeSeriesInput = {
+  addrInfluxInstance: IpAddrRef;
+  portInfluxInstance: PortRef;
+  streamPath: Scalars['String'];
+};
+
+export type AddTimeSeriesPayload = {
+  __typename?: 'AddTimeSeriesPayload';
+  numUids?: Maybe<Scalars['Int']>;
+  timeSeries?: Maybe<Array<Maybe<TimeSeries>>>;
+};
+
+
+export type AddTimeSeriesPayloadTimeSeriesArgs = {
+  filter?: InputMaybe<TimeSeriesFilter>;
+  first?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order?: InputMaybe<TimeSeriesOrder>;
+};
+
+export type AddWaterRoutePresetsInput = {
+  presets: Array<DriveOutputsPresetRef>;
+};
+
+export type AddWaterRoutePresetsPayload = {
+  __typename?: 'AddWaterRoutePresetsPayload';
+  numUids?: Maybe<Scalars['Int']>;
+  waterRoutePresets?: Maybe<Array<Maybe<WaterRoutePresets>>>;
+};
+
+
+export type AddWaterRoutePresetsPayloadWaterRoutePresetsArgs = {
+  filter?: InputMaybe<WaterRoutePresetsFilter>;
   first?: InputMaybe<Scalars['Int']>;
   offset?: InputMaybe<Scalars['Int']>;
 };
@@ -598,6 +729,35 @@ export type DeleteDrawerPayloadDrawerArgs = {
   order?: InputMaybe<DrawerOrder>;
 };
 
+export type DeleteDriveOutputsPresetPayload = {
+  __typename?: 'DeleteDriveOutputsPresetPayload';
+  driveOutputsPreset?: Maybe<Array<Maybe<DriveOutputsPreset>>>;
+  msg?: Maybe<Scalars['String']>;
+  numUids?: Maybe<Scalars['Int']>;
+};
+
+
+export type DeleteDriveOutputsPresetPayloadDriveOutputsPresetArgs = {
+  filter?: InputMaybe<DriveOutputsPresetFilter>;
+  first?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order?: InputMaybe<DriveOutputsPresetOrder>;
+};
+
+export type DeleteEndpointPayload = {
+  __typename?: 'DeleteEndpointPayload';
+  endpoint?: Maybe<Array<Maybe<Endpoint>>>;
+  msg?: Maybe<Scalars['String']>;
+  numUids?: Maybe<Scalars['Int']>;
+};
+
+
+export type DeleteEndpointPayloadEndpointArgs = {
+  filter?: InputMaybe<EndpointFilter>;
+  first?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+};
+
 export type DeleteGerminationTrayPayload = {
   __typename?: 'DeleteGerminationTrayPayload';
   germinationTray?: Maybe<Array<Maybe<GerminationTray>>>;
@@ -625,6 +785,21 @@ export type DeleteGrowPlatePayloadGrowPlateArgs = {
   first?: InputMaybe<Scalars['Int']>;
   offset?: InputMaybe<Scalars['Int']>;
   order?: InputMaybe<GrowPlateOrder>;
+};
+
+export type DeleteIpAddrPayload = {
+  __typename?: 'DeleteIpAddrPayload';
+  ipAddr?: Maybe<Array<Maybe<IpAddr>>>;
+  msg?: Maybe<Scalars['String']>;
+  numUids?: Maybe<Scalars['Int']>;
+};
+
+
+export type DeleteIpAddrPayloadIpAddrArgs = {
+  filter?: InputMaybe<IpAddrFilter>;
+  first?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order?: InputMaybe<IpAddrOrder>;
 };
 
 export type DeleteLocationPayload = {
@@ -684,6 +859,21 @@ export type DeleteNurseryPayloadNurseryArgs = {
   offset?: InputMaybe<Scalars['Int']>;
 };
 
+export type DeletePhysicalSolenoidPayload = {
+  __typename?: 'DeletePhysicalSolenoidPayload';
+  msg?: Maybe<Scalars['String']>;
+  numUids?: Maybe<Scalars['Int']>;
+  physicalSolenoid?: Maybe<Array<Maybe<PhysicalSolenoid>>>;
+};
+
+
+export type DeletePhysicalSolenoidPayloadPhysicalSolenoidArgs = {
+  filter?: InputMaybe<PhysicalSolenoidFilter>;
+  first?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order?: InputMaybe<PhysicalSolenoidOrder>;
+};
+
 export type DeletePlantPayload = {
   __typename?: 'DeletePlantPayload';
   msg?: Maybe<Scalars['String']>;
@@ -697,6 +887,21 @@ export type DeletePlantPayloadPlantArgs = {
   first?: InputMaybe<Scalars['Int']>;
   offset?: InputMaybe<Scalars['Int']>;
   order?: InputMaybe<PlantOrder>;
+};
+
+export type DeletePortPayload = {
+  __typename?: 'DeletePortPayload';
+  msg?: Maybe<Scalars['String']>;
+  numUids?: Maybe<Scalars['Int']>;
+  port?: Maybe<Array<Maybe<Port>>>;
+};
+
+
+export type DeletePortPayloadPortArgs = {
+  filter?: InputMaybe<PortFilter>;
+  first?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order?: InputMaybe<PortOrder>;
 };
 
 export type DeleteSeedPayload = {
@@ -768,6 +973,35 @@ export type DeleteSitePayload = {
 
 export type DeleteSitePayloadSiteArgs = {
   filter?: InputMaybe<SiteFilter>;
+  first?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+};
+
+export type DeleteTimeSeriesPayload = {
+  __typename?: 'DeleteTimeSeriesPayload';
+  msg?: Maybe<Scalars['String']>;
+  numUids?: Maybe<Scalars['Int']>;
+  timeSeries?: Maybe<Array<Maybe<TimeSeries>>>;
+};
+
+
+export type DeleteTimeSeriesPayloadTimeSeriesArgs = {
+  filter?: InputMaybe<TimeSeriesFilter>;
+  first?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order?: InputMaybe<TimeSeriesOrder>;
+};
+
+export type DeleteWaterRoutePresetsPayload = {
+  __typename?: 'DeleteWaterRoutePresetsPayload';
+  msg?: Maybe<Scalars['String']>;
+  numUids?: Maybe<Scalars['Int']>;
+  waterRoutePresets?: Maybe<Array<Maybe<WaterRoutePresets>>>;
+};
+
+
+export type DeleteWaterRoutePresetsPayloadWaterRoutePresetsArgs = {
+  filter?: InputMaybe<WaterRoutePresetsFilter>;
   first?: InputMaybe<Scalars['Int']>;
   offset?: InputMaybe<Scalars['Int']>;
 };
@@ -849,6 +1083,105 @@ export type DrawerRef = {
   cropAssignment?: InputMaybe<CropRef>;
   gridLocation?: InputMaybe<LocationRef>;
   stock?: InputMaybe<Scalars['Int']>;
+};
+
+export type DriveOutputsPreset = {
+  __typename?: 'DriveOutputsPreset';
+  boolArrayString: Scalars['String'];
+  id: Scalars['ID'];
+  lxEndpoint: Endpoint;
+};
+
+
+export type DriveOutputsPresetLxEndpointArgs = {
+  filter?: InputMaybe<EndpointFilter>;
+};
+
+export type DriveOutputsPresetAggregateResult = {
+  __typename?: 'DriveOutputsPresetAggregateResult';
+  boolArrayStringMax?: Maybe<Scalars['String']>;
+  boolArrayStringMin?: Maybe<Scalars['String']>;
+  count?: Maybe<Scalars['Int']>;
+};
+
+export type DriveOutputsPresetFilter = {
+  and?: InputMaybe<Array<InputMaybe<DriveOutputsPresetFilter>>>;
+  has?: InputMaybe<Array<InputMaybe<DriveOutputsPresetHasFilter>>>;
+  id?: InputMaybe<Array<Scalars['ID']>>;
+  not?: InputMaybe<DriveOutputsPresetFilter>;
+  or?: InputMaybe<Array<InputMaybe<DriveOutputsPresetFilter>>>;
+};
+
+export enum DriveOutputsPresetHasFilter {
+  BoolArrayString = 'boolArrayString',
+  LxEndpoint = 'lxEndpoint'
+}
+
+export type DriveOutputsPresetOrder = {
+  asc?: InputMaybe<DriveOutputsPresetOrderable>;
+  desc?: InputMaybe<DriveOutputsPresetOrderable>;
+  then?: InputMaybe<DriveOutputsPresetOrder>;
+};
+
+export enum DriveOutputsPresetOrderable {
+  BoolArrayString = 'boolArrayString'
+}
+
+export type DriveOutputsPresetPatch = {
+  boolArrayString?: InputMaybe<Scalars['String']>;
+  lxEndpoint?: InputMaybe<EndpointRef>;
+};
+
+export type DriveOutputsPresetRef = {
+  boolArrayString?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['ID']>;
+  lxEndpoint?: InputMaybe<EndpointRef>;
+};
+
+export type Endpoint = {
+  __typename?: 'Endpoint';
+  addr: IpAddr;
+  id: Scalars['ID'];
+  port: Port;
+};
+
+
+export type EndpointAddrArgs = {
+  filter?: InputMaybe<IpAddrFilter>;
+};
+
+
+export type EndpointPortArgs = {
+  filter?: InputMaybe<PortFilter>;
+};
+
+export type EndpointAggregateResult = {
+  __typename?: 'EndpointAggregateResult';
+  count?: Maybe<Scalars['Int']>;
+};
+
+export type EndpointFilter = {
+  and?: InputMaybe<Array<InputMaybe<EndpointFilter>>>;
+  has?: InputMaybe<Array<InputMaybe<EndpointHasFilter>>>;
+  id?: InputMaybe<Array<Scalars['ID']>>;
+  not?: InputMaybe<EndpointFilter>;
+  or?: InputMaybe<Array<InputMaybe<EndpointFilter>>>;
+};
+
+export enum EndpointHasFilter {
+  Addr = 'addr',
+  Port = 'port'
+}
+
+export type EndpointPatch = {
+  addr?: InputMaybe<IpAddrRef>;
+  port?: InputMaybe<PortRef>;
+};
+
+export type EndpointRef = {
+  addr?: InputMaybe<IpAddrRef>;
+  id?: InputMaybe<Scalars['ID']>;
+  port?: InputMaybe<PortRef>;
 };
 
 export type FloatFilter = {
@@ -1008,6 +1341,47 @@ export type IntRange = {
 export type IntersectsFilter = {
   multiPolygon?: InputMaybe<MultiPolygonRef>;
   polygon?: InputMaybe<PolygonRef>;
+};
+
+export type IpAddr = {
+  __typename?: 'IpAddr';
+  addr: Scalars['String'];
+};
+
+export type IpAddrAggregateResult = {
+  __typename?: 'IpAddrAggregateResult';
+  addrMax?: Maybe<Scalars['String']>;
+  addrMin?: Maybe<Scalars['String']>;
+  count?: Maybe<Scalars['Int']>;
+};
+
+export type IpAddrFilter = {
+  and?: InputMaybe<Array<InputMaybe<IpAddrFilter>>>;
+  has?: InputMaybe<Array<InputMaybe<IpAddrHasFilter>>>;
+  not?: InputMaybe<IpAddrFilter>;
+  or?: InputMaybe<Array<InputMaybe<IpAddrFilter>>>;
+};
+
+export enum IpAddrHasFilter {
+  Addr = 'addr'
+}
+
+export type IpAddrOrder = {
+  asc?: InputMaybe<IpAddrOrderable>;
+  desc?: InputMaybe<IpAddrOrderable>;
+  then?: InputMaybe<IpAddrOrder>;
+};
+
+export enum IpAddrOrderable {
+  Addr = 'addr'
+}
+
+export type IpAddrPatch = {
+  addr?: InputMaybe<Scalars['String']>;
+};
+
+export type IpAddrRef = {
+  addr?: InputMaybe<Scalars['String']>;
 };
 
 export type Location = {
@@ -1192,51 +1566,72 @@ export type Mutation = {
   addCropIntention?: Maybe<AddCropIntentionPayload>;
   addCropIntentionsList?: Maybe<AddCropIntentionsListPayload>;
   addDrawer?: Maybe<AddDrawerPayload>;
+  addDriveOutputsPreset?: Maybe<AddDriveOutputsPresetPayload>;
+  addEndpoint?: Maybe<AddEndpointPayload>;
   addGerminationTray?: Maybe<AddGerminationTrayPayload>;
   addGrowPlate?: Maybe<AddGrowPlatePayload>;
+  addIpAddr?: Maybe<AddIpAddrPayload>;
   addLocation?: Maybe<AddLocationPayload>;
   addModule?: Maybe<AddModulePayload>;
   addModuleMap?: Maybe<AddModuleMapPayload>;
   addNursery?: Maybe<AddNurseryPayload>;
+  addPhysicalSolenoid?: Maybe<AddPhysicalSolenoidPayload>;
   addPlant?: Maybe<AddPlantPayload>;
+  addPort?: Maybe<AddPortPayload>;
   addSeed?: Maybe<AddSeedPayload>;
   addShelf?: Maybe<AddShelfPayload>;
   addSignal?: Maybe<AddSignalPayload>;
   addSignalTable?: Maybe<AddSignalTablePayload>;
   addSite?: Maybe<AddSitePayload>;
+  addTimeSeries?: Maybe<AddTimeSeriesPayload>;
+  addWaterRoutePresets?: Maybe<AddWaterRoutePresetsPayload>;
   deleteCrop?: Maybe<DeleteCropPayload>;
   deleteCropIntention?: Maybe<DeleteCropIntentionPayload>;
   deleteCropIntentionsList?: Maybe<DeleteCropIntentionsListPayload>;
   deleteDrawer?: Maybe<DeleteDrawerPayload>;
+  deleteDriveOutputsPreset?: Maybe<DeleteDriveOutputsPresetPayload>;
+  deleteEndpoint?: Maybe<DeleteEndpointPayload>;
   deleteGerminationTray?: Maybe<DeleteGerminationTrayPayload>;
   deleteGrowPlate?: Maybe<DeleteGrowPlatePayload>;
+  deleteIpAddr?: Maybe<DeleteIpAddrPayload>;
   deleteLocation?: Maybe<DeleteLocationPayload>;
   deleteModule?: Maybe<DeleteModulePayload>;
   deleteModuleMap?: Maybe<DeleteModuleMapPayload>;
   deleteNursery?: Maybe<DeleteNurseryPayload>;
+  deletePhysicalSolenoid?: Maybe<DeletePhysicalSolenoidPayload>;
   deletePlant?: Maybe<DeletePlantPayload>;
+  deletePort?: Maybe<DeletePortPayload>;
   deleteSeed?: Maybe<DeleteSeedPayload>;
   deleteShelf?: Maybe<DeleteShelfPayload>;
   deleteSignal?: Maybe<DeleteSignalPayload>;
   deleteSignalTable?: Maybe<DeleteSignalTablePayload>;
   deleteSite?: Maybe<DeleteSitePayload>;
+  deleteTimeSeries?: Maybe<DeleteTimeSeriesPayload>;
+  deleteWaterRoutePresets?: Maybe<DeleteWaterRoutePresetsPayload>;
   ingestQR: Scalars['String'];
   updateCrop?: Maybe<UpdateCropPayload>;
   updateCropIntention?: Maybe<UpdateCropIntentionPayload>;
   updateCropIntentionsList?: Maybe<UpdateCropIntentionsListPayload>;
   updateDrawer?: Maybe<UpdateDrawerPayload>;
+  updateDriveOutputsPreset?: Maybe<UpdateDriveOutputsPresetPayload>;
+  updateEndpoint?: Maybe<UpdateEndpointPayload>;
   updateGerminationTray?: Maybe<UpdateGerminationTrayPayload>;
   updateGrowPlate?: Maybe<UpdateGrowPlatePayload>;
+  updateIpAddr?: Maybe<UpdateIpAddrPayload>;
   updateLocation?: Maybe<UpdateLocationPayload>;
   updateModule?: Maybe<UpdateModulePayload>;
   updateModuleMap?: Maybe<UpdateModuleMapPayload>;
   updateNursery?: Maybe<UpdateNurseryPayload>;
+  updatePhysicalSolenoid?: Maybe<UpdatePhysicalSolenoidPayload>;
   updatePlant?: Maybe<UpdatePlantPayload>;
+  updatePort?: Maybe<UpdatePortPayload>;
   updateSeed?: Maybe<UpdateSeedPayload>;
   updateShelf?: Maybe<UpdateShelfPayload>;
   updateSignal?: Maybe<UpdateSignalPayload>;
   updateSignalTable?: Maybe<UpdateSignalTablePayload>;
   updateSite?: Maybe<UpdateSitePayload>;
+  updateTimeSeries?: Maybe<UpdateTimeSeriesPayload>;
+  updateWaterRoutePresets?: Maybe<UpdateWaterRoutePresetsPayload>;
 };
 
 
@@ -1260,6 +1655,16 @@ export type MutationAddDrawerArgs = {
 };
 
 
+export type MutationAddDriveOutputsPresetArgs = {
+  input: Array<AddDriveOutputsPresetInput>;
+};
+
+
+export type MutationAddEndpointArgs = {
+  input: Array<AddEndpointInput>;
+};
+
+
 export type MutationAddGerminationTrayArgs = {
   input: Array<AddGerminationTrayInput>;
 };
@@ -1267,6 +1672,11 @@ export type MutationAddGerminationTrayArgs = {
 
 export type MutationAddGrowPlateArgs = {
   input: Array<AddGrowPlateInput>;
+};
+
+
+export type MutationAddIpAddrArgs = {
+  input: Array<AddIpAddrInput>;
 };
 
 
@@ -1290,8 +1700,18 @@ export type MutationAddNurseryArgs = {
 };
 
 
+export type MutationAddPhysicalSolenoidArgs = {
+  input: Array<AddPhysicalSolenoidInput>;
+};
+
+
 export type MutationAddPlantArgs = {
   input: Array<AddPlantInput>;
+};
+
+
+export type MutationAddPortArgs = {
+  input: Array<AddPortInput>;
 };
 
 
@@ -1320,6 +1740,16 @@ export type MutationAddSiteArgs = {
 };
 
 
+export type MutationAddTimeSeriesArgs = {
+  input: Array<AddTimeSeriesInput>;
+};
+
+
+export type MutationAddWaterRoutePresetsArgs = {
+  input: Array<AddWaterRoutePresetsInput>;
+};
+
+
 export type MutationDeleteCropArgs = {
   filter: CropFilter;
 };
@@ -1340,6 +1770,16 @@ export type MutationDeleteDrawerArgs = {
 };
 
 
+export type MutationDeleteDriveOutputsPresetArgs = {
+  filter: DriveOutputsPresetFilter;
+};
+
+
+export type MutationDeleteEndpointArgs = {
+  filter: EndpointFilter;
+};
+
+
 export type MutationDeleteGerminationTrayArgs = {
   filter: GerminationTrayFilter;
 };
@@ -1347,6 +1787,11 @@ export type MutationDeleteGerminationTrayArgs = {
 
 export type MutationDeleteGrowPlateArgs = {
   filter: GrowPlateFilter;
+};
+
+
+export type MutationDeleteIpAddrArgs = {
+  filter: IpAddrFilter;
 };
 
 
@@ -1370,8 +1815,18 @@ export type MutationDeleteNurseryArgs = {
 };
 
 
+export type MutationDeletePhysicalSolenoidArgs = {
+  filter: PhysicalSolenoidFilter;
+};
+
+
 export type MutationDeletePlantArgs = {
   filter: PlantFilter;
+};
+
+
+export type MutationDeletePortArgs = {
+  filter: PortFilter;
 };
 
 
@@ -1400,6 +1855,16 @@ export type MutationDeleteSiteArgs = {
 };
 
 
+export type MutationDeleteTimeSeriesArgs = {
+  filter: TimeSeriesFilter;
+};
+
+
+export type MutationDeleteWaterRoutePresetsArgs = {
+  filter: WaterRoutePresetsFilter;
+};
+
+
 export type MutationIngestQrArgs = {
   qr: Scalars['String'];
 };
@@ -1425,6 +1890,16 @@ export type MutationUpdateDrawerArgs = {
 };
 
 
+export type MutationUpdateDriveOutputsPresetArgs = {
+  input: UpdateDriveOutputsPresetInput;
+};
+
+
+export type MutationUpdateEndpointArgs = {
+  input: UpdateEndpointInput;
+};
+
+
 export type MutationUpdateGerminationTrayArgs = {
   input: UpdateGerminationTrayInput;
 };
@@ -1432,6 +1907,11 @@ export type MutationUpdateGerminationTrayArgs = {
 
 export type MutationUpdateGrowPlateArgs = {
   input: UpdateGrowPlateInput;
+};
+
+
+export type MutationUpdateIpAddrArgs = {
+  input: UpdateIpAddrInput;
 };
 
 
@@ -1455,8 +1935,18 @@ export type MutationUpdateNurseryArgs = {
 };
 
 
+export type MutationUpdatePhysicalSolenoidArgs = {
+  input: UpdatePhysicalSolenoidInput;
+};
+
+
 export type MutationUpdatePlantArgs = {
   input: UpdatePlantInput;
+};
+
+
+export type MutationUpdatePortArgs = {
+  input: UpdatePortInput;
 };
 
 
@@ -1482,6 +1972,16 @@ export type MutationUpdateSignalTableArgs = {
 
 export type MutationUpdateSiteArgs = {
   input: UpdateSiteInput;
+};
+
+
+export type MutationUpdateTimeSeriesArgs = {
+  input: UpdateTimeSeriesInput;
+};
+
+
+export type MutationUpdateWaterRoutePresetsArgs = {
+  input: UpdateWaterRoutePresetsInput;
 };
 
 export type NearFilter = {
@@ -1538,6 +2038,74 @@ export enum NutrientMix {
   A = 'A',
   B = 'B'
 }
+
+export type PhysicalSolenoid = {
+  __typename?: 'PhysicalSolenoid';
+  driveState: Scalars['Boolean'];
+  id: Scalars['ID'];
+  influxOutputCurrentTimeSeries?: Maybe<TimeSeries>;
+  outputDriveAddr: IpAddr;
+  outputDriveIndex: Scalars['Int'];
+};
+
+
+export type PhysicalSolenoidInfluxOutputCurrentTimeSeriesArgs = {
+  filter?: InputMaybe<TimeSeriesFilter>;
+};
+
+
+export type PhysicalSolenoidOutputDriveAddrArgs = {
+  filter?: InputMaybe<IpAddrFilter>;
+};
+
+export type PhysicalSolenoidAggregateResult = {
+  __typename?: 'PhysicalSolenoidAggregateResult';
+  count?: Maybe<Scalars['Int']>;
+  outputDriveIndexAvg?: Maybe<Scalars['Float']>;
+  outputDriveIndexMax?: Maybe<Scalars['Int']>;
+  outputDriveIndexMin?: Maybe<Scalars['Int']>;
+  outputDriveIndexSum?: Maybe<Scalars['Int']>;
+};
+
+export type PhysicalSolenoidFilter = {
+  and?: InputMaybe<Array<InputMaybe<PhysicalSolenoidFilter>>>;
+  has?: InputMaybe<Array<InputMaybe<PhysicalSolenoidHasFilter>>>;
+  id?: InputMaybe<Array<Scalars['ID']>>;
+  not?: InputMaybe<PhysicalSolenoidFilter>;
+  or?: InputMaybe<Array<InputMaybe<PhysicalSolenoidFilter>>>;
+};
+
+export enum PhysicalSolenoidHasFilter {
+  DriveState = 'driveState',
+  InfluxOutputCurrentTimeSeries = 'influxOutputCurrentTimeSeries',
+  OutputDriveAddr = 'outputDriveAddr',
+  OutputDriveIndex = 'outputDriveIndex'
+}
+
+export type PhysicalSolenoidOrder = {
+  asc?: InputMaybe<PhysicalSolenoidOrderable>;
+  desc?: InputMaybe<PhysicalSolenoidOrderable>;
+  then?: InputMaybe<PhysicalSolenoidOrder>;
+};
+
+export enum PhysicalSolenoidOrderable {
+  OutputDriveIndex = 'outputDriveIndex'
+}
+
+export type PhysicalSolenoidPatch = {
+  driveState?: InputMaybe<Scalars['Boolean']>;
+  influxOutputCurrentTimeSeries?: InputMaybe<TimeSeriesRef>;
+  outputDriveAddr?: InputMaybe<IpAddrRef>;
+  outputDriveIndex?: InputMaybe<Scalars['Int']>;
+};
+
+export type PhysicalSolenoidRef = {
+  driveState?: InputMaybe<Scalars['Boolean']>;
+  id?: InputMaybe<Scalars['ID']>;
+  influxOutputCurrentTimeSeries?: InputMaybe<TimeSeriesRef>;
+  outputDriveAddr?: InputMaybe<IpAddrRef>;
+  outputDriveIndex?: InputMaybe<Scalars['Int']>;
+};
 
 export type Plant = {
   __typename?: 'Plant';
@@ -1668,6 +2236,49 @@ export type PolygonRef = {
   coordinates: Array<PointListRef>;
 };
 
+export type Port = {
+  __typename?: 'Port';
+  port: Scalars['Int'];
+};
+
+export type PortAggregateResult = {
+  __typename?: 'PortAggregateResult';
+  count?: Maybe<Scalars['Int']>;
+  portAvg?: Maybe<Scalars['Float']>;
+  portMax?: Maybe<Scalars['Int']>;
+  portMin?: Maybe<Scalars['Int']>;
+  portSum?: Maybe<Scalars['Int']>;
+};
+
+export type PortFilter = {
+  and?: InputMaybe<Array<InputMaybe<PortFilter>>>;
+  has?: InputMaybe<Array<InputMaybe<PortHasFilter>>>;
+  not?: InputMaybe<PortFilter>;
+  or?: InputMaybe<Array<InputMaybe<PortFilter>>>;
+};
+
+export enum PortHasFilter {
+  Port = 'port'
+}
+
+export type PortOrder = {
+  asc?: InputMaybe<PortOrderable>;
+  desc?: InputMaybe<PortOrderable>;
+  then?: InputMaybe<PortOrder>;
+};
+
+export enum PortOrderable {
+  Port = 'port'
+}
+
+export type PortPatch = {
+  port?: InputMaybe<Scalars['Int']>;
+};
+
+export type PortRef = {
+  port?: InputMaybe<Scalars['Int']>;
+};
+
 export type Query = {
   __typename?: 'Query';
   addTwo: Scalars['Int'];
@@ -1675,45 +2286,64 @@ export type Query = {
   aggregateCropIntention?: Maybe<CropIntentionAggregateResult>;
   aggregateCropIntentionsList?: Maybe<CropIntentionsListAggregateResult>;
   aggregateDrawer?: Maybe<DrawerAggregateResult>;
+  aggregateDriveOutputsPreset?: Maybe<DriveOutputsPresetAggregateResult>;
+  aggregateEndpoint?: Maybe<EndpointAggregateResult>;
   aggregateGerminationTray?: Maybe<GerminationTrayAggregateResult>;
   aggregateGrowPlate?: Maybe<GrowPlateAggregateResult>;
+  aggregateIpAddr?: Maybe<IpAddrAggregateResult>;
   aggregateLocation?: Maybe<LocationAggregateResult>;
   aggregateModule?: Maybe<ModuleAggregateResult>;
   aggregateModuleMap?: Maybe<ModuleMapAggregateResult>;
   aggregateNursery?: Maybe<NurseryAggregateResult>;
+  aggregatePhysicalSolenoid?: Maybe<PhysicalSolenoidAggregateResult>;
   aggregatePlant?: Maybe<PlantAggregateResult>;
+  aggregatePort?: Maybe<PortAggregateResult>;
   aggregateSeed?: Maybe<SeedAggregateResult>;
   aggregateShelf?: Maybe<ShelfAggregateResult>;
   aggregateSignal?: Maybe<SignalAggregateResult>;
   aggregateSignalTable?: Maybe<SignalTableAggregateResult>;
   aggregateSite?: Maybe<SiteAggregateResult>;
+  aggregateTimeSeries?: Maybe<TimeSeriesAggregateResult>;
+  aggregateWaterRoutePresets?: Maybe<WaterRoutePresetsAggregateResult>;
   exampleLambda: Scalars['String'];
   getCrop?: Maybe<Crop>;
+  getDriveOutputsPreset?: Maybe<DriveOutputsPreset>;
+  getEndpoint?: Maybe<Endpoint>;
   getGerminationTray?: Maybe<GerminationTray>;
   getModule?: Maybe<Module>;
   getModuleMap?: Maybe<ModuleMap>;
   getNursery?: Maybe<Nursery>;
+  getPhysicalSolenoid?: Maybe<PhysicalSolenoid>;
   getPlant?: Maybe<Plant>;
   getShelf?: Maybe<Shelf>;
   getSignal?: Maybe<Signal>;
   getSignalTable?: Maybe<SignalTable>;
   getSite?: Maybe<Site>;
+  getTimeSeries?: Maybe<TimeSeries>;
+  getWaterRoutePresets?: Maybe<WaterRoutePresets>;
   queryCrop?: Maybe<Array<Maybe<Crop>>>;
   queryCropIntention?: Maybe<Array<Maybe<CropIntention>>>;
   queryCropIntentionsList?: Maybe<Array<Maybe<CropIntentionsList>>>;
   queryDrawer?: Maybe<Array<Maybe<Drawer>>>;
+  queryDriveOutputsPreset?: Maybe<Array<Maybe<DriveOutputsPreset>>>;
+  queryEndpoint?: Maybe<Array<Maybe<Endpoint>>>;
   queryGerminationTray?: Maybe<Array<Maybe<GerminationTray>>>;
   queryGrowPlate?: Maybe<Array<Maybe<GrowPlate>>>;
+  queryIpAddr?: Maybe<Array<Maybe<IpAddr>>>;
   queryLocation?: Maybe<Array<Maybe<Location>>>;
   queryModule?: Maybe<Array<Maybe<Module>>>;
   queryModuleMap?: Maybe<Array<Maybe<ModuleMap>>>;
   queryNursery?: Maybe<Array<Maybe<Nursery>>>;
+  queryPhysicalSolenoid?: Maybe<Array<Maybe<PhysicalSolenoid>>>;
   queryPlant?: Maybe<Array<Maybe<Plant>>>;
+  queryPort?: Maybe<Array<Maybe<Port>>>;
   querySeed?: Maybe<Array<Maybe<Seed>>>;
   queryShelf?: Maybe<Array<Maybe<Shelf>>>;
   querySignal?: Maybe<Array<Maybe<Signal>>>;
   querySignalTable?: Maybe<Array<Maybe<SignalTable>>>;
   querySite?: Maybe<Array<Maybe<Site>>>;
+  queryTimeSeries?: Maybe<Array<Maybe<TimeSeries>>>;
+  queryWaterRoutePresets?: Maybe<Array<Maybe<WaterRoutePresets>>>;
 };
 
 
@@ -1743,6 +2373,16 @@ export type QueryAggregateDrawerArgs = {
 };
 
 
+export type QueryAggregateDriveOutputsPresetArgs = {
+  filter?: InputMaybe<DriveOutputsPresetFilter>;
+};
+
+
+export type QueryAggregateEndpointArgs = {
+  filter?: InputMaybe<EndpointFilter>;
+};
+
+
 export type QueryAggregateGerminationTrayArgs = {
   filter?: InputMaybe<GerminationTrayFilter>;
 };
@@ -1750,6 +2390,11 @@ export type QueryAggregateGerminationTrayArgs = {
 
 export type QueryAggregateGrowPlateArgs = {
   filter?: InputMaybe<GrowPlateFilter>;
+};
+
+
+export type QueryAggregateIpAddrArgs = {
+  filter?: InputMaybe<IpAddrFilter>;
 };
 
 
@@ -1773,8 +2418,18 @@ export type QueryAggregateNurseryArgs = {
 };
 
 
+export type QueryAggregatePhysicalSolenoidArgs = {
+  filter?: InputMaybe<PhysicalSolenoidFilter>;
+};
+
+
 export type QueryAggregatePlantArgs = {
   filter?: InputMaybe<PlantFilter>;
+};
+
+
+export type QueryAggregatePortArgs = {
+  filter?: InputMaybe<PortFilter>;
 };
 
 
@@ -1803,12 +2458,32 @@ export type QueryAggregateSiteArgs = {
 };
 
 
+export type QueryAggregateTimeSeriesArgs = {
+  filter?: InputMaybe<TimeSeriesFilter>;
+};
+
+
+export type QueryAggregateWaterRoutePresetsArgs = {
+  filter?: InputMaybe<WaterRoutePresetsFilter>;
+};
+
+
 export type QueryExampleLambdaArgs = {
   exampleStringInput: Scalars['String'];
 };
 
 
 export type QueryGetCropArgs = {
+  id: Scalars['ID'];
+};
+
+
+export type QueryGetDriveOutputsPresetArgs = {
+  id: Scalars['ID'];
+};
+
+
+export type QueryGetEndpointArgs = {
   id: Scalars['ID'];
 };
 
@@ -1829,6 +2504,11 @@ export type QueryGetModuleMapArgs = {
 
 
 export type QueryGetNurseryArgs = {
+  id: Scalars['ID'];
+};
+
+
+export type QueryGetPhysicalSolenoidArgs = {
   id: Scalars['ID'];
 };
 
@@ -1854,6 +2534,16 @@ export type QueryGetSignalTableArgs = {
 
 
 export type QueryGetSiteArgs = {
+  id: Scalars['ID'];
+};
+
+
+export type QueryGetTimeSeriesArgs = {
+  id: Scalars['ID'];
+};
+
+
+export type QueryGetWaterRoutePresetsArgs = {
   id: Scalars['ID'];
 };
 
@@ -1889,6 +2579,21 @@ export type QueryQueryDrawerArgs = {
 };
 
 
+export type QueryQueryDriveOutputsPresetArgs = {
+  filter?: InputMaybe<DriveOutputsPresetFilter>;
+  first?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order?: InputMaybe<DriveOutputsPresetOrder>;
+};
+
+
+export type QueryQueryEndpointArgs = {
+  filter?: InputMaybe<EndpointFilter>;
+  first?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+};
+
+
 export type QueryQueryGerminationTrayArgs = {
   filter?: InputMaybe<GerminationTrayFilter>;
   first?: InputMaybe<Scalars['Int']>;
@@ -1901,6 +2606,14 @@ export type QueryQueryGrowPlateArgs = {
   first?: InputMaybe<Scalars['Int']>;
   offset?: InputMaybe<Scalars['Int']>;
   order?: InputMaybe<GrowPlateOrder>;
+};
+
+
+export type QueryQueryIpAddrArgs = {
+  filter?: InputMaybe<IpAddrFilter>;
+  first?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order?: InputMaybe<IpAddrOrder>;
 };
 
 
@@ -1933,11 +2646,27 @@ export type QueryQueryNurseryArgs = {
 };
 
 
+export type QueryQueryPhysicalSolenoidArgs = {
+  filter?: InputMaybe<PhysicalSolenoidFilter>;
+  first?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order?: InputMaybe<PhysicalSolenoidOrder>;
+};
+
+
 export type QueryQueryPlantArgs = {
   filter?: InputMaybe<PlantFilter>;
   first?: InputMaybe<Scalars['Int']>;
   offset?: InputMaybe<Scalars['Int']>;
   order?: InputMaybe<PlantOrder>;
+};
+
+
+export type QueryQueryPortArgs = {
+  filter?: InputMaybe<PortFilter>;
+  first?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order?: InputMaybe<PortOrder>;
 };
 
 
@@ -1974,6 +2703,21 @@ export type QueryQuerySignalTableArgs = {
 
 export type QueryQuerySiteArgs = {
   filter?: InputMaybe<SiteFilter>;
+  first?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+};
+
+
+export type QueryQueryTimeSeriesArgs = {
+  filter?: InputMaybe<TimeSeriesFilter>;
+  first?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order?: InputMaybe<TimeSeriesOrder>;
+};
+
+
+export type QueryQueryWaterRoutePresetsArgs = {
+  filter?: InputMaybe<WaterRoutePresetsFilter>;
   first?: InputMaybe<Scalars['Int']>;
   offset?: InputMaybe<Scalars['Int']>;
 };
@@ -2335,6 +3079,68 @@ export type StringTermFilter = {
   anyofterms?: InputMaybe<Scalars['String']>;
 };
 
+export type TimeSeries = {
+  __typename?: 'TimeSeries';
+  addrInfluxInstance: IpAddr;
+  id: Scalars['ID'];
+  portInfluxInstance: Port;
+  streamPath: Scalars['String'];
+};
+
+
+export type TimeSeriesAddrInfluxInstanceArgs = {
+  filter?: InputMaybe<IpAddrFilter>;
+};
+
+
+export type TimeSeriesPortInfluxInstanceArgs = {
+  filter?: InputMaybe<PortFilter>;
+};
+
+export type TimeSeriesAggregateResult = {
+  __typename?: 'TimeSeriesAggregateResult';
+  count?: Maybe<Scalars['Int']>;
+  streamPathMax?: Maybe<Scalars['String']>;
+  streamPathMin?: Maybe<Scalars['String']>;
+};
+
+export type TimeSeriesFilter = {
+  and?: InputMaybe<Array<InputMaybe<TimeSeriesFilter>>>;
+  has?: InputMaybe<Array<InputMaybe<TimeSeriesHasFilter>>>;
+  id?: InputMaybe<Array<Scalars['ID']>>;
+  not?: InputMaybe<TimeSeriesFilter>;
+  or?: InputMaybe<Array<InputMaybe<TimeSeriesFilter>>>;
+};
+
+export enum TimeSeriesHasFilter {
+  AddrInfluxInstance = 'addrInfluxInstance',
+  PortInfluxInstance = 'portInfluxInstance',
+  StreamPath = 'streamPath'
+}
+
+export type TimeSeriesOrder = {
+  asc?: InputMaybe<TimeSeriesOrderable>;
+  desc?: InputMaybe<TimeSeriesOrderable>;
+  then?: InputMaybe<TimeSeriesOrder>;
+};
+
+export enum TimeSeriesOrderable {
+  StreamPath = 'streamPath'
+}
+
+export type TimeSeriesPatch = {
+  addrInfluxInstance?: InputMaybe<IpAddrRef>;
+  portInfluxInstance?: InputMaybe<PortRef>;
+  streamPath?: InputMaybe<Scalars['String']>;
+};
+
+export type TimeSeriesRef = {
+  addrInfluxInstance?: InputMaybe<IpAddrRef>;
+  id?: InputMaybe<Scalars['ID']>;
+  portInfluxInstance?: InputMaybe<PortRef>;
+  streamPath?: InputMaybe<Scalars['String']>;
+};
+
 export type UpdateCropInput = {
   filter: CropFilter;
   remove?: InputMaybe<CropPatch>;
@@ -2414,6 +3220,45 @@ export type UpdateDrawerPayloadDrawerArgs = {
   order?: InputMaybe<DrawerOrder>;
 };
 
+export type UpdateDriveOutputsPresetInput = {
+  filter: DriveOutputsPresetFilter;
+  remove?: InputMaybe<DriveOutputsPresetPatch>;
+  set?: InputMaybe<DriveOutputsPresetPatch>;
+};
+
+export type UpdateDriveOutputsPresetPayload = {
+  __typename?: 'UpdateDriveOutputsPresetPayload';
+  driveOutputsPreset?: Maybe<Array<Maybe<DriveOutputsPreset>>>;
+  numUids?: Maybe<Scalars['Int']>;
+};
+
+
+export type UpdateDriveOutputsPresetPayloadDriveOutputsPresetArgs = {
+  filter?: InputMaybe<DriveOutputsPresetFilter>;
+  first?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order?: InputMaybe<DriveOutputsPresetOrder>;
+};
+
+export type UpdateEndpointInput = {
+  filter: EndpointFilter;
+  remove?: InputMaybe<EndpointPatch>;
+  set?: InputMaybe<EndpointPatch>;
+};
+
+export type UpdateEndpointPayload = {
+  __typename?: 'UpdateEndpointPayload';
+  endpoint?: Maybe<Array<Maybe<Endpoint>>>;
+  numUids?: Maybe<Scalars['Int']>;
+};
+
+
+export type UpdateEndpointPayloadEndpointArgs = {
+  filter?: InputMaybe<EndpointFilter>;
+  first?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+};
+
 export type UpdateGerminationTrayInput = {
   filter: GerminationTrayFilter;
   remove?: InputMaybe<GerminationTrayPatch>;
@@ -2451,6 +3296,26 @@ export type UpdateGrowPlatePayloadGrowPlateArgs = {
   first?: InputMaybe<Scalars['Int']>;
   offset?: InputMaybe<Scalars['Int']>;
   order?: InputMaybe<GrowPlateOrder>;
+};
+
+export type UpdateIpAddrInput = {
+  filter: IpAddrFilter;
+  remove?: InputMaybe<IpAddrPatch>;
+  set?: InputMaybe<IpAddrPatch>;
+};
+
+export type UpdateIpAddrPayload = {
+  __typename?: 'UpdateIpAddrPayload';
+  ipAddr?: Maybe<Array<Maybe<IpAddr>>>;
+  numUids?: Maybe<Scalars['Int']>;
+};
+
+
+export type UpdateIpAddrPayloadIpAddrArgs = {
+  filter?: InputMaybe<IpAddrFilter>;
+  first?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order?: InputMaybe<IpAddrOrder>;
 };
 
 export type UpdateLocationInput = {
@@ -2530,6 +3395,26 @@ export type UpdateNurseryPayloadNurseryArgs = {
   offset?: InputMaybe<Scalars['Int']>;
 };
 
+export type UpdatePhysicalSolenoidInput = {
+  filter: PhysicalSolenoidFilter;
+  remove?: InputMaybe<PhysicalSolenoidPatch>;
+  set?: InputMaybe<PhysicalSolenoidPatch>;
+};
+
+export type UpdatePhysicalSolenoidPayload = {
+  __typename?: 'UpdatePhysicalSolenoidPayload';
+  numUids?: Maybe<Scalars['Int']>;
+  physicalSolenoid?: Maybe<Array<Maybe<PhysicalSolenoid>>>;
+};
+
+
+export type UpdatePhysicalSolenoidPayloadPhysicalSolenoidArgs = {
+  filter?: InputMaybe<PhysicalSolenoidFilter>;
+  first?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order?: InputMaybe<PhysicalSolenoidOrder>;
+};
+
 export type UpdatePlantInput = {
   filter: PlantFilter;
   remove?: InputMaybe<PlantPatch>;
@@ -2548,6 +3433,26 @@ export type UpdatePlantPayloadPlantArgs = {
   first?: InputMaybe<Scalars['Int']>;
   offset?: InputMaybe<Scalars['Int']>;
   order?: InputMaybe<PlantOrder>;
+};
+
+export type UpdatePortInput = {
+  filter: PortFilter;
+  remove?: InputMaybe<PortPatch>;
+  set?: InputMaybe<PortPatch>;
+};
+
+export type UpdatePortPayload = {
+  __typename?: 'UpdatePortPayload';
+  numUids?: Maybe<Scalars['Int']>;
+  port?: Maybe<Array<Maybe<Port>>>;
+};
+
+
+export type UpdatePortPayloadPortArgs = {
+  filter?: InputMaybe<PortFilter>;
+  first?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order?: InputMaybe<PortOrder>;
 };
 
 export type UpdateSeedInput = {
@@ -2646,6 +3551,91 @@ export type UpdateSitePayloadSiteArgs = {
   filter?: InputMaybe<SiteFilter>;
   first?: InputMaybe<Scalars['Int']>;
   offset?: InputMaybe<Scalars['Int']>;
+};
+
+export type UpdateTimeSeriesInput = {
+  filter: TimeSeriesFilter;
+  remove?: InputMaybe<TimeSeriesPatch>;
+  set?: InputMaybe<TimeSeriesPatch>;
+};
+
+export type UpdateTimeSeriesPayload = {
+  __typename?: 'UpdateTimeSeriesPayload';
+  numUids?: Maybe<Scalars['Int']>;
+  timeSeries?: Maybe<Array<Maybe<TimeSeries>>>;
+};
+
+
+export type UpdateTimeSeriesPayloadTimeSeriesArgs = {
+  filter?: InputMaybe<TimeSeriesFilter>;
+  first?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order?: InputMaybe<TimeSeriesOrder>;
+};
+
+export type UpdateWaterRoutePresetsInput = {
+  filter: WaterRoutePresetsFilter;
+  remove?: InputMaybe<WaterRoutePresetsPatch>;
+  set?: InputMaybe<WaterRoutePresetsPatch>;
+};
+
+export type UpdateWaterRoutePresetsPayload = {
+  __typename?: 'UpdateWaterRoutePresetsPayload';
+  numUids?: Maybe<Scalars['Int']>;
+  waterRoutePresets?: Maybe<Array<Maybe<WaterRoutePresets>>>;
+};
+
+
+export type UpdateWaterRoutePresetsPayloadWaterRoutePresetsArgs = {
+  filter?: InputMaybe<WaterRoutePresetsFilter>;
+  first?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+};
+
+export type WaterRoutePresets = {
+  __typename?: 'WaterRoutePresets';
+  id: Scalars['ID'];
+  presets: Array<DriveOutputsPreset>;
+  presetsAggregate?: Maybe<DriveOutputsPresetAggregateResult>;
+};
+
+
+export type WaterRoutePresetsPresetsArgs = {
+  filter?: InputMaybe<DriveOutputsPresetFilter>;
+  first?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order?: InputMaybe<DriveOutputsPresetOrder>;
+};
+
+
+export type WaterRoutePresetsPresetsAggregateArgs = {
+  filter?: InputMaybe<DriveOutputsPresetFilter>;
+};
+
+export type WaterRoutePresetsAggregateResult = {
+  __typename?: 'WaterRoutePresetsAggregateResult';
+  count?: Maybe<Scalars['Int']>;
+};
+
+export type WaterRoutePresetsFilter = {
+  and?: InputMaybe<Array<InputMaybe<WaterRoutePresetsFilter>>>;
+  has?: InputMaybe<Array<InputMaybe<WaterRoutePresetsHasFilter>>>;
+  id?: InputMaybe<Array<Scalars['ID']>>;
+  not?: InputMaybe<WaterRoutePresetsFilter>;
+  or?: InputMaybe<Array<InputMaybe<WaterRoutePresetsFilter>>>;
+};
+
+export enum WaterRoutePresetsHasFilter {
+  Presets = 'presets'
+}
+
+export type WaterRoutePresetsPatch = {
+  presets?: InputMaybe<Array<DriveOutputsPresetRef>>;
+};
+
+export type WaterRoutePresetsRef = {
+  id?: InputMaybe<Scalars['ID']>;
+  presets?: InputMaybe<Array<DriveOutputsPresetRef>>;
 };
 
 export type WithinFilter = {

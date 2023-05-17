@@ -1,0 +1,27 @@
+mutation AddDriveOutputsPreset ($driveOutputSerialString:String!){
+    addDriveOutputsPreset
+    (
+        input:
+        {
+            lxEndpoint: {
+                addr: {addr: "192.168.1.251"}
+                port: {port: 3030}
+            }
+            boolArrayString: $driveOutputSerialString
+        }
+    )
+    {
+        driveOutputsPreset {
+            id
+            boolArrayString
+            lxEndpoint {
+                addr {
+                    addr
+                }
+                port {
+                    port
+                }
+            }
+        }
+    }
+}

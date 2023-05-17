@@ -139,6 +139,47 @@ type GerminationTray {
 	sitesAggregate(filter: SiteFilter): SiteAggregateResult
 }
 
+type WaterRoutePresets {
+	id: ID!
+	presets(filter: DriveOutputsPresetFilter, order: DriveOutputsPresetOrder, first: Int, offset: Int): [DriveOutputsPreset!]!
+	presetsAggregate(filter: DriveOutputsPresetFilter): DriveOutputsPresetAggregateResult
+}
+
+type DriveOutputsPreset {
+	id: ID!
+	boolArrayString: String!
+	lxEndpoint(filter: EndpointFilter): Endpoint!
+}
+
+type PhysicalSolenoid {
+	id: ID!
+	outputDriveIndex: Int!
+	outputDriveAddr(filter: IpAddrFilter): IpAddr!
+	driveState: Boolean!
+	influxOutputCurrentTimeSeries(filter: TimeSeriesFilter): TimeSeries
+}
+
+type IpAddr {
+	addr: String!
+}
+
+type Port {
+	port: Int!
+}
+
+type Endpoint {
+	id: ID!
+	addr(filter: IpAddrFilter): IpAddr!
+	port(filter: PortFilter): Port!
+}
+
+type TimeSeries {
+	id: ID!
+	addrInfluxInstance(filter: IpAddrFilter): IpAddr!
+	portInfluxInstance(filter: PortFilter): Port!
+	streamPath: String!
+}
+
 #######################
 # Extended Definitions
 #######################
@@ -425,6 +466,16 @@ type AddDrawerPayload {
 	numUids: Int
 }
 
+type AddDriveOutputsPresetPayload {
+	driveOutputsPreset(filter: DriveOutputsPresetFilter, order: DriveOutputsPresetOrder, first: Int, offset: Int): [DriveOutputsPreset]
+	numUids: Int
+}
+
+type AddEndpointPayload {
+	endpoint(filter: EndpointFilter, first: Int, offset: Int): [Endpoint]
+	numUids: Int
+}
+
 type AddGerminationTrayPayload {
 	germinationTray(filter: GerminationTrayFilter, first: Int, offset: Int): [GerminationTray]
 	numUids: Int
@@ -432,6 +483,11 @@ type AddGerminationTrayPayload {
 
 type AddGrowPlatePayload {
 	growPlate(filter: GrowPlateFilter, order: GrowPlateOrder, first: Int, offset: Int): [GrowPlate]
+	numUids: Int
+}
+
+type AddIpAddrPayload {
+	ipAddr(filter: IpAddrFilter, order: IpAddrOrder, first: Int, offset: Int): [IpAddr]
 	numUids: Int
 }
 
@@ -455,8 +511,18 @@ type AddNurseryPayload {
 	numUids: Int
 }
 
+type AddPhysicalSolenoidPayload {
+	physicalSolenoid(filter: PhysicalSolenoidFilter, order: PhysicalSolenoidOrder, first: Int, offset: Int): [PhysicalSolenoid]
+	numUids: Int
+}
+
 type AddPlantPayload {
 	plant(filter: PlantFilter, order: PlantOrder, first: Int, offset: Int): [Plant]
+	numUids: Int
+}
+
+type AddPortPayload {
+	port(filter: PortFilter, order: PortOrder, first: Int, offset: Int): [Port]
 	numUids: Int
 }
 
@@ -482,6 +548,16 @@ type AddSignalTablePayload {
 
 type AddSitePayload {
 	site(filter: SiteFilter, first: Int, offset: Int): [Site]
+	numUids: Int
+}
+
+type AddTimeSeriesPayload {
+	timeSeries(filter: TimeSeriesFilter, order: TimeSeriesOrder, first: Int, offset: Int): [TimeSeries]
+	numUids: Int
+}
+
+type AddWaterRoutePresetsPayload {
+	waterRoutePresets(filter: WaterRoutePresetsFilter, first: Int, offset: Int): [WaterRoutePresets]
 	numUids: Int
 }
 
@@ -537,6 +613,18 @@ type DeleteDrawerPayload {
 	numUids: Int
 }
 
+type DeleteDriveOutputsPresetPayload {
+	driveOutputsPreset(filter: DriveOutputsPresetFilter, order: DriveOutputsPresetOrder, first: Int, offset: Int): [DriveOutputsPreset]
+	msg: String
+	numUids: Int
+}
+
+type DeleteEndpointPayload {
+	endpoint(filter: EndpointFilter, first: Int, offset: Int): [Endpoint]
+	msg: String
+	numUids: Int
+}
+
 type DeleteGerminationTrayPayload {
 	germinationTray(filter: GerminationTrayFilter, first: Int, offset: Int): [GerminationTray]
 	msg: String
@@ -545,6 +633,12 @@ type DeleteGerminationTrayPayload {
 
 type DeleteGrowPlatePayload {
 	growPlate(filter: GrowPlateFilter, order: GrowPlateOrder, first: Int, offset: Int): [GrowPlate]
+	msg: String
+	numUids: Int
+}
+
+type DeleteIpAddrPayload {
+	ipAddr(filter: IpAddrFilter, order: IpAddrOrder, first: Int, offset: Int): [IpAddr]
 	msg: String
 	numUids: Int
 }
@@ -573,8 +667,20 @@ type DeleteNurseryPayload {
 	numUids: Int
 }
 
+type DeletePhysicalSolenoidPayload {
+	physicalSolenoid(filter: PhysicalSolenoidFilter, order: PhysicalSolenoidOrder, first: Int, offset: Int): [PhysicalSolenoid]
+	msg: String
+	numUids: Int
+}
+
 type DeletePlantPayload {
 	plant(filter: PlantFilter, order: PlantOrder, first: Int, offset: Int): [Plant]
+	msg: String
+	numUids: Int
+}
+
+type DeletePortPayload {
+	port(filter: PortFilter, order: PortOrder, first: Int, offset: Int): [Port]
 	msg: String
 	numUids: Int
 }
@@ -609,12 +715,34 @@ type DeleteSitePayload {
 	numUids: Int
 }
 
+type DeleteTimeSeriesPayload {
+	timeSeries(filter: TimeSeriesFilter, order: TimeSeriesOrder, first: Int, offset: Int): [TimeSeries]
+	msg: String
+	numUids: Int
+}
+
+type DeleteWaterRoutePresetsPayload {
+	waterRoutePresets(filter: WaterRoutePresetsFilter, first: Int, offset: Int): [WaterRoutePresets]
+	msg: String
+	numUids: Int
+}
+
 type DrawerAggregateResult {
 	count: Int
 	stockMin: Int
 	stockMax: Int
 	stockSum: Int
 	stockAvg: Float
+}
+
+type DriveOutputsPresetAggregateResult {
+	count: Int
+	boolArrayStringMin: String
+	boolArrayStringMax: String
+}
+
+type EndpointAggregateResult {
+	count: Int
 }
 
 type GerminationTrayAggregateResult {
@@ -627,6 +755,12 @@ type GrowPlateAggregateResult {
 	rawNetCupReadingMax: Int
 	rawNetCupReadingSum: Int
 	rawNetCupReadingAvg: Float
+}
+
+type IpAddrAggregateResult {
+	count: Int
+	addrMin: String
+	addrMax: String
 }
 
 type LocationAggregateResult {
@@ -653,6 +787,14 @@ type NurseryAggregateResult {
 	count: Int
 }
 
+type PhysicalSolenoidAggregateResult {
+	count: Int
+	outputDriveIndexMin: Int
+	outputDriveIndexMax: Int
+	outputDriveIndexSum: Int
+	outputDriveIndexAvg: Float
+}
+
 type PlantAggregateResult {
 	count: Int
 	cropNameMin: String
@@ -665,6 +807,14 @@ type PlantAggregateResult {
 	transferredDateMax: DateTime
 	harvestedDateMin: DateTime
 	harvestedDateMax: DateTime
+}
+
+type PortAggregateResult {
+	count: Int
+	portMin: Int
+	portMax: Int
+	portSum: Int
+	portAvg: Float
 }
 
 type SeedAggregateResult {
@@ -717,6 +867,12 @@ type SiteAggregateResult {
 	count: Int
 }
 
+type TimeSeriesAggregateResult {
+	count: Int
+	streamPathMin: String
+	streamPathMax: String
+}
+
 type UpdateCropIntentionPayload {
 	cropIntention(filter: CropIntentionFilter, order: CropIntentionOrder, first: Int, offset: Int): [CropIntention]
 	numUids: Int
@@ -737,6 +893,16 @@ type UpdateDrawerPayload {
 	numUids: Int
 }
 
+type UpdateDriveOutputsPresetPayload {
+	driveOutputsPreset(filter: DriveOutputsPresetFilter, order: DriveOutputsPresetOrder, first: Int, offset: Int): [DriveOutputsPreset]
+	numUids: Int
+}
+
+type UpdateEndpointPayload {
+	endpoint(filter: EndpointFilter, first: Int, offset: Int): [Endpoint]
+	numUids: Int
+}
+
 type UpdateGerminationTrayPayload {
 	germinationTray(filter: GerminationTrayFilter, first: Int, offset: Int): [GerminationTray]
 	numUids: Int
@@ -744,6 +910,11 @@ type UpdateGerminationTrayPayload {
 
 type UpdateGrowPlatePayload {
 	growPlate(filter: GrowPlateFilter, order: GrowPlateOrder, first: Int, offset: Int): [GrowPlate]
+	numUids: Int
+}
+
+type UpdateIpAddrPayload {
+	ipAddr(filter: IpAddrFilter, order: IpAddrOrder, first: Int, offset: Int): [IpAddr]
 	numUids: Int
 }
 
@@ -767,8 +938,18 @@ type UpdateNurseryPayload {
 	numUids: Int
 }
 
+type UpdatePhysicalSolenoidPayload {
+	physicalSolenoid(filter: PhysicalSolenoidFilter, order: PhysicalSolenoidOrder, first: Int, offset: Int): [PhysicalSolenoid]
+	numUids: Int
+}
+
 type UpdatePlantPayload {
 	plant(filter: PlantFilter, order: PlantOrder, first: Int, offset: Int): [Plant]
+	numUids: Int
+}
+
+type UpdatePortPayload {
+	port(filter: PortFilter, order: PortOrder, first: Int, offset: Int): [Port]
 	numUids: Int
 }
 
@@ -795,6 +976,20 @@ type UpdateSignalTablePayload {
 type UpdateSitePayload {
 	site(filter: SiteFilter, first: Int, offset: Int): [Site]
 	numUids: Int
+}
+
+type UpdateTimeSeriesPayload {
+	timeSeries(filter: TimeSeriesFilter, order: TimeSeriesOrder, first: Int, offset: Int): [TimeSeries]
+	numUids: Int
+}
+
+type UpdateWaterRoutePresetsPayload {
+	waterRoutePresets(filter: WaterRoutePresetsFilter, first: Int, offset: Int): [WaterRoutePresets]
+	numUids: Int
+}
+
+type WaterRoutePresetsAggregateResult {
+	count: Int
 }
 
 #######################
@@ -839,6 +1034,20 @@ enum DrawerOrderable {
 	stock
 }
 
+enum DriveOutputsPresetHasFilter {
+	boolArrayString
+	lxEndpoint
+}
+
+enum DriveOutputsPresetOrderable {
+	boolArrayString
+}
+
+enum EndpointHasFilter {
+	addr
+	port
+}
+
 enum GerminationTrayHasFilter {
 	sites
 }
@@ -849,6 +1058,14 @@ enum GrowPlateHasFilter {
 
 enum GrowPlateOrderable {
 	rawNetCupReading
+}
+
+enum IpAddrHasFilter {
+	addr
+}
+
+enum IpAddrOrderable {
+	addr
 }
 
 enum LocationHasFilter {
@@ -875,6 +1092,17 @@ enum NurseryHasFilter {
 	GerminationTrays
 }
 
+enum PhysicalSolenoidHasFilter {
+	outputDriveIndex
+	outputDriveAddr
+	driveState
+	influxOutputCurrentTimeSeries
+}
+
+enum PhysicalSolenoidOrderable {
+	outputDriveIndex
+}
+
 enum PlantHasFilter {
 	cropName
 	repeater
@@ -891,6 +1119,14 @@ enum PlantOrderable {
 	germinatedDate
 	transferredDate
 	harvestedDate
+}
+
+enum PortHasFilter {
+	port
+}
+
+enum PortOrderable {
+	port
 }
 
 enum SeedHasFilter {
@@ -945,6 +1181,20 @@ enum SiteHasFilter {
 	occupant
 }
 
+enum TimeSeriesHasFilter {
+	addrInfluxInstance
+	portInfluxInstance
+	streamPath
+}
+
+enum TimeSeriesOrderable {
+	streamPath
+}
+
+enum WaterRoutePresetsHasFilter {
+	presets
+}
+
 #######################
 # Generated Inputs
 #######################
@@ -972,12 +1222,26 @@ input AddDrawerInput {
 	stock: Int
 }
 
+input AddDriveOutputsPresetInput {
+	boolArrayString: String!
+	lxEndpoint: EndpointRef!
+}
+
+input AddEndpointInput {
+	addr: IpAddrRef!
+	port: PortRef!
+}
+
 input AddGerminationTrayInput {
 	sites: [SiteRef!]!
 }
 
 input AddGrowPlateInput {
 	rawNetCupReading: Int
+}
+
+input AddIpAddrInput {
+	addr: String!
 }
 
 input AddLocationInput {
@@ -999,6 +1263,13 @@ input AddNurseryInput {
 	GerminationTrays: [GerminationTrayRef!]!
 }
 
+input AddPhysicalSolenoidInput {
+	outputDriveIndex: Int!
+	outputDriveAddr: IpAddrRef!
+	driveState: Boolean!
+	influxOutputCurrentTimeSeries: TimeSeriesRef
+}
+
 input AddPlantInput {
 	cropName: String!
 	repeater: Boolean!
@@ -1007,6 +1278,10 @@ input AddPlantInput {
 	transferredDate: DateTime
 	harvestedDate: DateTime
 	location: SiteRef
+}
+
+input AddPortInput {
+	port: Int!
 }
 
 input AddSeedInput {
@@ -1039,6 +1314,16 @@ input AddSignalTableInput {
 input AddSiteInput {
 	signal: SignalRef
 	occupant: PlantRef
+}
+
+input AddTimeSeriesInput {
+	addrInfluxInstance: IpAddrRef!
+	portInfluxInstance: PortRef!
+	streamPath: String!
+}
+
+input AddWaterRoutePresetsInput {
+	presets: [DriveOutputsPresetRef!]!
 }
 
 input CropFilter {
@@ -1135,6 +1420,50 @@ input DrawerRef {
 	stock: Int
 }
 
+input DriveOutputsPresetFilter {
+	id: [ID!]
+	has: [DriveOutputsPresetHasFilter]
+	and: [DriveOutputsPresetFilter]
+	or: [DriveOutputsPresetFilter]
+	not: DriveOutputsPresetFilter
+}
+
+input DriveOutputsPresetOrder {
+	asc: DriveOutputsPresetOrderable
+	desc: DriveOutputsPresetOrderable
+	then: DriveOutputsPresetOrder
+}
+
+input DriveOutputsPresetPatch {
+	boolArrayString: String
+	lxEndpoint: EndpointRef
+}
+
+input DriveOutputsPresetRef {
+	id: ID
+	boolArrayString: String
+	lxEndpoint: EndpointRef
+}
+
+input EndpointFilter {
+	id: [ID!]
+	has: [EndpointHasFilter]
+	and: [EndpointFilter]
+	or: [EndpointFilter]
+	not: EndpointFilter
+}
+
+input EndpointPatch {
+	addr: IpAddrRef
+	port: PortRef
+}
+
+input EndpointRef {
+	id: ID
+	addr: IpAddrRef
+	port: PortRef
+}
+
 input GerminationTrayFilter {
 	id: [ID!]
 	has: [GerminationTrayHasFilter]
@@ -1171,6 +1500,27 @@ input GrowPlatePatch {
 
 input GrowPlateRef {
 	rawNetCupReading: Int
+}
+
+input IpAddrFilter {
+	has: [IpAddrHasFilter]
+	and: [IpAddrFilter]
+	or: [IpAddrFilter]
+	not: IpAddrFilter
+}
+
+input IpAddrOrder {
+	asc: IpAddrOrderable
+	desc: IpAddrOrderable
+	then: IpAddrOrder
+}
+
+input IpAddrPatch {
+	addr: String
+}
+
+input IpAddrRef {
+	addr: String
 }
 
 input LocationFilter {
@@ -1251,6 +1601,35 @@ input NurseryRef {
 	GerminationTrays: [GerminationTrayRef!]
 }
 
+input PhysicalSolenoidFilter {
+	id: [ID!]
+	has: [PhysicalSolenoidHasFilter]
+	and: [PhysicalSolenoidFilter]
+	or: [PhysicalSolenoidFilter]
+	not: PhysicalSolenoidFilter
+}
+
+input PhysicalSolenoidOrder {
+	asc: PhysicalSolenoidOrderable
+	desc: PhysicalSolenoidOrderable
+	then: PhysicalSolenoidOrder
+}
+
+input PhysicalSolenoidPatch {
+	outputDriveIndex: Int
+	outputDriveAddr: IpAddrRef
+	driveState: Boolean
+	influxOutputCurrentTimeSeries: TimeSeriesRef
+}
+
+input PhysicalSolenoidRef {
+	id: ID
+	outputDriveIndex: Int
+	outputDriveAddr: IpAddrRef
+	driveState: Boolean
+	influxOutputCurrentTimeSeries: TimeSeriesRef
+}
+
 input PlantFilter {
 	id: [ID!]
 	cropName: StringTermFilter
@@ -1287,6 +1666,27 @@ input PlantRef {
 	transferredDate: DateTime
 	harvestedDate: DateTime
 	location: SiteRef
+}
+
+input PortFilter {
+	has: [PortHasFilter]
+	and: [PortFilter]
+	or: [PortFilter]
+	not: PortFilter
+}
+
+input PortOrder {
+	asc: PortOrderable
+	desc: PortOrderable
+	then: PortOrder
+}
+
+input PortPatch {
+	port: Int
+}
+
+input PortRef {
+	port: Int
 }
 
 input SeedFilter {
@@ -1415,6 +1815,33 @@ input SiteRef {
 	occupant: PlantRef
 }
 
+input TimeSeriesFilter {
+	id: [ID!]
+	has: [TimeSeriesHasFilter]
+	and: [TimeSeriesFilter]
+	or: [TimeSeriesFilter]
+	not: TimeSeriesFilter
+}
+
+input TimeSeriesOrder {
+	asc: TimeSeriesOrderable
+	desc: TimeSeriesOrderable
+	then: TimeSeriesOrder
+}
+
+input TimeSeriesPatch {
+	addrInfluxInstance: IpAddrRef
+	portInfluxInstance: PortRef
+	streamPath: String
+}
+
+input TimeSeriesRef {
+	id: ID
+	addrInfluxInstance: IpAddrRef
+	portInfluxInstance: PortRef
+	streamPath: String
+}
+
 input UpdateCropInput {
 	filter: CropFilter!
 	set: CropPatch
@@ -1439,6 +1866,18 @@ input UpdateDrawerInput {
 	remove: DrawerPatch
 }
 
+input UpdateDriveOutputsPresetInput {
+	filter: DriveOutputsPresetFilter!
+	set: DriveOutputsPresetPatch
+	remove: DriveOutputsPresetPatch
+}
+
+input UpdateEndpointInput {
+	filter: EndpointFilter!
+	set: EndpointPatch
+	remove: EndpointPatch
+}
+
 input UpdateGerminationTrayInput {
 	filter: GerminationTrayFilter!
 	set: GerminationTrayPatch
@@ -1449,6 +1888,12 @@ input UpdateGrowPlateInput {
 	filter: GrowPlateFilter!
 	set: GrowPlatePatch
 	remove: GrowPlatePatch
+}
+
+input UpdateIpAddrInput {
+	filter: IpAddrFilter!
+	set: IpAddrPatch
+	remove: IpAddrPatch
 }
 
 input UpdateLocationInput {
@@ -1475,10 +1920,22 @@ input UpdateNurseryInput {
 	remove: NurseryPatch
 }
 
+input UpdatePhysicalSolenoidInput {
+	filter: PhysicalSolenoidFilter!
+	set: PhysicalSolenoidPatch
+	remove: PhysicalSolenoidPatch
+}
+
 input UpdatePlantInput {
 	filter: PlantFilter!
 	set: PlantPatch
 	remove: PlantPatch
+}
+
+input UpdatePortInput {
+	filter: PortFilter!
+	set: PortPatch
+	remove: PortPatch
 }
 
 input UpdateSeedInput {
@@ -1509,6 +1966,35 @@ input UpdateSiteInput {
 	filter: SiteFilter!
 	set: SitePatch
 	remove: SitePatch
+}
+
+input UpdateTimeSeriesInput {
+	filter: TimeSeriesFilter!
+	set: TimeSeriesPatch
+	remove: TimeSeriesPatch
+}
+
+input UpdateWaterRoutePresetsInput {
+	filter: WaterRoutePresetsFilter!
+	set: WaterRoutePresetsPatch
+	remove: WaterRoutePresetsPatch
+}
+
+input WaterRoutePresetsFilter {
+	id: [ID!]
+	has: [WaterRoutePresetsHasFilter]
+	and: [WaterRoutePresetsFilter]
+	or: [WaterRoutePresetsFilter]
+	not: WaterRoutePresetsFilter
+}
+
+input WaterRoutePresetsPatch {
+	presets: [DriveOutputsPresetRef!]
+}
+
+input WaterRoutePresetsRef {
+	id: ID
+	presets: [DriveOutputsPresetRef!]
 }
 
 #######################
@@ -1560,6 +2046,25 @@ type Query {
 	getGerminationTray(id: ID!): GerminationTray
 	queryGerminationTray(filter: GerminationTrayFilter, first: Int, offset: Int): [GerminationTray]
 	aggregateGerminationTray(filter: GerminationTrayFilter): GerminationTrayAggregateResult
+	getWaterRoutePresets(id: ID!): WaterRoutePresets
+	queryWaterRoutePresets(filter: WaterRoutePresetsFilter, first: Int, offset: Int): [WaterRoutePresets]
+	aggregateWaterRoutePresets(filter: WaterRoutePresetsFilter): WaterRoutePresetsAggregateResult
+	getDriveOutputsPreset(id: ID!): DriveOutputsPreset
+	queryDriveOutputsPreset(filter: DriveOutputsPresetFilter, order: DriveOutputsPresetOrder, first: Int, offset: Int): [DriveOutputsPreset]
+	aggregateDriveOutputsPreset(filter: DriveOutputsPresetFilter): DriveOutputsPresetAggregateResult
+	getPhysicalSolenoid(id: ID!): PhysicalSolenoid
+	queryPhysicalSolenoid(filter: PhysicalSolenoidFilter, order: PhysicalSolenoidOrder, first: Int, offset: Int): [PhysicalSolenoid]
+	aggregatePhysicalSolenoid(filter: PhysicalSolenoidFilter): PhysicalSolenoidAggregateResult
+	queryIpAddr(filter: IpAddrFilter, order: IpAddrOrder, first: Int, offset: Int): [IpAddr]
+	aggregateIpAddr(filter: IpAddrFilter): IpAddrAggregateResult
+	queryPort(filter: PortFilter, order: PortOrder, first: Int, offset: Int): [Port]
+	aggregatePort(filter: PortFilter): PortAggregateResult
+	getEndpoint(id: ID!): Endpoint
+	queryEndpoint(filter: EndpointFilter, first: Int, offset: Int): [Endpoint]
+	aggregateEndpoint(filter: EndpointFilter): EndpointAggregateResult
+	getTimeSeries(id: ID!): TimeSeries
+	queryTimeSeries(filter: TimeSeriesFilter, order: TimeSeriesOrder, first: Int, offset: Int): [TimeSeries]
+	aggregateTimeSeries(filter: TimeSeriesFilter): TimeSeriesAggregateResult
 }
 
 #######################
@@ -1616,5 +2121,26 @@ type Mutation {
 	addGerminationTray(input: [AddGerminationTrayInput!]!): AddGerminationTrayPayload
 	updateGerminationTray(input: UpdateGerminationTrayInput!): UpdateGerminationTrayPayload
 	deleteGerminationTray(filter: GerminationTrayFilter!): DeleteGerminationTrayPayload
+	addWaterRoutePresets(input: [AddWaterRoutePresetsInput!]!): AddWaterRoutePresetsPayload
+	updateWaterRoutePresets(input: UpdateWaterRoutePresetsInput!): UpdateWaterRoutePresetsPayload
+	deleteWaterRoutePresets(filter: WaterRoutePresetsFilter!): DeleteWaterRoutePresetsPayload
+	addDriveOutputsPreset(input: [AddDriveOutputsPresetInput!]!): AddDriveOutputsPresetPayload
+	updateDriveOutputsPreset(input: UpdateDriveOutputsPresetInput!): UpdateDriveOutputsPresetPayload
+	deleteDriveOutputsPreset(filter: DriveOutputsPresetFilter!): DeleteDriveOutputsPresetPayload
+	addPhysicalSolenoid(input: [AddPhysicalSolenoidInput!]!): AddPhysicalSolenoidPayload
+	updatePhysicalSolenoid(input: UpdatePhysicalSolenoidInput!): UpdatePhysicalSolenoidPayload
+	deletePhysicalSolenoid(filter: PhysicalSolenoidFilter!): DeletePhysicalSolenoidPayload
+	addIpAddr(input: [AddIpAddrInput!]!): AddIpAddrPayload
+	updateIpAddr(input: UpdateIpAddrInput!): UpdateIpAddrPayload
+	deleteIpAddr(filter: IpAddrFilter!): DeleteIpAddrPayload
+	addPort(input: [AddPortInput!]!): AddPortPayload
+	updatePort(input: UpdatePortInput!): UpdatePortPayload
+	deletePort(filter: PortFilter!): DeletePortPayload
+	addEndpoint(input: [AddEndpointInput!]!): AddEndpointPayload
+	updateEndpoint(input: UpdateEndpointInput!): UpdateEndpointPayload
+	deleteEndpoint(filter: EndpointFilter!): DeleteEndpointPayload
+	addTimeSeries(input: [AddTimeSeriesInput!]!): AddTimeSeriesPayload
+	updateTimeSeries(input: UpdateTimeSeriesInput!): UpdateTimeSeriesPayload
+	deleteTimeSeries(filter: TimeSeriesFilter!): DeleteTimeSeriesPayload
 }
 

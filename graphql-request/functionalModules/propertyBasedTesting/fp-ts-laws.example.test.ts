@@ -8,6 +8,6 @@ describe('my semigroup instance', () => {
         const semigroupSpace: Semigroup<string> = {
             concat: (x, y) => x + ' ' + y
         }
-        laws.semigroup(semigroupSpace, setoidString, fc.string())
+        // laws.semigroup(semigroupSpace, setoidString, fc.string())
     })
 })

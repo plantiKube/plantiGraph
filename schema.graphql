@@ -159,13 +159,19 @@ type GerminationTray {
 type WaterRoutePresets {
     id: ID!
 
-    presets: [SolenoidsControlHandle!]!
+    presets: [DriveOutputsPreset!]!
 }
 
 # one idiosyncracy of GraphQL is the lack of ordered Lists.
 # As a workaround we store the boolean values in a string deserialize an ordered bool list
-type SolenoidsControlHandle {
+type DriveOutputsPreset {
+    id: ID!
+
     boolArrayString: String! # acts like a []bool array. .. perhaps could proxy as a lambda and store a JSON compatible list
+
+    # just a patch for right now - the OPC path into LX
+    #    opcPath: String!
+    lxEndpoint: Endpoint!
 }
 
 
