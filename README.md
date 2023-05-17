@@ -90,5 +90,7 @@ Abstractly every transformation of our datagraph follows the following flow:
 
 ---
 `plantiKube` ecosystem projects such as `plantiGraph` are
-</> and maintained with <3 with AGPL Licensing
+</> and maintained with <3 by GreenCubes.io
+
+This code is copyleft via AGPL Licensing
 in service of self sovereign food security for all.
