@@ -2,7 +2,7 @@ import {Bundle, Client} from 'node-osc';
 
 const client = new Client('127.0.0.1', 3030);
 
-const oscAddress = '/lx/mixer/channel/sel/pattern/LinearMap/'
+const oscAddress = '/lx/mixer/channel/1/pattern/1/'
 
 // a bundle without an explicit time tag
 const bundle = new Bundle();
@@ -17,4 +17,4 @@ function SendValToAll(val: boolean) {
     });
 }
 
-SendValToAll(false);
+SendValToAll(true);

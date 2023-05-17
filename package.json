@@ -13,7 +13,8 @@
     "run-graphql-request": "ts-node graphql-request/simpleExample.ts",
     "fn-build-germ": "ts-node graphql-request/fnBuildGermMap.ts",
     "fn-adder": "ts-node graphql-request/functionalModules/adder.ts",
-    "mut-germ-tray": "ts-node graphql-request/mutateGermMap.ts"
+    "mut-germ-tray": "ts-node graphql-request/mutateGermMap.ts",
+    "osc-test": "ts-node oscManager/serialOscSender.ts"
   },
   "dependencies": {
     "@apollo/client": "^3.7.14",
