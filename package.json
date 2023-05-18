@@ -16,7 +16,8 @@
     "mut-germ-tray": "ts-node graphql-request/mutateGermMap.ts",
     "osc-test": "ts-node oscManager/serialOscSender.ts",
     "deserialize-bits": "ts-node fn/DeserializeStringToBoolArray.ts",
-    "old-subscription-client": "node subscriptions-transport-ws/test.js"
+    "old-subscription-client-js": "node subscriptions-transport-ws/test.js",
+    "SUBSCRIBE_to_OSC__outputDrivesPreset": "ts-node subscriptions-transport-ws/proxy_outputDrivesPreset_to_OSC.ts"
   },
   "dependencies": {
     "@apollo/client": "^3.7.14",

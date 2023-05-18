@@ -1,11 +1,10 @@
-import { SubscriptionClient } from 'subscriptions-transport-ws';
-import gql from 'graphql-tag';
-// @ts-ignore
-import WebSocket from 'ws';
+const { SubscriptionClient } = require('subscriptions-transport-ws');
+const gql = require('graphql-tag');
+const WebSocket = require('ws');
 
-const GRAPHQL_ENDPOINT: string = 'ws://localhost:8080/graphql';
+const GRAPHQL_ENDPOINT = 'ws://localhost:8080/graphql';
 
-const client: SubscriptionClient = new SubscriptionClient(GRAPHQL_ENDPOINT, {
+const client = new SubscriptionClient(GRAPHQL_ENDPOINT, {
     reconnect: true
 }, WebSocket);
 
@@ -17,13 +16,16 @@ const GET_DRIVE_OUTPUTS_PRESET = gql`
     }
 `;
 
+
 client.request({
     query: GET_DRIVE_OUTPUTS_PRESET
 }).subscribe({
-    next(data: any) {
+    next(data) {
         console.log('Received data: ', data);
+
+
     },
-    error(err: Error) {
+    error(err) {
         console.error('Error occurred: ', err);
     },
     complete() {

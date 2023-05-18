@@ -67,7 +67,7 @@ We use `graphql-request` to execute queries and mutations within `TypeScript` co
 Try running the function exported by `instantiateNursery.ts` via:
 
 ```bash
-jest graphql-request/initScripts/instantiateNursery.test.ts 
+jest graphql-request/initScripts/instantiateNursery.proxy_outputDrivesPreset_to_OSC.ts 
 ```
 
 # FP (Functional Programming)
