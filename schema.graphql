@@ -1,17 +1,17 @@
-type Query {
-    exampleLambda(exampleStringInput: String!): String! @lambda
+#type Query {
+#    exampleLambda(exampleStringInput: String!): String! @lambda
 #    addTwo(addTwoInput: twoNums!): Int! @lambda
-    addTwo(one: Int!, two: Int!): Int! @lambda
-}
+#    addTwo(one: Int!, two: Int!): Int! @lambda
+#}
 
 input twoNums {
     one: Int!
     two: Int!
 }
 
-type Mutation {
-    ingestQR(qr: String!): String! @lambda
-}
+#type Mutation {
+#    ingestQR(qr: String!): String! @lambda
+#}
 
 
 type CropIntentionsList {
@@ -68,7 +68,7 @@ type Module {
     
     instantiationTemplateUsed: ModuleType!
     shelves: [Shelf]
-    totalNumberOfSites: Int! @lambda
+#    totalNumberOfSites: Int! @lambda
     nutrientMix: NutrientMix
 }
 
@@ -91,7 +91,7 @@ type Shelf {
     id: ID!
     
     sites: [Site]
-    numSites: Int! @lambda
+#    numSites: Int! @lambda
     verticalClearanceHeightToNextShelf: Int!
     parentModule: Module @hasInverse(field: shelves)
 }
@@ -162,6 +162,15 @@ type WaterRoutePresets {
     presets: [DriveOutputsPreset!]!
 }
 
+# The client is responsible for deep copying the preset into here..
+# ..is this the right way about this? Could a reference serve better.
+# could also implement the copy function  as a lambda.
+type ChosenDriveOutputPreset @withSubscription {
+    id: ID!
+
+    preset: DriveOutputsPreset!
+}
+
 # one idiosyncracy of GraphQL is the lack of ordered Lists.
 # As a workaround we store the boolean values in a string deserialize an ordered bool list
 type DriveOutputsPreset {
@@ -173,7 +182,6 @@ type DriveOutputsPreset {
     #    opcPath: String!
     lxEndpoint: Endpoint!
 }
-
 
 type PhysicalSolenoid {
     id: ID!

@@ -12,9 +12,15 @@ const client: SubscriptionClient = new SubscriptionClient(GRAPHQL_ENDPOINT, {
 }, WebSocket);
 
 const GET_DRIVE_OUTPUTS_PRESET = gql`
-    subscription NoVarSub {
-        getDriveOutputsPreset(id: "0xc3b3") {
-            boolArrayString
+    subscription sub{
+        getChosenDriveOutputPreset
+        (id: "0x3d")
+        {
+            id
+            preset {
+                boolArrayString
+                lxEndpoint {addr {addr} port {port}}
+            }
         }
     }
 `;
@@ -24,7 +30,8 @@ client.request({
 }).subscribe({
     next(data: any) {
         console.log('Received data: ', data);
-        let outputDriveString: string = data.data.getDriveOutputsPreset.boolArrayString;
+        let outputDriveString: string = data.data.getChosenDriveOutputPreset.preset.boolArrayString;
+
         console.log('Drive String: ', outputDriveString);
 
         DriveOscBundle(decodeBits(outputDriveString));
