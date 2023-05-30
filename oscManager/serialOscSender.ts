@@ -19,7 +19,7 @@ function SendValToAll(val: boolean) {
 
 function paramNameByIdx(idx: number) {
     let paramNameMap: string[] = [
-        "DELIVERY.ph",
+        "PUMP.mod",
         "BORKED.ph",
         "LEFT.1.ph",
         "LEFT.2.ph",
@@ -55,9 +55,10 @@ function paramNameByIdx(idx: number) {
     return idx + "_" + paramNameMap[idx];
 }
 export function DriveOscBundle(boolEitherArray: Either<Error, boolean>[]) {
-    const oscAddress = '/lx/mixer/channel/1/pattern/1/'
+    const oscAddress = '/lx/mixer/channel/drive/pattern/LinearMap/'
     const bundle = new Bundle();
-    const client = new Client('127.0.0.1', 3030);
+    // const client = new Client('127.0.0.1', 3030);
+    const client = new Client('100.126.16.85', 3030);
 
 
 

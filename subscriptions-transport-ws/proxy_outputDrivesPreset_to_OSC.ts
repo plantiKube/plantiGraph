@@ -11,10 +11,12 @@ const client: SubscriptionClient = new SubscriptionClient(GRAPHQL_ENDPOINT, {
     reconnect: true
 }, WebSocket);
 
+const chosenId: string = "0xc355";
+
 const GET_DRIVE_OUTPUTS_PRESET = gql`
     subscription sub{
         getChosenDriveOutputPreset
-        (id: "0x3d")
+        (id: "${chosenId}" )
         {
             id
             preset {

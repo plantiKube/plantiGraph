@@ -1,7 +1,7 @@
 version: "3.2"
 services:
   zero:
-    image: dgraph/dgraph:v23.0.0-rc1-arm64
+    image: dgraph/dgraph:v23.0.0
     volumes:
       - /tmp/data:/dgraph
     ports:
@@ -10,7 +10,7 @@ services:
     restart: on-failure
     command: dgraph zero --my=zero:5080
   alpha:
-    image: dgraph/dgraph:v23.0.0-rc1-arm64
+    image: dgraph/dgraph:v23.0.0
     volumes:
       - /tmp/data:/dgraph
     ports:
