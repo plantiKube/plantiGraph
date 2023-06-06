@@ -1,0 +1,13 @@
+{
+  "pointsList":
+  [
+    {
+      "xid": 0,
+      "outputState": 200
+    },
+    {
+      "xid": 2,
+      "outputState": 222
+    }
+  ]
+}

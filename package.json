@@ -5,7 +5,7 @@
   "main": "index.js",
   "repository": "git@github.com:plantiKube/plantiGraph.git",
   "author": "Nathan Argetsinger <nargetdev@gmail.com>",
-  "license": "MIT",
+  "license": "AGPL-3.0-or-later",
   "scripts": {
     "test": "jest",
     "codegen": "graphql-codegen",
@@ -27,11 +27,14 @@
     "fast-check": "^2.25.0",
     "fp-ts": "^2.15.0",
     "fp-ts-laws": "^0.3.0",
+    "graphql": "^16.6.0",
+    "graphql-codegen": "^0.4.0",
     "graphql-request": "^6.0.0",
     "osc": "^2.4.4",
     "sacn": "^4.3.0"
   },
   "devDependencies": {
+    "@graphql-codegen/cli": "^4.0.1",
     "@relmify/jest-fp-ts": "^2.0.2",
     "@types/jest": "^29.5.1",
     "io-ts": "^2.2.20",

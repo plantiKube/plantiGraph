@@ -14,7 +14,7 @@ udpPort.on("ready", function () {
         let floatTime = (currentTimeInMilliseconds%1000)/1000
         console.log(floatTime);
         sendMessage((currentTimeInMilliseconds%1000)/1000);
-    }, 200); // send every 200 milliseconds
+    }, 20); // send every 200 milliseconds
 });
 
 udpPort.open();

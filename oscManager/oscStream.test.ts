@@ -25,7 +25,7 @@ describe('driveOutputString', function () {
                     udpPort.close();
                     done(); // signal Jest that we're done testing
                 }
-            }, 200); // send every 200 milliseconds
+            }, 20); // send every 200 milliseconds
         });
 
         udpPort.open();

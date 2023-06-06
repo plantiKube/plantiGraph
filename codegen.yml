@@ -1,6 +1,7 @@
 overwrite: true
 schema: "generatedSchema.graphql"
-documents: "gql/**/*.graphql"
+documents: "gql/initializationMutations/CreateClockMutation/CreateClockMutation.graphql"
+#  - "gql/**/*.graphql"
 generates:
   operations.ts:
     plugins:

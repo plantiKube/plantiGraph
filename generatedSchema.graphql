@@ -57,7 +57,6 @@ type Module {
 	id: ID!
 	instantiationTemplateUsed: ModuleType!
 	shelves(filter: ShelfFilter, order: ShelfOrder, first: Int, offset: Int): [Shelf] @hasInverse(field: parentModule)
-	totalNumberOfSites: Int! @lambda
 	nutrientMix: NutrientMix
 	shelvesAggregate(filter: ShelfFilter): ShelfAggregateResult
 }
@@ -80,7 +79,6 @@ enum NutrientMix {
 type Shelf {
 	id: ID!
 	sites(filter: SiteFilter, first: Int, offset: Int): [Site]
-	numSites: Int! @lambda
 	verticalClearanceHeightToNextShelf: Int!
 	parentModule(filter: ModuleFilter): Module @hasInverse(field: shelves)
 	sitesAggregate(filter: SiteFilter): SiteAggregateResult
@@ -145,6 +143,11 @@ type WaterRoutePresets {
 	presetsAggregate(filter: DriveOutputsPresetFilter): DriveOutputsPresetAggregateResult
 }
 
+type ChosenDriveOutputPreset @withSubscription {
+	id: ID!
+	preset(filter: DriveOutputsPresetFilter): DriveOutputsPreset!
+}
+
 type DriveOutputsPreset {
 	id: ID!
 	boolArrayString: String!
@@ -178,6 +181,21 @@ type TimeSeries {
 	addrInfluxInstance(filter: IpAddrFilter): IpAddr!
 	portInfluxInstance(filter: PortFilter): Port!
 	streamPath: String!
+}
+
+type AutomationClockMeta {
+	id: ID!
+	clockNodes(filter: ClockNodePointFilter, order: ClockNodePointOrder, first: Int, offset: Int): [ClockNodePoint!]! @hasInverse(field: ownedByClock)
+	clockNodesAggregate(filter: ClockNodePointFilter): ClockNodePointAggregateResult
+}
+
+type ClockNodePoint {
+	id: ID!
+	xid: Int! @id
+	ownedByClock(filter: AutomationClockMetaFilter): AutomationClockMeta @hasInverse(field: clockNodes)
+	azimuth: Float! @lambda
+	timeOfDay: DateTime! @lambda
+	outputState: Int!
 }
 
 #######################
@@ -446,6 +464,21 @@ input StringHashFilter {
 # Generated Types
 #######################
 
+type AddAutomationClockMetaPayload {
+	automationClockMeta(filter: AutomationClockMetaFilter, first: Int, offset: Int): [AutomationClockMeta]
+	numUids: Int
+}
+
+type AddChosenDriveOutputPresetPayload {
+	chosenDriveOutputPreset(filter: ChosenDriveOutputPresetFilter, first: Int, offset: Int): [ChosenDriveOutputPreset]
+	numUids: Int
+}
+
+type AddClockNodePointPayload {
+	clockNodePoint(filter: ClockNodePointFilter, order: ClockNodePointOrder, first: Int, offset: Int): [ClockNodePoint]
+	numUids: Int
+}
+
 type AddCropIntentionPayload {
 	cropIntention(filter: CropIntentionFilter, order: CropIntentionOrder, first: Int, offset: Int): [CropIntention]
 	numUids: Int
@@ -561,6 +594,26 @@ type AddWaterRoutePresetsPayload {
 	numUids: Int
 }
 
+type AutomationClockMetaAggregateResult {
+	count: Int
+}
+
+type ChosenDriveOutputPresetAggregateResult {
+	count: Int
+}
+
+type ClockNodePointAggregateResult {
+	count: Int
+	xidMin: Int
+	xidMax: Int
+	xidSum: Int
+	xidAvg: Float
+	outputStateMin: Int
+	outputStateMax: Int
+	outputStateSum: Int
+	outputStateAvg: Float
+}
+
 type CropAggregateResult {
 	count: Int
 	nameMin: String
@@ -587,6 +640,24 @@ type CropIntentionAggregateResult {
 
 type CropIntentionsListAggregateResult {
 	count: Int
+}
+
+type DeleteAutomationClockMetaPayload {
+	automationClockMeta(filter: AutomationClockMetaFilter, first: Int, offset: Int): [AutomationClockMeta]
+	msg: String
+	numUids: Int
+}
+
+type DeleteChosenDriveOutputPresetPayload {
+	chosenDriveOutputPreset(filter: ChosenDriveOutputPresetFilter, first: Int, offset: Int): [ChosenDriveOutputPreset]
+	msg: String
+	numUids: Int
+}
+
+type DeleteClockNodePointPayload {
+	clockNodePoint(filter: ClockNodePointFilter, order: ClockNodePointOrder, first: Int, offset: Int): [ClockNodePoint]
+	msg: String
+	numUids: Int
 }
 
 type DeleteCropIntentionPayload {
@@ -873,6 +944,21 @@ type TimeSeriesAggregateResult {
 	streamPathMax: String
 }
 
+type UpdateAutomationClockMetaPayload {
+	automationClockMeta(filter: AutomationClockMetaFilter, first: Int, offset: Int): [AutomationClockMeta]
+	numUids: Int
+}
+
+type UpdateChosenDriveOutputPresetPayload {
+	chosenDriveOutputPreset(filter: ChosenDriveOutputPresetFilter, first: Int, offset: Int): [ChosenDriveOutputPreset]
+	numUids: Int
+}
+
+type UpdateClockNodePointPayload {
+	clockNodePoint(filter: ClockNodePointFilter, order: ClockNodePointOrder, first: Int, offset: Int): [ClockNodePoint]
+	numUids: Int
+}
+
 type UpdateCropIntentionPayload {
 	cropIntention(filter: CropIntentionFilter, order: CropIntentionOrder, first: Int, offset: Int): [CropIntention]
 	numUids: Int
@@ -995,6 +1081,25 @@ type WaterRoutePresetsAggregateResult {
 #######################
 # Generated Enums
 #######################
+
+enum AutomationClockMetaHasFilter {
+	clockNodes
+}
+
+enum ChosenDriveOutputPresetHasFilter {
+	preset
+}
+
+enum ClockNodePointHasFilter {
+	xid
+	ownedByClock
+	outputState
+}
+
+enum ClockNodePointOrderable {
+	xid
+	outputState
+}
 
 enum CropHasFilter {
 	name
@@ -1199,6 +1304,20 @@ enum WaterRoutePresetsHasFilter {
 # Generated Inputs
 #######################
 
+input AddAutomationClockMetaInput {
+	clockNodes: [ClockNodePointRef!]!
+}
+
+input AddChosenDriveOutputPresetInput {
+	preset: DriveOutputsPresetRef!
+}
+
+input AddClockNodePointInput {
+	xid: Int!
+	ownedByClock: AutomationClockMetaRef
+	outputState: Int!
+}
+
 input AddCropInput {
 	name: String!
 	required_module_type: String!
@@ -1324,6 +1443,67 @@ input AddTimeSeriesInput {
 
 input AddWaterRoutePresetsInput {
 	presets: [DriveOutputsPresetRef!]!
+}
+
+input AutomationClockMetaFilter {
+	id: [ID!]
+	has: [AutomationClockMetaHasFilter]
+	and: [AutomationClockMetaFilter]
+	or: [AutomationClockMetaFilter]
+	not: AutomationClockMetaFilter
+}
+
+input AutomationClockMetaPatch {
+	clockNodes: [ClockNodePointRef!]
+}
+
+input AutomationClockMetaRef {
+	id: ID
+	clockNodes: [ClockNodePointRef!]
+}
+
+input ChosenDriveOutputPresetFilter {
+	id: [ID!]
+	has: [ChosenDriveOutputPresetHasFilter]
+	and: [ChosenDriveOutputPresetFilter]
+	or: [ChosenDriveOutputPresetFilter]
+	not: ChosenDriveOutputPresetFilter
+}
+
+input ChosenDriveOutputPresetPatch {
+	preset: DriveOutputsPresetRef
+}
+
+input ChosenDriveOutputPresetRef {
+	id: ID
+	preset: DriveOutputsPresetRef
+}
+
+input ClockNodePointFilter {
+	id: [ID!]
+	xid: IntFilter
+	has: [ClockNodePointHasFilter]
+	and: [ClockNodePointFilter]
+	or: [ClockNodePointFilter]
+	not: ClockNodePointFilter
+}
+
+input ClockNodePointOrder {
+	asc: ClockNodePointOrderable
+	desc: ClockNodePointOrderable
+	then: ClockNodePointOrder
+}
+
+input ClockNodePointPatch {
+	ownedByClock: AutomationClockMetaRef
+	outputState: Int
+}
+
+input ClockNodePointRef {
+	id: ID
+	xid: Int
+	ownedByClock: AutomationClockMetaRef
+	outputState: Int
 }
 
 input CropFilter {
@@ -1842,6 +2022,24 @@ input TimeSeriesRef {
 	streamPath: String
 }
 
+input UpdateAutomationClockMetaInput {
+	filter: AutomationClockMetaFilter!
+	set: AutomationClockMetaPatch
+	remove: AutomationClockMetaPatch
+}
+
+input UpdateChosenDriveOutputPresetInput {
+	filter: ChosenDriveOutputPresetFilter!
+	set: ChosenDriveOutputPresetPatch
+	remove: ChosenDriveOutputPresetPatch
+}
+
+input UpdateClockNodePointInput {
+	filter: ClockNodePointFilter!
+	set: ClockNodePointPatch
+	remove: ClockNodePointPatch
+}
+
 input UpdateCropInput {
 	filter: CropFilter!
 	set: CropPatch
@@ -2002,8 +2200,6 @@ input WaterRoutePresetsRef {
 #######################
 
 type Query {
-	exampleLambda(exampleStringInput: String!): String! @lambda
-	addTwo(one: Int!, two: Int!): Int! @lambda
 	queryCropIntentionsList(filter: CropIntentionsListFilter, first: Int, offset: Int): [CropIntentionsList]
 	aggregateCropIntentionsList(filter: CropIntentionsListFilter): CropIntentionsListAggregateResult
 	queryCropIntention(filter: CropIntentionFilter, order: CropIntentionOrder, first: Int, offset: Int): [CropIntention]
@@ -2049,6 +2245,9 @@ type Query {
 	getWaterRoutePresets(id: ID!): WaterRoutePresets
 	queryWaterRoutePresets(filter: WaterRoutePresetsFilter, first: Int, offset: Int): [WaterRoutePresets]
 	aggregateWaterRoutePresets(filter: WaterRoutePresetsFilter): WaterRoutePresetsAggregateResult
+	getChosenDriveOutputPreset(id: ID!): ChosenDriveOutputPreset
+	queryChosenDriveOutputPreset(filter: ChosenDriveOutputPresetFilter, first: Int, offset: Int): [ChosenDriveOutputPreset]
+	aggregateChosenDriveOutputPreset(filter: ChosenDriveOutputPresetFilter): ChosenDriveOutputPresetAggregateResult
 	getDriveOutputsPreset(id: ID!): DriveOutputsPreset
 	queryDriveOutputsPreset(filter: DriveOutputsPresetFilter, order: DriveOutputsPresetOrder, first: Int, offset: Int): [DriveOutputsPreset]
 	aggregateDriveOutputsPreset(filter: DriveOutputsPresetFilter): DriveOutputsPresetAggregateResult
@@ -2065,6 +2264,12 @@ type Query {
 	getTimeSeries(id: ID!): TimeSeries
 	queryTimeSeries(filter: TimeSeriesFilter, order: TimeSeriesOrder, first: Int, offset: Int): [TimeSeries]
 	aggregateTimeSeries(filter: TimeSeriesFilter): TimeSeriesAggregateResult
+	getAutomationClockMeta(id: ID!): AutomationClockMeta
+	queryAutomationClockMeta(filter: AutomationClockMetaFilter, first: Int, offset: Int): [AutomationClockMeta]
+	aggregateAutomationClockMeta(filter: AutomationClockMetaFilter): AutomationClockMetaAggregateResult
+	getClockNodePoint(id: ID, xid: Int): ClockNodePoint
+	queryClockNodePoint(filter: ClockNodePointFilter, order: ClockNodePointOrder, first: Int, offset: Int): [ClockNodePoint]
+	aggregateClockNodePoint(filter: ClockNodePointFilter): ClockNodePointAggregateResult
 }
 
 #######################
@@ -2072,7 +2277,6 @@ type Query {
 #######################
 
 type Mutation {
-	ingestQR(qr: String!): String! @lambda
 	addCropIntentionsList(input: [AddCropIntentionsListInput!]!): AddCropIntentionsListPayload
 	updateCropIntentionsList(input: UpdateCropIntentionsListInput!): UpdateCropIntentionsListPayload
 	deleteCropIntentionsList(filter: CropIntentionsListFilter!): DeleteCropIntentionsListPayload
@@ -2124,6 +2328,9 @@ type Mutation {
 	addWaterRoutePresets(input: [AddWaterRoutePresetsInput!]!): AddWaterRoutePresetsPayload
 	updateWaterRoutePresets(input: UpdateWaterRoutePresetsInput!): UpdateWaterRoutePresetsPayload
 	deleteWaterRoutePresets(filter: WaterRoutePresetsFilter!): DeleteWaterRoutePresetsPayload
+	addChosenDriveOutputPreset(input: [AddChosenDriveOutputPresetInput!]!): AddChosenDriveOutputPresetPayload
+	updateChosenDriveOutputPreset(input: UpdateChosenDriveOutputPresetInput!): UpdateChosenDriveOutputPresetPayload
+	deleteChosenDriveOutputPreset(filter: ChosenDriveOutputPresetFilter!): DeleteChosenDriveOutputPresetPayload
 	addDriveOutputsPreset(input: [AddDriveOutputsPresetInput!]!): AddDriveOutputsPresetPayload
 	updateDriveOutputsPreset(input: UpdateDriveOutputsPresetInput!): UpdateDriveOutputsPresetPayload
 	deleteDriveOutputsPreset(filter: DriveOutputsPresetFilter!): DeleteDriveOutputsPresetPayload
@@ -2142,5 +2349,20 @@ type Mutation {
 	addTimeSeries(input: [AddTimeSeriesInput!]!): AddTimeSeriesPayload
 	updateTimeSeries(input: UpdateTimeSeriesInput!): UpdateTimeSeriesPayload
 	deleteTimeSeries(filter: TimeSeriesFilter!): DeleteTimeSeriesPayload
+	addAutomationClockMeta(input: [AddAutomationClockMetaInput!]!): AddAutomationClockMetaPayload
+	updateAutomationClockMeta(input: UpdateAutomationClockMetaInput!): UpdateAutomationClockMetaPayload
+	deleteAutomationClockMeta(filter: AutomationClockMetaFilter!): DeleteAutomationClockMetaPayload
+	addClockNodePoint(input: [AddClockNodePointInput!]!, upsert: Boolean): AddClockNodePointPayload
+	updateClockNodePoint(input: UpdateClockNodePointInput!): UpdateClockNodePointPayload
+	deleteClockNodePoint(filter: ClockNodePointFilter!): DeleteClockNodePointPayload
 }
 
+#######################
+# Generated Subscriptions
+#######################
+
+type Subscription {
+	getChosenDriveOutputPreset(id: ID!): ChosenDriveOutputPreset
+	queryChosenDriveOutputPreset(filter: ChosenDriveOutputPresetFilter, first: Int, offset: Int): [ChosenDriveOutputPreset]
+	aggregateChosenDriveOutputPreset(filter: ChosenDriveOutputPresetFilter): ChosenDriveOutputPresetAggregateResult
+}

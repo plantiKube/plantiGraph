@@ -1,0 +1,21 @@
+mutation CreateClockMutation ($pointsList:[ClockNodePointRef!]!)
+{
+    addAutomationClockMeta
+    (
+        input:
+        {
+            clockNodes: $pointsList
+        }
+    )
+    {
+        numUids
+        automationClockMeta
+        {
+            clockNodes
+            {
+                xid
+                outputState
+            }
+        }
+    }
+}
