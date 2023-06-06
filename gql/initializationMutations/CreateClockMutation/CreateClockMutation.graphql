@@ -11,6 +11,7 @@ mutation CreateClockMutation ($pointsList:[ClockNodePointRef!]!)
         numUids
         automationClockMeta
         {
+            id
             clockNodes
             {
                 xid
