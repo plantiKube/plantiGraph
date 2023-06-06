@@ -1,3 +1,0 @@
-query ExampleLambda {
-  exampleLambda (exampleStringInput:"gahhhh")
-}

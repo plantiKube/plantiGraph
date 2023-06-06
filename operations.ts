@@ -4,49 +4,105 @@ export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
+export type MakeEmpty<T extends { [key: string]: unknown }, K extends keyof T> = { [_ in K]?: never };
+export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
-  ID: string;
-  String: string;
-  Boolean: boolean;
-  Int: number;
-  Float: number;
+  ID: { input: string | number; output: string; }
+  String: { input: string; output: string; }
+  Boolean: { input: boolean; output: boolean; }
+  Int: { input: number; output: number; }
+  Float: { input: number; output: number; }
   /**
    * The DateTime scalar type represents date and time as a string in RFC3339 format.
    * For example: "1985-04-12T23:20:50.52Z" represents 20 mins 50.52 secs after the 23rd hour of Apr 12th 1985 in UTC.
    */
-  DateTime: any;
+  DateTime: { input: any; output: any; }
   /**
    * The Int64 scalar type represents a signed 64‐bit numeric non‐fractional value.
    * Int64 can represent values in range [-(2^63),(2^63 - 1)].
    */
-  Int64: any;
+  Int64: { input: any; output: any; }
+};
+
+export type AddAutomationClockMetaInput = {
+  clockNodes: Array<ClockNodePointRef>;
+};
+
+export type AddAutomationClockMetaPayload = {
+  __typename?: 'AddAutomationClockMetaPayload';
+  automationClockMeta?: Maybe<Array<Maybe<AutomationClockMeta>>>;
+  numUids?: Maybe<Scalars['Int']['output']>;
+};
+
+
+export type AddAutomationClockMetaPayloadAutomationClockMetaArgs = {
+  filter?: InputMaybe<AutomationClockMetaFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+};
+
+export type AddChosenDriveOutputPresetInput = {
+  preset: DriveOutputsPresetRef;
+};
+
+export type AddChosenDriveOutputPresetPayload = {
+  __typename?: 'AddChosenDriveOutputPresetPayload';
+  chosenDriveOutputPreset?: Maybe<Array<Maybe<ChosenDriveOutputPreset>>>;
+  numUids?: Maybe<Scalars['Int']['output']>;
+};
+
+
+export type AddChosenDriveOutputPresetPayloadChosenDriveOutputPresetArgs = {
+  filter?: InputMaybe<ChosenDriveOutputPresetFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+};
+
+export type AddClockNodePointInput = {
+  outputState: Scalars['Int']['input'];
+  ownedByClock?: InputMaybe<AutomationClockMetaRef>;
+  xid: Scalars['Int']['input'];
+};
+
+export type AddClockNodePointPayload = {
+  __typename?: 'AddClockNodePointPayload';
+  clockNodePoint?: Maybe<Array<Maybe<ClockNodePoint>>>;
+  numUids?: Maybe<Scalars['Int']['output']>;
+};
+
+
+export type AddClockNodePointPayloadClockNodePointArgs = {
+  filter?: InputMaybe<ClockNodePointFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order?: InputMaybe<ClockNodePointOrder>;
 };
 
 export type AddCropInput = {
-  days_from_transfer_to_first_harvest: Scalars['Int'];
-  days_harvestable: Scalars['Int'];
-  name: Scalars['String'];
-  repeater: Scalars['Boolean'];
-  required_module_type: Scalars['String'];
+  days_from_transfer_to_first_harvest: Scalars['Int']['input'];
+  days_harvestable: Scalars['Int']['input'];
+  name: Scalars['String']['input'];
+  repeater: Scalars['Boolean']['input'];
+  required_module_type: Scalars['String']['input'];
 };
 
 export type AddCropIntentionInput = {
   crop: CropRef;
-  harvestPerWeek: Scalars['Int'];
+  harvestPerWeek: Scalars['Int']['input'];
 };
 
 export type AddCropIntentionPayload = {
   __typename?: 'AddCropIntentionPayload';
   cropIntention?: Maybe<Array<Maybe<CropIntention>>>;
-  numUids?: Maybe<Scalars['Int']>;
+  numUids?: Maybe<Scalars['Int']['output']>;
 };
 
 
 export type AddCropIntentionPayloadCropIntentionArgs = {
   filter?: InputMaybe<CropIntentionFilter>;
-  first?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   order?: InputMaybe<CropIntentionOrder>;
 };
 
@@ -57,66 +113,66 @@ export type AddCropIntentionsListInput = {
 export type AddCropIntentionsListPayload = {
   __typename?: 'AddCropIntentionsListPayload';
   cropIntentionsList?: Maybe<Array<Maybe<CropIntentionsList>>>;
-  numUids?: Maybe<Scalars['Int']>;
+  numUids?: Maybe<Scalars['Int']['output']>;
 };
 
 
 export type AddCropIntentionsListPayloadCropIntentionsListArgs = {
   filter?: InputMaybe<CropIntentionsListFilter>;
-  first?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
 };
 
 export type AddCropPayload = {
   __typename?: 'AddCropPayload';
   crop?: Maybe<Array<Maybe<Crop>>>;
-  numUids?: Maybe<Scalars['Int']>;
+  numUids?: Maybe<Scalars['Int']['output']>;
 };
 
 
 export type AddCropPayloadCropArgs = {
   filter?: InputMaybe<CropFilter>;
-  first?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   order?: InputMaybe<CropOrder>;
 };
 
 export type AddDrawerInput = {
   cropAssignment?: InputMaybe<CropRef>;
   gridLocation: LocationRef;
-  stock?: InputMaybe<Scalars['Int']>;
+  stock?: InputMaybe<Scalars['Int']['input']>;
 };
 
 export type AddDrawerPayload = {
   __typename?: 'AddDrawerPayload';
   drawer?: Maybe<Array<Maybe<Drawer>>>;
-  numUids?: Maybe<Scalars['Int']>;
+  numUids?: Maybe<Scalars['Int']['output']>;
 };
 
 
 export type AddDrawerPayloadDrawerArgs = {
   filter?: InputMaybe<DrawerFilter>;
-  first?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   order?: InputMaybe<DrawerOrder>;
 };
 
 export type AddDriveOutputsPresetInput = {
-  boolArrayString: Scalars['String'];
+  boolArrayString: Scalars['String']['input'];
   lxEndpoint: EndpointRef;
 };
 
 export type AddDriveOutputsPresetPayload = {
   __typename?: 'AddDriveOutputsPresetPayload';
   driveOutputsPreset?: Maybe<Array<Maybe<DriveOutputsPreset>>>;
-  numUids?: Maybe<Scalars['Int']>;
+  numUids?: Maybe<Scalars['Int']['output']>;
 };
 
 
 export type AddDriveOutputsPresetPayloadDriveOutputsPresetArgs = {
   filter?: InputMaybe<DriveOutputsPresetFilter>;
-  first?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   order?: InputMaybe<DriveOutputsPresetOrder>;
 };
 
@@ -128,14 +184,14 @@ export type AddEndpointInput = {
 export type AddEndpointPayload = {
   __typename?: 'AddEndpointPayload';
   endpoint?: Maybe<Array<Maybe<Endpoint>>>;
-  numUids?: Maybe<Scalars['Int']>;
+  numUids?: Maybe<Scalars['Int']['output']>;
 };
 
 
 export type AddEndpointPayloadEndpointArgs = {
   filter?: InputMaybe<EndpointFilter>;
-  first?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
 };
 
 export type AddGerminationTrayInput = {
@@ -145,68 +201,68 @@ export type AddGerminationTrayInput = {
 export type AddGerminationTrayPayload = {
   __typename?: 'AddGerminationTrayPayload';
   germinationTray?: Maybe<Array<Maybe<GerminationTray>>>;
-  numUids?: Maybe<Scalars['Int']>;
+  numUids?: Maybe<Scalars['Int']['output']>;
 };
 
 
 export type AddGerminationTrayPayloadGerminationTrayArgs = {
   filter?: InputMaybe<GerminationTrayFilter>;
-  first?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
 };
 
 export type AddGrowPlateInput = {
-  rawNetCupReading?: InputMaybe<Scalars['Int']>;
+  rawNetCupReading?: InputMaybe<Scalars['Int']['input']>;
 };
 
 export type AddGrowPlatePayload = {
   __typename?: 'AddGrowPlatePayload';
   growPlate?: Maybe<Array<Maybe<GrowPlate>>>;
-  numUids?: Maybe<Scalars['Int']>;
+  numUids?: Maybe<Scalars['Int']['output']>;
 };
 
 
 export type AddGrowPlatePayloadGrowPlateArgs = {
   filter?: InputMaybe<GrowPlateFilter>;
-  first?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   order?: InputMaybe<GrowPlateOrder>;
 };
 
 export type AddIpAddrInput = {
-  addr: Scalars['String'];
+  addr: Scalars['String']['input'];
 };
 
 export type AddIpAddrPayload = {
   __typename?: 'AddIpAddrPayload';
   ipAddr?: Maybe<Array<Maybe<IpAddr>>>;
-  numUids?: Maybe<Scalars['Int']>;
+  numUids?: Maybe<Scalars['Int']['output']>;
 };
 
 
 export type AddIpAddrPayloadIpAddrArgs = {
   filter?: InputMaybe<IpAddrFilter>;
-  first?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   order?: InputMaybe<IpAddrOrder>;
 };
 
 export type AddLocationInput = {
-  x: Scalars['Int'];
-  y: Scalars['Int'];
+  x: Scalars['Int']['input'];
+  y: Scalars['Int']['input'];
 };
 
 export type AddLocationPayload = {
   __typename?: 'AddLocationPayload';
   location?: Maybe<Array<Maybe<Location>>>;
-  numUids?: Maybe<Scalars['Int']>;
+  numUids?: Maybe<Scalars['Int']['output']>;
 };
 
 
 export type AddLocationPayloadLocationArgs = {
   filter?: InputMaybe<LocationFilter>;
-  first?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   order?: InputMaybe<LocationOrder>;
 };
 
@@ -223,27 +279,27 @@ export type AddModuleMapInput = {
 export type AddModuleMapPayload = {
   __typename?: 'AddModuleMapPayload';
   moduleMap?: Maybe<Array<Maybe<ModuleMap>>>;
-  numUids?: Maybe<Scalars['Int']>;
+  numUids?: Maybe<Scalars['Int']['output']>;
 };
 
 
 export type AddModuleMapPayloadModuleMapArgs = {
   filter?: InputMaybe<ModuleMapFilter>;
-  first?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
 };
 
 export type AddModulePayload = {
   __typename?: 'AddModulePayload';
   module?: Maybe<Array<Maybe<Module>>>;
-  numUids?: Maybe<Scalars['Int']>;
+  numUids?: Maybe<Scalars['Int']['output']>;
 };
 
 
 export type AddModulePayloadModuleArgs = {
   filter?: InputMaybe<ModuleFilter>;
-  first?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
 };
 
 export type AddNurseryInput = {
@@ -252,142 +308,142 @@ export type AddNurseryInput = {
 
 export type AddNurseryPayload = {
   __typename?: 'AddNurseryPayload';
-  numUids?: Maybe<Scalars['Int']>;
+  numUids?: Maybe<Scalars['Int']['output']>;
   nursery?: Maybe<Array<Maybe<Nursery>>>;
 };
 
 
 export type AddNurseryPayloadNurseryArgs = {
   filter?: InputMaybe<NurseryFilter>;
-  first?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
 };
 
 export type AddPhysicalSolenoidInput = {
-  driveState: Scalars['Boolean'];
+  driveState: Scalars['Boolean']['input'];
   influxOutputCurrentTimeSeries?: InputMaybe<TimeSeriesRef>;
   outputDriveAddr: IpAddrRef;
-  outputDriveIndex: Scalars['Int'];
+  outputDriveIndex: Scalars['Int']['input'];
 };
 
 export type AddPhysicalSolenoidPayload = {
   __typename?: 'AddPhysicalSolenoidPayload';
-  numUids?: Maybe<Scalars['Int']>;
+  numUids?: Maybe<Scalars['Int']['output']>;
   physicalSolenoid?: Maybe<Array<Maybe<PhysicalSolenoid>>>;
 };
 
 
 export type AddPhysicalSolenoidPayloadPhysicalSolenoidArgs = {
   filter?: InputMaybe<PhysicalSolenoidFilter>;
-  first?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   order?: InputMaybe<PhysicalSolenoidOrder>;
 };
 
 export type AddPlantInput = {
-  cropName: Scalars['String'];
-  germinatedDate?: InputMaybe<Scalars['DateTime']>;
-  harvestedDate?: InputMaybe<Scalars['DateTime']>;
+  cropName: Scalars['String']['input'];
+  germinatedDate?: InputMaybe<Scalars['DateTime']['input']>;
+  harvestedDate?: InputMaybe<Scalars['DateTime']['input']>;
   location?: InputMaybe<SiteRef>;
-  nutrientType: Scalars['String'];
-  repeater: Scalars['Boolean'];
-  transferredDate?: InputMaybe<Scalars['DateTime']>;
+  nutrientType: Scalars['String']['input'];
+  repeater: Scalars['Boolean']['input'];
+  transferredDate?: InputMaybe<Scalars['DateTime']['input']>;
 };
 
 export type AddPlantPayload = {
   __typename?: 'AddPlantPayload';
-  numUids?: Maybe<Scalars['Int']>;
+  numUids?: Maybe<Scalars['Int']['output']>;
   plant?: Maybe<Array<Maybe<Plant>>>;
 };
 
 
 export type AddPlantPayloadPlantArgs = {
   filter?: InputMaybe<PlantFilter>;
-  first?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   order?: InputMaybe<PlantOrder>;
 };
 
 export type AddPortInput = {
-  port: Scalars['Int'];
+  port: Scalars['Int']['input'];
 };
 
 export type AddPortPayload = {
   __typename?: 'AddPortPayload';
-  numUids?: Maybe<Scalars['Int']>;
+  numUids?: Maybe<Scalars['Int']['output']>;
   port?: Maybe<Array<Maybe<Port>>>;
 };
 
 
 export type AddPortPayloadPortArgs = {
   filter?: InputMaybe<PortFilter>;
-  first?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   order?: InputMaybe<PortOrder>;
 };
 
 export type AddSeedInput = {
-  qr: Scalars['String'];
+  qr: Scalars['String']['input'];
 };
 
 export type AddSeedPayload = {
   __typename?: 'AddSeedPayload';
-  numUids?: Maybe<Scalars['Int']>;
+  numUids?: Maybe<Scalars['Int']['output']>;
   seed?: Maybe<Array<Maybe<Seed>>>;
 };
 
 
 export type AddSeedPayloadSeedArgs = {
   filter?: InputMaybe<SeedFilter>;
-  first?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   order?: InputMaybe<SeedOrder>;
 };
 
 export type AddShelfInput = {
   parentModule?: InputMaybe<ModuleRef>;
   sites?: InputMaybe<Array<InputMaybe<SiteRef>>>;
-  verticalClearanceHeightToNextShelf: Scalars['Int'];
+  verticalClearanceHeightToNextShelf: Scalars['Int']['input'];
 };
 
 export type AddShelfPayload = {
   __typename?: 'AddShelfPayload';
-  numUids?: Maybe<Scalars['Int']>;
+  numUids?: Maybe<Scalars['Int']['output']>;
   shelf?: Maybe<Array<Maybe<Shelf>>>;
 };
 
 
 export type AddShelfPayloadShelfArgs = {
   filter?: InputMaybe<ShelfFilter>;
-  first?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   order?: InputMaybe<ShelfOrder>;
 };
 
 export type AddSignalInput = {
-  algoString?: InputMaybe<Scalars['String']>;
-  daysToGerminate?: InputMaybe<Scalars['Int']>;
-  growTime?: InputMaybe<Scalars['Int']>;
-  maxHarvTime?: InputMaybe<Scalars['Int']>;
-  moduleType?: InputMaybe<Scalars['String']>;
-  plantId?: InputMaybe<Scalars['String']>;
-  plantName?: InputMaybe<Scalars['String']>;
-  signalDate: Scalars['DateTime'];
+  algoString?: InputMaybe<Scalars['String']['input']>;
+  daysToGerminate?: InputMaybe<Scalars['Int']['input']>;
+  growTime?: InputMaybe<Scalars['Int']['input']>;
+  maxHarvTime?: InputMaybe<Scalars['Int']['input']>;
+  moduleType?: InputMaybe<Scalars['String']['input']>;
+  plantId?: InputMaybe<Scalars['String']['input']>;
+  plantName?: InputMaybe<Scalars['String']['input']>;
+  signalDate: Scalars['DateTime']['input'];
   signalType: SignalType;
-  targetMessage?: InputMaybe<Scalars['String']>;
+  targetMessage?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type AddSignalPayload = {
   __typename?: 'AddSignalPayload';
-  numUids?: Maybe<Scalars['Int']>;
+  numUids?: Maybe<Scalars['Int']['output']>;
   signal?: Maybe<Array<Maybe<Signal>>>;
 };
 
 
 export type AddSignalPayloadSignalArgs = {
   filter?: InputMaybe<SignalFilter>;
-  first?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   order?: InputMaybe<SignalOrder>;
 };
 
@@ -397,15 +453,15 @@ export type AddSignalTableInput = {
 
 export type AddSignalTablePayload = {
   __typename?: 'AddSignalTablePayload';
-  numUids?: Maybe<Scalars['Int']>;
+  numUids?: Maybe<Scalars['Int']['output']>;
   signalTable?: Maybe<Array<Maybe<SignalTable>>>;
 };
 
 
 export type AddSignalTablePayloadSignalTableArgs = {
   filter?: InputMaybe<SignalTableFilter>;
-  first?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
 };
 
 export type AddSiteInput = {
@@ -415,34 +471,34 @@ export type AddSiteInput = {
 
 export type AddSitePayload = {
   __typename?: 'AddSitePayload';
-  numUids?: Maybe<Scalars['Int']>;
+  numUids?: Maybe<Scalars['Int']['output']>;
   site?: Maybe<Array<Maybe<Site>>>;
 };
 
 
 export type AddSitePayloadSiteArgs = {
   filter?: InputMaybe<SiteFilter>;
-  first?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
 };
 
 export type AddTimeSeriesInput = {
   addrInfluxInstance: IpAddrRef;
   portInfluxInstance: PortRef;
-  streamPath: Scalars['String'];
+  streamPath: Scalars['String']['input'];
 };
 
 export type AddTimeSeriesPayload = {
   __typename?: 'AddTimeSeriesPayload';
-  numUids?: Maybe<Scalars['Int']>;
+  numUids?: Maybe<Scalars['Int']['output']>;
   timeSeries?: Maybe<Array<Maybe<TimeSeries>>>;
 };
 
 
 export type AddTimeSeriesPayloadTimeSeriesArgs = {
   filter?: InputMaybe<TimeSeriesFilter>;
-  first?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   order?: InputMaybe<TimeSeriesOrder>;
 };
 
@@ -452,22 +508,171 @@ export type AddWaterRoutePresetsInput = {
 
 export type AddWaterRoutePresetsPayload = {
   __typename?: 'AddWaterRoutePresetsPayload';
-  numUids?: Maybe<Scalars['Int']>;
+  numUids?: Maybe<Scalars['Int']['output']>;
   waterRoutePresets?: Maybe<Array<Maybe<WaterRoutePresets>>>;
 };
 
 
 export type AddWaterRoutePresetsPayloadWaterRoutePresetsArgs = {
   filter?: InputMaybe<WaterRoutePresetsFilter>;
-  first?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
 };
 
 export type AuthRule = {
   and?: InputMaybe<Array<InputMaybe<AuthRule>>>;
   not?: InputMaybe<AuthRule>;
   or?: InputMaybe<Array<InputMaybe<AuthRule>>>;
-  rule?: InputMaybe<Scalars['String']>;
+  rule?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type AutomationClockMeta = {
+  __typename?: 'AutomationClockMeta';
+  clockNodes: Array<ClockNodePoint>;
+  clockNodesAggregate?: Maybe<ClockNodePointAggregateResult>;
+  id: Scalars['ID']['output'];
+};
+
+
+export type AutomationClockMetaClockNodesArgs = {
+  filter?: InputMaybe<ClockNodePointFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order?: InputMaybe<ClockNodePointOrder>;
+};
+
+
+export type AutomationClockMetaClockNodesAggregateArgs = {
+  filter?: InputMaybe<ClockNodePointFilter>;
+};
+
+export type AutomationClockMetaAggregateResult = {
+  __typename?: 'AutomationClockMetaAggregateResult';
+  count?: Maybe<Scalars['Int']['output']>;
+};
+
+export type AutomationClockMetaFilter = {
+  and?: InputMaybe<Array<InputMaybe<AutomationClockMetaFilter>>>;
+  has?: InputMaybe<Array<InputMaybe<AutomationClockMetaHasFilter>>>;
+  id?: InputMaybe<Array<Scalars['ID']['input']>>;
+  not?: InputMaybe<AutomationClockMetaFilter>;
+  or?: InputMaybe<Array<InputMaybe<AutomationClockMetaFilter>>>;
+};
+
+export enum AutomationClockMetaHasFilter {
+  ClockNodes = 'clockNodes'
+}
+
+export type AutomationClockMetaPatch = {
+  clockNodes?: InputMaybe<Array<ClockNodePointRef>>;
+};
+
+export type AutomationClockMetaRef = {
+  clockNodes?: InputMaybe<Array<ClockNodePointRef>>;
+  id?: InputMaybe<Scalars['ID']['input']>;
+};
+
+export type ChosenDriveOutputPreset = {
+  __typename?: 'ChosenDriveOutputPreset';
+  id: Scalars['ID']['output'];
+  preset: DriveOutputsPreset;
+};
+
+
+export type ChosenDriveOutputPresetPresetArgs = {
+  filter?: InputMaybe<DriveOutputsPresetFilter>;
+};
+
+export type ChosenDriveOutputPresetAggregateResult = {
+  __typename?: 'ChosenDriveOutputPresetAggregateResult';
+  count?: Maybe<Scalars['Int']['output']>;
+};
+
+export type ChosenDriveOutputPresetFilter = {
+  and?: InputMaybe<Array<InputMaybe<ChosenDriveOutputPresetFilter>>>;
+  has?: InputMaybe<Array<InputMaybe<ChosenDriveOutputPresetHasFilter>>>;
+  id?: InputMaybe<Array<Scalars['ID']['input']>>;
+  not?: InputMaybe<ChosenDriveOutputPresetFilter>;
+  or?: InputMaybe<Array<InputMaybe<ChosenDriveOutputPresetFilter>>>;
+};
+
+export enum ChosenDriveOutputPresetHasFilter {
+  Preset = 'preset'
+}
+
+export type ChosenDriveOutputPresetPatch = {
+  preset?: InputMaybe<DriveOutputsPresetRef>;
+};
+
+export type ChosenDriveOutputPresetRef = {
+  id?: InputMaybe<Scalars['ID']['input']>;
+  preset?: InputMaybe<DriveOutputsPresetRef>;
+};
+
+export type ClockNodePoint = {
+  __typename?: 'ClockNodePoint';
+  azimuth: Scalars['Float']['output'];
+  id: Scalars['ID']['output'];
+  outputState: Scalars['Int']['output'];
+  ownedByClock?: Maybe<AutomationClockMeta>;
+  timeOfDay: Scalars['DateTime']['output'];
+  xid: Scalars['Int']['output'];
+};
+
+
+export type ClockNodePointOwnedByClockArgs = {
+  filter?: InputMaybe<AutomationClockMetaFilter>;
+};
+
+export type ClockNodePointAggregateResult = {
+  __typename?: 'ClockNodePointAggregateResult';
+  count?: Maybe<Scalars['Int']['output']>;
+  outputStateAvg?: Maybe<Scalars['Float']['output']>;
+  outputStateMax?: Maybe<Scalars['Int']['output']>;
+  outputStateMin?: Maybe<Scalars['Int']['output']>;
+  outputStateSum?: Maybe<Scalars['Int']['output']>;
+  xidAvg?: Maybe<Scalars['Float']['output']>;
+  xidMax?: Maybe<Scalars['Int']['output']>;
+  xidMin?: Maybe<Scalars['Int']['output']>;
+  xidSum?: Maybe<Scalars['Int']['output']>;
+};
+
+export type ClockNodePointFilter = {
+  and?: InputMaybe<Array<InputMaybe<ClockNodePointFilter>>>;
+  has?: InputMaybe<Array<InputMaybe<ClockNodePointHasFilter>>>;
+  id?: InputMaybe<Array<Scalars['ID']['input']>>;
+  not?: InputMaybe<ClockNodePointFilter>;
+  or?: InputMaybe<Array<InputMaybe<ClockNodePointFilter>>>;
+  xid?: InputMaybe<IntFilter>;
+};
+
+export enum ClockNodePointHasFilter {
+  OutputState = 'outputState',
+  OwnedByClock = 'ownedByClock',
+  Xid = 'xid'
+}
+
+export type ClockNodePointOrder = {
+  asc?: InputMaybe<ClockNodePointOrderable>;
+  desc?: InputMaybe<ClockNodePointOrderable>;
+  then?: InputMaybe<ClockNodePointOrder>;
+};
+
+export enum ClockNodePointOrderable {
+  OutputState = 'outputState',
+  Xid = 'xid'
+}
+
+export type ClockNodePointPatch = {
+  outputState?: InputMaybe<Scalars['Int']['input']>;
+  ownedByClock?: InputMaybe<AutomationClockMetaRef>;
+};
+
+export type ClockNodePointRef = {
+  id?: InputMaybe<Scalars['ID']['input']>;
+  outputState?: InputMaybe<Scalars['Int']['input']>;
+  ownedByClock?: InputMaybe<AutomationClockMetaRef>;
+  xid?: InputMaybe<Scalars['Int']['input']>;
 };
 
 export type ContainsFilter = {
@@ -477,35 +682,35 @@ export type ContainsFilter = {
 
 export type Crop = {
   __typename?: 'Crop';
-  days_from_transfer_to_first_harvest: Scalars['Int'];
-  days_harvestable: Scalars['Int'];
-  id: Scalars['ID'];
-  name: Scalars['String'];
-  repeater: Scalars['Boolean'];
-  required_module_type: Scalars['String'];
+  days_from_transfer_to_first_harvest: Scalars['Int']['output'];
+  days_harvestable: Scalars['Int']['output'];
+  id: Scalars['ID']['output'];
+  name: Scalars['String']['output'];
+  repeater: Scalars['Boolean']['output'];
+  required_module_type: Scalars['String']['output'];
 };
 
 export type CropAggregateResult = {
   __typename?: 'CropAggregateResult';
-  count?: Maybe<Scalars['Int']>;
-  days_from_transfer_to_first_harvestAvg?: Maybe<Scalars['Float']>;
-  days_from_transfer_to_first_harvestMax?: Maybe<Scalars['Int']>;
-  days_from_transfer_to_first_harvestMin?: Maybe<Scalars['Int']>;
-  days_from_transfer_to_first_harvestSum?: Maybe<Scalars['Int']>;
-  days_harvestableAvg?: Maybe<Scalars['Float']>;
-  days_harvestableMax?: Maybe<Scalars['Int']>;
-  days_harvestableMin?: Maybe<Scalars['Int']>;
-  days_harvestableSum?: Maybe<Scalars['Int']>;
-  nameMax?: Maybe<Scalars['String']>;
-  nameMin?: Maybe<Scalars['String']>;
-  required_module_typeMax?: Maybe<Scalars['String']>;
-  required_module_typeMin?: Maybe<Scalars['String']>;
+  count?: Maybe<Scalars['Int']['output']>;
+  days_from_transfer_to_first_harvestAvg?: Maybe<Scalars['Float']['output']>;
+  days_from_transfer_to_first_harvestMax?: Maybe<Scalars['Int']['output']>;
+  days_from_transfer_to_first_harvestMin?: Maybe<Scalars['Int']['output']>;
+  days_from_transfer_to_first_harvestSum?: Maybe<Scalars['Int']['output']>;
+  days_harvestableAvg?: Maybe<Scalars['Float']['output']>;
+  days_harvestableMax?: Maybe<Scalars['Int']['output']>;
+  days_harvestableMin?: Maybe<Scalars['Int']['output']>;
+  days_harvestableSum?: Maybe<Scalars['Int']['output']>;
+  nameMax?: Maybe<Scalars['String']['output']>;
+  nameMin?: Maybe<Scalars['String']['output']>;
+  required_module_typeMax?: Maybe<Scalars['String']['output']>;
+  required_module_typeMin?: Maybe<Scalars['String']['output']>;
 };
 
 export type CropFilter = {
   and?: InputMaybe<Array<InputMaybe<CropFilter>>>;
   has?: InputMaybe<Array<InputMaybe<CropHasFilter>>>;
-  id?: InputMaybe<Array<Scalars['ID']>>;
+  id?: InputMaybe<Array<Scalars['ID']['input']>>;
   not?: InputMaybe<CropFilter>;
   or?: InputMaybe<Array<InputMaybe<CropFilter>>>;
 };
@@ -521,7 +726,7 @@ export enum CropHasFilter {
 export type CropIntention = {
   __typename?: 'CropIntention';
   crop: Crop;
-  harvestPerWeek: Scalars['Int'];
+  harvestPerWeek: Scalars['Int']['output'];
 };
 
 
@@ -531,11 +736,11 @@ export type CropIntentionCropArgs = {
 
 export type CropIntentionAggregateResult = {
   __typename?: 'CropIntentionAggregateResult';
-  count?: Maybe<Scalars['Int']>;
-  harvestPerWeekAvg?: Maybe<Scalars['Float']>;
-  harvestPerWeekMax?: Maybe<Scalars['Int']>;
-  harvestPerWeekMin?: Maybe<Scalars['Int']>;
-  harvestPerWeekSum?: Maybe<Scalars['Int']>;
+  count?: Maybe<Scalars['Int']['output']>;
+  harvestPerWeekAvg?: Maybe<Scalars['Float']['output']>;
+  harvestPerWeekMax?: Maybe<Scalars['Int']['output']>;
+  harvestPerWeekMin?: Maybe<Scalars['Int']['output']>;
+  harvestPerWeekSum?: Maybe<Scalars['Int']['output']>;
 };
 
 export type CropIntentionFilter = {
@@ -562,12 +767,12 @@ export enum CropIntentionOrderable {
 
 export type CropIntentionPatch = {
   crop?: InputMaybe<CropRef>;
-  harvestPerWeek?: InputMaybe<Scalars['Int']>;
+  harvestPerWeek?: InputMaybe<Scalars['Int']['input']>;
 };
 
 export type CropIntentionRef = {
   crop?: InputMaybe<CropRef>;
-  harvestPerWeek?: InputMaybe<Scalars['Int']>;
+  harvestPerWeek?: InputMaybe<Scalars['Int']['input']>;
 };
 
 export type CropIntentionsList = {
@@ -579,8 +784,8 @@ export type CropIntentionsList = {
 
 export type CropIntentionsListCropIntentionsArgs = {
   filter?: InputMaybe<CropIntentionFilter>;
-  first?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   order?: InputMaybe<CropIntentionOrder>;
 };
 
@@ -591,7 +796,7 @@ export type CropIntentionsListCropIntentionsAggregateArgs = {
 
 export type CropIntentionsListAggregateResult = {
   __typename?: 'CropIntentionsListAggregateResult';
-  count?: Maybe<Scalars['Int']>;
+  count?: Maybe<Scalars['Int']['output']>;
 };
 
 export type CropIntentionsListFilter = {
@@ -627,383 +832,426 @@ export enum CropOrderable {
 }
 
 export type CropPatch = {
-  days_from_transfer_to_first_harvest?: InputMaybe<Scalars['Int']>;
-  days_harvestable?: InputMaybe<Scalars['Int']>;
-  name?: InputMaybe<Scalars['String']>;
-  repeater?: InputMaybe<Scalars['Boolean']>;
-  required_module_type?: InputMaybe<Scalars['String']>;
+  days_from_transfer_to_first_harvest?: InputMaybe<Scalars['Int']['input']>;
+  days_harvestable?: InputMaybe<Scalars['Int']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
+  repeater?: InputMaybe<Scalars['Boolean']['input']>;
+  required_module_type?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type CropRef = {
-  days_from_transfer_to_first_harvest?: InputMaybe<Scalars['Int']>;
-  days_harvestable?: InputMaybe<Scalars['Int']>;
-  id?: InputMaybe<Scalars['ID']>;
-  name?: InputMaybe<Scalars['String']>;
-  repeater?: InputMaybe<Scalars['Boolean']>;
-  required_module_type?: InputMaybe<Scalars['String']>;
+  days_from_transfer_to_first_harvest?: InputMaybe<Scalars['Int']['input']>;
+  days_harvestable?: InputMaybe<Scalars['Int']['input']>;
+  id?: InputMaybe<Scalars['ID']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
+  repeater?: InputMaybe<Scalars['Boolean']['input']>;
+  required_module_type?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type CustomHttp = {
-  body?: InputMaybe<Scalars['String']>;
-  forwardHeaders?: InputMaybe<Array<Scalars['String']>>;
-  graphql?: InputMaybe<Scalars['String']>;
-  introspectionHeaders?: InputMaybe<Array<Scalars['String']>>;
+  body?: InputMaybe<Scalars['String']['input']>;
+  forwardHeaders?: InputMaybe<Array<Scalars['String']['input']>>;
+  graphql?: InputMaybe<Scalars['String']['input']>;
+  introspectionHeaders?: InputMaybe<Array<Scalars['String']['input']>>;
   method: HttpMethod;
   mode?: InputMaybe<Mode>;
-  secretHeaders?: InputMaybe<Array<Scalars['String']>>;
-  skipIntrospection?: InputMaybe<Scalars['Boolean']>;
-  url: Scalars['String'];
+  secretHeaders?: InputMaybe<Array<Scalars['String']['input']>>;
+  skipIntrospection?: InputMaybe<Scalars['Boolean']['input']>;
+  url: Scalars['String']['input'];
 };
 
 export type DateTimeFilter = {
   between?: InputMaybe<DateTimeRange>;
-  eq?: InputMaybe<Scalars['DateTime']>;
-  ge?: InputMaybe<Scalars['DateTime']>;
-  gt?: InputMaybe<Scalars['DateTime']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']>>>;
-  le?: InputMaybe<Scalars['DateTime']>;
-  lt?: InputMaybe<Scalars['DateTime']>;
+  eq?: InputMaybe<Scalars['DateTime']['input']>;
+  ge?: InputMaybe<Scalars['DateTime']['input']>;
+  gt?: InputMaybe<Scalars['DateTime']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>;
+  le?: InputMaybe<Scalars['DateTime']['input']>;
+  lt?: InputMaybe<Scalars['DateTime']['input']>;
 };
 
 export type DateTimeRange = {
-  max: Scalars['DateTime'];
-  min: Scalars['DateTime'];
+  max: Scalars['DateTime']['input'];
+  min: Scalars['DateTime']['input'];
+};
+
+export type DeleteAutomationClockMetaPayload = {
+  __typename?: 'DeleteAutomationClockMetaPayload';
+  automationClockMeta?: Maybe<Array<Maybe<AutomationClockMeta>>>;
+  msg?: Maybe<Scalars['String']['output']>;
+  numUids?: Maybe<Scalars['Int']['output']>;
+};
+
+
+export type DeleteAutomationClockMetaPayloadAutomationClockMetaArgs = {
+  filter?: InputMaybe<AutomationClockMetaFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+};
+
+export type DeleteChosenDriveOutputPresetPayload = {
+  __typename?: 'DeleteChosenDriveOutputPresetPayload';
+  chosenDriveOutputPreset?: Maybe<Array<Maybe<ChosenDriveOutputPreset>>>;
+  msg?: Maybe<Scalars['String']['output']>;
+  numUids?: Maybe<Scalars['Int']['output']>;
+};
+
+
+export type DeleteChosenDriveOutputPresetPayloadChosenDriveOutputPresetArgs = {
+  filter?: InputMaybe<ChosenDriveOutputPresetFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+};
+
+export type DeleteClockNodePointPayload = {
+  __typename?: 'DeleteClockNodePointPayload';
+  clockNodePoint?: Maybe<Array<Maybe<ClockNodePoint>>>;
+  msg?: Maybe<Scalars['String']['output']>;
+  numUids?: Maybe<Scalars['Int']['output']>;
+};
+
+
+export type DeleteClockNodePointPayloadClockNodePointArgs = {
+  filter?: InputMaybe<ClockNodePointFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order?: InputMaybe<ClockNodePointOrder>;
 };
 
 export type DeleteCropIntentionPayload = {
   __typename?: 'DeleteCropIntentionPayload';
   cropIntention?: Maybe<Array<Maybe<CropIntention>>>;
-  msg?: Maybe<Scalars['String']>;
-  numUids?: Maybe<Scalars['Int']>;
+  msg?: Maybe<Scalars['String']['output']>;
+  numUids?: Maybe<Scalars['Int']['output']>;
 };
 
 
 export type DeleteCropIntentionPayloadCropIntentionArgs = {
   filter?: InputMaybe<CropIntentionFilter>;
-  first?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   order?: InputMaybe<CropIntentionOrder>;
 };
 
 export type DeleteCropIntentionsListPayload = {
   __typename?: 'DeleteCropIntentionsListPayload';
   cropIntentionsList?: Maybe<Array<Maybe<CropIntentionsList>>>;
-  msg?: Maybe<Scalars['String']>;
-  numUids?: Maybe<Scalars['Int']>;
+  msg?: Maybe<Scalars['String']['output']>;
+  numUids?: Maybe<Scalars['Int']['output']>;
 };
 
 
 export type DeleteCropIntentionsListPayloadCropIntentionsListArgs = {
   filter?: InputMaybe<CropIntentionsListFilter>;
-  first?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
 };
 
 export type DeleteCropPayload = {
   __typename?: 'DeleteCropPayload';
   crop?: Maybe<Array<Maybe<Crop>>>;
-  msg?: Maybe<Scalars['String']>;
-  numUids?: Maybe<Scalars['Int']>;
+  msg?: Maybe<Scalars['String']['output']>;
+  numUids?: Maybe<Scalars['Int']['output']>;
 };
 
 
 export type DeleteCropPayloadCropArgs = {
   filter?: InputMaybe<CropFilter>;
-  first?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   order?: InputMaybe<CropOrder>;
 };
 
 export type DeleteDrawerPayload = {
   __typename?: 'DeleteDrawerPayload';
   drawer?: Maybe<Array<Maybe<Drawer>>>;
-  msg?: Maybe<Scalars['String']>;
-  numUids?: Maybe<Scalars['Int']>;
+  msg?: Maybe<Scalars['String']['output']>;
+  numUids?: Maybe<Scalars['Int']['output']>;
 };
 
 
 export type DeleteDrawerPayloadDrawerArgs = {
   filter?: InputMaybe<DrawerFilter>;
-  first?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   order?: InputMaybe<DrawerOrder>;
 };
 
 export type DeleteDriveOutputsPresetPayload = {
   __typename?: 'DeleteDriveOutputsPresetPayload';
   driveOutputsPreset?: Maybe<Array<Maybe<DriveOutputsPreset>>>;
-  msg?: Maybe<Scalars['String']>;
-  numUids?: Maybe<Scalars['Int']>;
+  msg?: Maybe<Scalars['String']['output']>;
+  numUids?: Maybe<Scalars['Int']['output']>;
 };
 
 
 export type DeleteDriveOutputsPresetPayloadDriveOutputsPresetArgs = {
   filter?: InputMaybe<DriveOutputsPresetFilter>;
-  first?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   order?: InputMaybe<DriveOutputsPresetOrder>;
 };
 
 export type DeleteEndpointPayload = {
   __typename?: 'DeleteEndpointPayload';
   endpoint?: Maybe<Array<Maybe<Endpoint>>>;
-  msg?: Maybe<Scalars['String']>;
-  numUids?: Maybe<Scalars['Int']>;
+  msg?: Maybe<Scalars['String']['output']>;
+  numUids?: Maybe<Scalars['Int']['output']>;
 };
 
 
 export type DeleteEndpointPayloadEndpointArgs = {
   filter?: InputMaybe<EndpointFilter>;
-  first?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
 };
 
 export type DeleteGerminationTrayPayload = {
   __typename?: 'DeleteGerminationTrayPayload';
   germinationTray?: Maybe<Array<Maybe<GerminationTray>>>;
-  msg?: Maybe<Scalars['String']>;
-  numUids?: Maybe<Scalars['Int']>;
+  msg?: Maybe<Scalars['String']['output']>;
+  numUids?: Maybe<Scalars['Int']['output']>;
 };
 
 
 export type DeleteGerminationTrayPayloadGerminationTrayArgs = {
   filter?: InputMaybe<GerminationTrayFilter>;
-  first?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
 };
 
 export type DeleteGrowPlatePayload = {
   __typename?: 'DeleteGrowPlatePayload';
   growPlate?: Maybe<Array<Maybe<GrowPlate>>>;
-  msg?: Maybe<Scalars['String']>;
-  numUids?: Maybe<Scalars['Int']>;
+  msg?: Maybe<Scalars['String']['output']>;
+  numUids?: Maybe<Scalars['Int']['output']>;
 };
 
 
 export type DeleteGrowPlatePayloadGrowPlateArgs = {
   filter?: InputMaybe<GrowPlateFilter>;
-  first?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   order?: InputMaybe<GrowPlateOrder>;
 };
 
 export type DeleteIpAddrPayload = {
   __typename?: 'DeleteIpAddrPayload';
   ipAddr?: Maybe<Array<Maybe<IpAddr>>>;
-  msg?: Maybe<Scalars['String']>;
-  numUids?: Maybe<Scalars['Int']>;
+  msg?: Maybe<Scalars['String']['output']>;
+  numUids?: Maybe<Scalars['Int']['output']>;
 };
 
 
 export type DeleteIpAddrPayloadIpAddrArgs = {
   filter?: InputMaybe<IpAddrFilter>;
-  first?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   order?: InputMaybe<IpAddrOrder>;
 };
 
 export type DeleteLocationPayload = {
   __typename?: 'DeleteLocationPayload';
   location?: Maybe<Array<Maybe<Location>>>;
-  msg?: Maybe<Scalars['String']>;
-  numUids?: Maybe<Scalars['Int']>;
+  msg?: Maybe<Scalars['String']['output']>;
+  numUids?: Maybe<Scalars['Int']['output']>;
 };
 
 
 export type DeleteLocationPayloadLocationArgs = {
   filter?: InputMaybe<LocationFilter>;
-  first?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   order?: InputMaybe<LocationOrder>;
 };
 
 export type DeleteModuleMapPayload = {
   __typename?: 'DeleteModuleMapPayload';
   moduleMap?: Maybe<Array<Maybe<ModuleMap>>>;
-  msg?: Maybe<Scalars['String']>;
-  numUids?: Maybe<Scalars['Int']>;
+  msg?: Maybe<Scalars['String']['output']>;
+  numUids?: Maybe<Scalars['Int']['output']>;
 };
 
 
 export type DeleteModuleMapPayloadModuleMapArgs = {
   filter?: InputMaybe<ModuleMapFilter>;
-  first?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
 };
 
 export type DeleteModulePayload = {
   __typename?: 'DeleteModulePayload';
   module?: Maybe<Array<Maybe<Module>>>;
-  msg?: Maybe<Scalars['String']>;
-  numUids?: Maybe<Scalars['Int']>;
+  msg?: Maybe<Scalars['String']['output']>;
+  numUids?: Maybe<Scalars['Int']['output']>;
 };
 
 
 export type DeleteModulePayloadModuleArgs = {
   filter?: InputMaybe<ModuleFilter>;
-  first?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
 };
 
 export type DeleteNurseryPayload = {
   __typename?: 'DeleteNurseryPayload';
-  msg?: Maybe<Scalars['String']>;
-  numUids?: Maybe<Scalars['Int']>;
+  msg?: Maybe<Scalars['String']['output']>;
+  numUids?: Maybe<Scalars['Int']['output']>;
   nursery?: Maybe<Array<Maybe<Nursery>>>;
 };
 
 
 export type DeleteNurseryPayloadNurseryArgs = {
   filter?: InputMaybe<NurseryFilter>;
-  first?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
 };
 
 export type DeletePhysicalSolenoidPayload = {
   __typename?: 'DeletePhysicalSolenoidPayload';
-  msg?: Maybe<Scalars['String']>;
-  numUids?: Maybe<Scalars['Int']>;
+  msg?: Maybe<Scalars['String']['output']>;
+  numUids?: Maybe<Scalars['Int']['output']>;
   physicalSolenoid?: Maybe<Array<Maybe<PhysicalSolenoid>>>;
 };
 
 
 export type DeletePhysicalSolenoidPayloadPhysicalSolenoidArgs = {
   filter?: InputMaybe<PhysicalSolenoidFilter>;
-  first?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   order?: InputMaybe<PhysicalSolenoidOrder>;
 };
 
 export type DeletePlantPayload = {
   __typename?: 'DeletePlantPayload';
-  msg?: Maybe<Scalars['String']>;
-  numUids?: Maybe<Scalars['Int']>;
+  msg?: Maybe<Scalars['String']['output']>;
+  numUids?: Maybe<Scalars['Int']['output']>;
   plant?: Maybe<Array<Maybe<Plant>>>;
 };
 
 
 export type DeletePlantPayloadPlantArgs = {
   filter?: InputMaybe<PlantFilter>;
-  first?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   order?: InputMaybe<PlantOrder>;
 };
 
 export type DeletePortPayload = {
   __typename?: 'DeletePortPayload';
-  msg?: Maybe<Scalars['String']>;
-  numUids?: Maybe<Scalars['Int']>;
+  msg?: Maybe<Scalars['String']['output']>;
+  numUids?: Maybe<Scalars['Int']['output']>;
   port?: Maybe<Array<Maybe<Port>>>;
 };
 
 
 export type DeletePortPayloadPortArgs = {
   filter?: InputMaybe<PortFilter>;
-  first?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   order?: InputMaybe<PortOrder>;
 };
 
 export type DeleteSeedPayload = {
   __typename?: 'DeleteSeedPayload';
-  msg?: Maybe<Scalars['String']>;
-  numUids?: Maybe<Scalars['Int']>;
+  msg?: Maybe<Scalars['String']['output']>;
+  numUids?: Maybe<Scalars['Int']['output']>;
   seed?: Maybe<Array<Maybe<Seed>>>;
 };
 
 
 export type DeleteSeedPayloadSeedArgs = {
   filter?: InputMaybe<SeedFilter>;
-  first?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   order?: InputMaybe<SeedOrder>;
 };
 
 export type DeleteShelfPayload = {
   __typename?: 'DeleteShelfPayload';
-  msg?: Maybe<Scalars['String']>;
-  numUids?: Maybe<Scalars['Int']>;
+  msg?: Maybe<Scalars['String']['output']>;
+  numUids?: Maybe<Scalars['Int']['output']>;
   shelf?: Maybe<Array<Maybe<Shelf>>>;
 };
 
 
 export type DeleteShelfPayloadShelfArgs = {
   filter?: InputMaybe<ShelfFilter>;
-  first?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   order?: InputMaybe<ShelfOrder>;
 };
 
 export type DeleteSignalPayload = {
   __typename?: 'DeleteSignalPayload';
-  msg?: Maybe<Scalars['String']>;
-  numUids?: Maybe<Scalars['Int']>;
+  msg?: Maybe<Scalars['String']['output']>;
+  numUids?: Maybe<Scalars['Int']['output']>;
   signal?: Maybe<Array<Maybe<Signal>>>;
 };
 
 
 export type DeleteSignalPayloadSignalArgs = {
   filter?: InputMaybe<SignalFilter>;
-  first?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   order?: InputMaybe<SignalOrder>;
 };
 
 export type DeleteSignalTablePayload = {
   __typename?: 'DeleteSignalTablePayload';
-  msg?: Maybe<Scalars['String']>;
-  numUids?: Maybe<Scalars['Int']>;
+  msg?: Maybe<Scalars['String']['output']>;
+  numUids?: Maybe<Scalars['Int']['output']>;
   signalTable?: Maybe<Array<Maybe<SignalTable>>>;
 };
 
 
 export type DeleteSignalTablePayloadSignalTableArgs = {
   filter?: InputMaybe<SignalTableFilter>;
-  first?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
 };
 
 export type DeleteSitePayload = {
   __typename?: 'DeleteSitePayload';
-  msg?: Maybe<Scalars['String']>;
-  numUids?: Maybe<Scalars['Int']>;
+  msg?: Maybe<Scalars['String']['output']>;
+  numUids?: Maybe<Scalars['Int']['output']>;
   site?: Maybe<Array<Maybe<Site>>>;
 };
 
 
 export type DeleteSitePayloadSiteArgs = {
   filter?: InputMaybe<SiteFilter>;
-  first?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
 };
 
 export type DeleteTimeSeriesPayload = {
   __typename?: 'DeleteTimeSeriesPayload';
-  msg?: Maybe<Scalars['String']>;
-  numUids?: Maybe<Scalars['Int']>;
+  msg?: Maybe<Scalars['String']['output']>;
+  numUids?: Maybe<Scalars['Int']['output']>;
   timeSeries?: Maybe<Array<Maybe<TimeSeries>>>;
 };
 
 
 export type DeleteTimeSeriesPayloadTimeSeriesArgs = {
   filter?: InputMaybe<TimeSeriesFilter>;
-  first?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   order?: InputMaybe<TimeSeriesOrder>;
 };
 
 export type DeleteWaterRoutePresetsPayload = {
   __typename?: 'DeleteWaterRoutePresetsPayload';
-  msg?: Maybe<Scalars['String']>;
-  numUids?: Maybe<Scalars['Int']>;
+  msg?: Maybe<Scalars['String']['output']>;
+  numUids?: Maybe<Scalars['Int']['output']>;
   waterRoutePresets?: Maybe<Array<Maybe<WaterRoutePresets>>>;
 };
 
 
 export type DeleteWaterRoutePresetsPayloadWaterRoutePresetsArgs = {
   filter?: InputMaybe<WaterRoutePresetsFilter>;
-  first?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
 };
 
 export enum DgraphIndex {
@@ -1028,7 +1276,7 @@ export type Drawer = {
   __typename?: 'Drawer';
   cropAssignment?: Maybe<Crop>;
   gridLocation: Location;
-  stock?: Maybe<Scalars['Int']>;
+  stock?: Maybe<Scalars['Int']['output']>;
 };
 
 
@@ -1043,11 +1291,11 @@ export type DrawerGridLocationArgs = {
 
 export type DrawerAggregateResult = {
   __typename?: 'DrawerAggregateResult';
-  count?: Maybe<Scalars['Int']>;
-  stockAvg?: Maybe<Scalars['Float']>;
-  stockMax?: Maybe<Scalars['Int']>;
-  stockMin?: Maybe<Scalars['Int']>;
-  stockSum?: Maybe<Scalars['Int']>;
+  count?: Maybe<Scalars['Int']['output']>;
+  stockAvg?: Maybe<Scalars['Float']['output']>;
+  stockMax?: Maybe<Scalars['Int']['output']>;
+  stockMin?: Maybe<Scalars['Int']['output']>;
+  stockSum?: Maybe<Scalars['Int']['output']>;
 };
 
 export type DrawerFilter = {
@@ -1076,19 +1324,19 @@ export enum DrawerOrderable {
 export type DrawerPatch = {
   cropAssignment?: InputMaybe<CropRef>;
   gridLocation?: InputMaybe<LocationRef>;
-  stock?: InputMaybe<Scalars['Int']>;
+  stock?: InputMaybe<Scalars['Int']['input']>;
 };
 
 export type DrawerRef = {
   cropAssignment?: InputMaybe<CropRef>;
   gridLocation?: InputMaybe<LocationRef>;
-  stock?: InputMaybe<Scalars['Int']>;
+  stock?: InputMaybe<Scalars['Int']['input']>;
 };
 
 export type DriveOutputsPreset = {
   __typename?: 'DriveOutputsPreset';
-  boolArrayString: Scalars['String'];
-  id: Scalars['ID'];
+  boolArrayString: Scalars['String']['output'];
+  id: Scalars['ID']['output'];
   lxEndpoint: Endpoint;
 };
 
@@ -1099,15 +1347,15 @@ export type DriveOutputsPresetLxEndpointArgs = {
 
 export type DriveOutputsPresetAggregateResult = {
   __typename?: 'DriveOutputsPresetAggregateResult';
-  boolArrayStringMax?: Maybe<Scalars['String']>;
-  boolArrayStringMin?: Maybe<Scalars['String']>;
-  count?: Maybe<Scalars['Int']>;
+  boolArrayStringMax?: Maybe<Scalars['String']['output']>;
+  boolArrayStringMin?: Maybe<Scalars['String']['output']>;
+  count?: Maybe<Scalars['Int']['output']>;
 };
 
 export type DriveOutputsPresetFilter = {
   and?: InputMaybe<Array<InputMaybe<DriveOutputsPresetFilter>>>;
   has?: InputMaybe<Array<InputMaybe<DriveOutputsPresetHasFilter>>>;
-  id?: InputMaybe<Array<Scalars['ID']>>;
+  id?: InputMaybe<Array<Scalars['ID']['input']>>;
   not?: InputMaybe<DriveOutputsPresetFilter>;
   or?: InputMaybe<Array<InputMaybe<DriveOutputsPresetFilter>>>;
 };
@@ -1128,20 +1376,20 @@ export enum DriveOutputsPresetOrderable {
 }
 
 export type DriveOutputsPresetPatch = {
-  boolArrayString?: InputMaybe<Scalars['String']>;
+  boolArrayString?: InputMaybe<Scalars['String']['input']>;
   lxEndpoint?: InputMaybe<EndpointRef>;
 };
 
 export type DriveOutputsPresetRef = {
-  boolArrayString?: InputMaybe<Scalars['String']>;
-  id?: InputMaybe<Scalars['ID']>;
+  boolArrayString?: InputMaybe<Scalars['String']['input']>;
+  id?: InputMaybe<Scalars['ID']['input']>;
   lxEndpoint?: InputMaybe<EndpointRef>;
 };
 
 export type Endpoint = {
   __typename?: 'Endpoint';
   addr: IpAddr;
-  id: Scalars['ID'];
+  id: Scalars['ID']['output'];
   port: Port;
 };
 
@@ -1157,13 +1405,13 @@ export type EndpointPortArgs = {
 
 export type EndpointAggregateResult = {
   __typename?: 'EndpointAggregateResult';
-  count?: Maybe<Scalars['Int']>;
+  count?: Maybe<Scalars['Int']['output']>;
 };
 
 export type EndpointFilter = {
   and?: InputMaybe<Array<InputMaybe<EndpointFilter>>>;
   has?: InputMaybe<Array<InputMaybe<EndpointHasFilter>>>;
-  id?: InputMaybe<Array<Scalars['ID']>>;
+  id?: InputMaybe<Array<Scalars['ID']['input']>>;
   not?: InputMaybe<EndpointFilter>;
   or?: InputMaybe<Array<InputMaybe<EndpointFilter>>>;
 };
@@ -1180,41 +1428,41 @@ export type EndpointPatch = {
 
 export type EndpointRef = {
   addr?: InputMaybe<IpAddrRef>;
-  id?: InputMaybe<Scalars['ID']>;
+  id?: InputMaybe<Scalars['ID']['input']>;
   port?: InputMaybe<PortRef>;
 };
 
 export type FloatFilter = {
   between?: InputMaybe<FloatRange>;
-  eq?: InputMaybe<Scalars['Float']>;
-  ge?: InputMaybe<Scalars['Float']>;
-  gt?: InputMaybe<Scalars['Float']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['Float']>>>;
-  le?: InputMaybe<Scalars['Float']>;
-  lt?: InputMaybe<Scalars['Float']>;
+  eq?: InputMaybe<Scalars['Float']['input']>;
+  ge?: InputMaybe<Scalars['Float']['input']>;
+  gt?: InputMaybe<Scalars['Float']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['Float']['input']>>>;
+  le?: InputMaybe<Scalars['Float']['input']>;
+  lt?: InputMaybe<Scalars['Float']['input']>;
 };
 
 export type FloatRange = {
-  max: Scalars['Float'];
-  min: Scalars['Float'];
+  max: Scalars['Float']['input'];
+  min: Scalars['Float']['input'];
 };
 
 export type GenerateMutationParams = {
-  add?: InputMaybe<Scalars['Boolean']>;
-  delete?: InputMaybe<Scalars['Boolean']>;
-  update?: InputMaybe<Scalars['Boolean']>;
+  add?: InputMaybe<Scalars['Boolean']['input']>;
+  delete?: InputMaybe<Scalars['Boolean']['input']>;
+  update?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 export type GenerateQueryParams = {
-  aggregate?: InputMaybe<Scalars['Boolean']>;
-  get?: InputMaybe<Scalars['Boolean']>;
-  password?: InputMaybe<Scalars['Boolean']>;
-  query?: InputMaybe<Scalars['Boolean']>;
+  aggregate?: InputMaybe<Scalars['Boolean']['input']>;
+  get?: InputMaybe<Scalars['Boolean']['input']>;
+  password?: InputMaybe<Scalars['Boolean']['input']>;
+  query?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 export type GerminationTray = {
   __typename?: 'GerminationTray';
-  id: Scalars['ID'];
+  id: Scalars['ID']['output'];
   sites: Array<Site>;
   sitesAggregate?: Maybe<SiteAggregateResult>;
 };
@@ -1222,8 +1470,8 @@ export type GerminationTray = {
 
 export type GerminationTraySitesArgs = {
   filter?: InputMaybe<SiteFilter>;
-  first?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
 };
 
 
@@ -1233,13 +1481,13 @@ export type GerminationTraySitesAggregateArgs = {
 
 export type GerminationTrayAggregateResult = {
   __typename?: 'GerminationTrayAggregateResult';
-  count?: Maybe<Scalars['Int']>;
+  count?: Maybe<Scalars['Int']['output']>;
 };
 
 export type GerminationTrayFilter = {
   and?: InputMaybe<Array<InputMaybe<GerminationTrayFilter>>>;
   has?: InputMaybe<Array<InputMaybe<GerminationTrayHasFilter>>>;
-  id?: InputMaybe<Array<Scalars['ID']>>;
+  id?: InputMaybe<Array<Scalars['ID']['input']>>;
   not?: InputMaybe<GerminationTrayFilter>;
   or?: InputMaybe<Array<InputMaybe<GerminationTrayFilter>>>;
 };
@@ -1253,22 +1501,22 @@ export type GerminationTrayPatch = {
 };
 
 export type GerminationTrayRef = {
-  id?: InputMaybe<Scalars['ID']>;
+  id?: InputMaybe<Scalars['ID']['input']>;
   sites?: InputMaybe<Array<SiteRef>>;
 };
 
 export type GrowPlate = {
   __typename?: 'GrowPlate';
-  rawNetCupReading?: Maybe<Scalars['Int']>;
+  rawNetCupReading?: Maybe<Scalars['Int']['output']>;
 };
 
 export type GrowPlateAggregateResult = {
   __typename?: 'GrowPlateAggregateResult';
-  count?: Maybe<Scalars['Int']>;
-  rawNetCupReadingAvg?: Maybe<Scalars['Float']>;
-  rawNetCupReadingMax?: Maybe<Scalars['Int']>;
-  rawNetCupReadingMin?: Maybe<Scalars['Int']>;
-  rawNetCupReadingSum?: Maybe<Scalars['Int']>;
+  count?: Maybe<Scalars['Int']['output']>;
+  rawNetCupReadingAvg?: Maybe<Scalars['Float']['output']>;
+  rawNetCupReadingMax?: Maybe<Scalars['Int']['output']>;
+  rawNetCupReadingMin?: Maybe<Scalars['Int']['output']>;
+  rawNetCupReadingSum?: Maybe<Scalars['Int']['output']>;
 };
 
 export type GrowPlateFilter = {
@@ -1293,11 +1541,11 @@ export enum GrowPlateOrderable {
 }
 
 export type GrowPlatePatch = {
-  rawNetCupReading?: InputMaybe<Scalars['Int']>;
+  rawNetCupReading?: InputMaybe<Scalars['Int']['input']>;
 };
 
 export type GrowPlateRef = {
-  rawNetCupReading?: InputMaybe<Scalars['Int']>;
+  rawNetCupReading?: InputMaybe<Scalars['Int']['input']>;
 };
 
 export enum HttpMethod {
@@ -1310,32 +1558,32 @@ export enum HttpMethod {
 
 export type Int64Filter = {
   between?: InputMaybe<Int64Range>;
-  eq?: InputMaybe<Scalars['Int64']>;
-  ge?: InputMaybe<Scalars['Int64']>;
-  gt?: InputMaybe<Scalars['Int64']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['Int64']>>>;
-  le?: InputMaybe<Scalars['Int64']>;
-  lt?: InputMaybe<Scalars['Int64']>;
+  eq?: InputMaybe<Scalars['Int64']['input']>;
+  ge?: InputMaybe<Scalars['Int64']['input']>;
+  gt?: InputMaybe<Scalars['Int64']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['Int64']['input']>>>;
+  le?: InputMaybe<Scalars['Int64']['input']>;
+  lt?: InputMaybe<Scalars['Int64']['input']>;
 };
 
 export type Int64Range = {
-  max: Scalars['Int64'];
-  min: Scalars['Int64'];
+  max: Scalars['Int64']['input'];
+  min: Scalars['Int64']['input'];
 };
 
 export type IntFilter = {
   between?: InputMaybe<IntRange>;
-  eq?: InputMaybe<Scalars['Int']>;
-  ge?: InputMaybe<Scalars['Int']>;
-  gt?: InputMaybe<Scalars['Int']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
-  le?: InputMaybe<Scalars['Int']>;
-  lt?: InputMaybe<Scalars['Int']>;
+  eq?: InputMaybe<Scalars['Int']['input']>;
+  ge?: InputMaybe<Scalars['Int']['input']>;
+  gt?: InputMaybe<Scalars['Int']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['Int']['input']>>>;
+  le?: InputMaybe<Scalars['Int']['input']>;
+  lt?: InputMaybe<Scalars['Int']['input']>;
 };
 
 export type IntRange = {
-  max: Scalars['Int'];
-  min: Scalars['Int'];
+  max: Scalars['Int']['input'];
+  min: Scalars['Int']['input'];
 };
 
 export type IntersectsFilter = {
@@ -1345,14 +1593,14 @@ export type IntersectsFilter = {
 
 export type IpAddr = {
   __typename?: 'IpAddr';
-  addr: Scalars['String'];
+  addr: Scalars['String']['output'];
 };
 
 export type IpAddrAggregateResult = {
   __typename?: 'IpAddrAggregateResult';
-  addrMax?: Maybe<Scalars['String']>;
-  addrMin?: Maybe<Scalars['String']>;
-  count?: Maybe<Scalars['Int']>;
+  addrMax?: Maybe<Scalars['String']['output']>;
+  addrMin?: Maybe<Scalars['String']['output']>;
+  count?: Maybe<Scalars['Int']['output']>;
 };
 
 export type IpAddrFilter = {
@@ -1377,30 +1625,30 @@ export enum IpAddrOrderable {
 }
 
 export type IpAddrPatch = {
-  addr?: InputMaybe<Scalars['String']>;
+  addr?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type IpAddrRef = {
-  addr?: InputMaybe<Scalars['String']>;
+  addr?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type Location = {
   __typename?: 'Location';
-  x: Scalars['Int'];
-  y: Scalars['Int'];
+  x: Scalars['Int']['output'];
+  y: Scalars['Int']['output'];
 };
 
 export type LocationAggregateResult = {
   __typename?: 'LocationAggregateResult';
-  count?: Maybe<Scalars['Int']>;
-  xAvg?: Maybe<Scalars['Float']>;
-  xMax?: Maybe<Scalars['Int']>;
-  xMin?: Maybe<Scalars['Int']>;
-  xSum?: Maybe<Scalars['Int']>;
-  yAvg?: Maybe<Scalars['Float']>;
-  yMax?: Maybe<Scalars['Int']>;
-  yMin?: Maybe<Scalars['Int']>;
-  ySum?: Maybe<Scalars['Int']>;
+  count?: Maybe<Scalars['Int']['output']>;
+  xAvg?: Maybe<Scalars['Float']['output']>;
+  xMax?: Maybe<Scalars['Int']['output']>;
+  xMin?: Maybe<Scalars['Int']['output']>;
+  xSum?: Maybe<Scalars['Int']['output']>;
+  yAvg?: Maybe<Scalars['Float']['output']>;
+  yMax?: Maybe<Scalars['Int']['output']>;
+  yMin?: Maybe<Scalars['Int']['output']>;
+  ySum?: Maybe<Scalars['Int']['output']>;
 };
 
 export type LocationFilter = {
@@ -1427,13 +1675,13 @@ export enum LocationOrderable {
 }
 
 export type LocationPatch = {
-  x?: InputMaybe<Scalars['Int']>;
-  y?: InputMaybe<Scalars['Int']>;
+  x?: InputMaybe<Scalars['Int']['input']>;
+  y?: InputMaybe<Scalars['Int']['input']>;
 };
 
 export type LocationRef = {
-  x?: InputMaybe<Scalars['Int']>;
-  y?: InputMaybe<Scalars['Int']>;
+  x?: InputMaybe<Scalars['Int']['input']>;
+  y?: InputMaybe<Scalars['Int']['input']>;
 };
 
 export enum Mode {
@@ -1443,19 +1691,18 @@ export enum Mode {
 
 export type Module = {
   __typename?: 'Module';
-  id: Scalars['ID'];
+  id: Scalars['ID']['output'];
   instantiationTemplateUsed: ModuleType;
   nutrientMix?: Maybe<NutrientMix>;
   shelves?: Maybe<Array<Maybe<Shelf>>>;
   shelvesAggregate?: Maybe<ShelfAggregateResult>;
-  totalNumberOfSites: Scalars['Int'];
 };
 
 
 export type ModuleShelvesArgs = {
   filter?: InputMaybe<ShelfFilter>;
-  first?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   order?: InputMaybe<ShelfOrder>;
 };
 
@@ -1466,13 +1713,13 @@ export type ModuleShelvesAggregateArgs = {
 
 export type ModuleAggregateResult = {
   __typename?: 'ModuleAggregateResult';
-  count?: Maybe<Scalars['Int']>;
+  count?: Maybe<Scalars['Int']['output']>;
 };
 
 export type ModuleFilter = {
   and?: InputMaybe<Array<InputMaybe<ModuleFilter>>>;
   has?: InputMaybe<Array<InputMaybe<ModuleHasFilter>>>;
-  id?: InputMaybe<Array<Scalars['ID']>>;
+  id?: InputMaybe<Array<Scalars['ID']['input']>>;
   not?: InputMaybe<ModuleFilter>;
   or?: InputMaybe<Array<InputMaybe<ModuleFilter>>>;
 };
@@ -1485,7 +1732,7 @@ export enum ModuleHasFilter {
 
 export type ModuleMap = {
   __typename?: 'ModuleMap';
-  id: Scalars['ID'];
+  id: Scalars['ID']['output'];
   modules?: Maybe<Array<Maybe<Module>>>;
   modulesAggregate?: Maybe<ModuleAggregateResult>;
 };
@@ -1493,8 +1740,8 @@ export type ModuleMap = {
 
 export type ModuleMapModulesArgs = {
   filter?: InputMaybe<ModuleFilter>;
-  first?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
 };
 
 
@@ -1504,13 +1751,13 @@ export type ModuleMapModulesAggregateArgs = {
 
 export type ModuleMapAggregateResult = {
   __typename?: 'ModuleMapAggregateResult';
-  count?: Maybe<Scalars['Int']>;
+  count?: Maybe<Scalars['Int']['output']>;
 };
 
 export type ModuleMapFilter = {
   and?: InputMaybe<Array<InputMaybe<ModuleMapFilter>>>;
   has?: InputMaybe<Array<InputMaybe<ModuleMapHasFilter>>>;
-  id?: InputMaybe<Array<Scalars['ID']>>;
+  id?: InputMaybe<Array<Scalars['ID']['input']>>;
   not?: InputMaybe<ModuleMapFilter>;
   or?: InputMaybe<Array<InputMaybe<ModuleMapFilter>>>;
 };
@@ -1524,7 +1771,7 @@ export type ModuleMapPatch = {
 };
 
 export type ModuleMapRef = {
-  id?: InputMaybe<Scalars['ID']>;
+  id?: InputMaybe<Scalars['ID']['input']>;
   modules?: InputMaybe<Array<InputMaybe<ModuleRef>>>;
 };
 
@@ -1535,7 +1782,7 @@ export type ModulePatch = {
 };
 
 export type ModuleRef = {
-  id?: InputMaybe<Scalars['ID']>;
+  id?: InputMaybe<Scalars['ID']['input']>;
   instantiationTemplateUsed?: InputMaybe<ModuleType>;
   nutrientMix?: InputMaybe<NutrientMix>;
   shelves?: InputMaybe<Array<InputMaybe<ShelfRef>>>;
@@ -1562,6 +1809,9 @@ export type MultiPolygonRef = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  addAutomationClockMeta?: Maybe<AddAutomationClockMetaPayload>;
+  addChosenDriveOutputPreset?: Maybe<AddChosenDriveOutputPresetPayload>;
+  addClockNodePoint?: Maybe<AddClockNodePointPayload>;
   addCrop?: Maybe<AddCropPayload>;
   addCropIntention?: Maybe<AddCropIntentionPayload>;
   addCropIntentionsList?: Maybe<AddCropIntentionsListPayload>;
@@ -1585,6 +1835,9 @@ export type Mutation = {
   addSite?: Maybe<AddSitePayload>;
   addTimeSeries?: Maybe<AddTimeSeriesPayload>;
   addWaterRoutePresets?: Maybe<AddWaterRoutePresetsPayload>;
+  deleteAutomationClockMeta?: Maybe<DeleteAutomationClockMetaPayload>;
+  deleteChosenDriveOutputPreset?: Maybe<DeleteChosenDriveOutputPresetPayload>;
+  deleteClockNodePoint?: Maybe<DeleteClockNodePointPayload>;
   deleteCrop?: Maybe<DeleteCropPayload>;
   deleteCropIntention?: Maybe<DeleteCropIntentionPayload>;
   deleteCropIntentionsList?: Maybe<DeleteCropIntentionsListPayload>;
@@ -1608,7 +1861,9 @@ export type Mutation = {
   deleteSite?: Maybe<DeleteSitePayload>;
   deleteTimeSeries?: Maybe<DeleteTimeSeriesPayload>;
   deleteWaterRoutePresets?: Maybe<DeleteWaterRoutePresetsPayload>;
-  ingestQR: Scalars['String'];
+  updateAutomationClockMeta?: Maybe<UpdateAutomationClockMetaPayload>;
+  updateChosenDriveOutputPreset?: Maybe<UpdateChosenDriveOutputPresetPayload>;
+  updateClockNodePoint?: Maybe<UpdateClockNodePointPayload>;
   updateCrop?: Maybe<UpdateCropPayload>;
   updateCropIntention?: Maybe<UpdateCropIntentionPayload>;
   updateCropIntentionsList?: Maybe<UpdateCropIntentionsListPayload>;
@@ -1632,6 +1887,22 @@ export type Mutation = {
   updateSite?: Maybe<UpdateSitePayload>;
   updateTimeSeries?: Maybe<UpdateTimeSeriesPayload>;
   updateWaterRoutePresets?: Maybe<UpdateWaterRoutePresetsPayload>;
+};
+
+
+export type MutationAddAutomationClockMetaArgs = {
+  input: Array<AddAutomationClockMetaInput>;
+};
+
+
+export type MutationAddChosenDriveOutputPresetArgs = {
+  input: Array<AddChosenDriveOutputPresetInput>;
+};
+
+
+export type MutationAddClockNodePointArgs = {
+  input: Array<AddClockNodePointInput>;
+  upsert?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 
@@ -1750,6 +2021,21 @@ export type MutationAddWaterRoutePresetsArgs = {
 };
 
 
+export type MutationDeleteAutomationClockMetaArgs = {
+  filter: AutomationClockMetaFilter;
+};
+
+
+export type MutationDeleteChosenDriveOutputPresetArgs = {
+  filter: ChosenDriveOutputPresetFilter;
+};
+
+
+export type MutationDeleteClockNodePointArgs = {
+  filter: ClockNodePointFilter;
+};
+
+
 export type MutationDeleteCropArgs = {
   filter: CropFilter;
 };
@@ -1865,8 +2151,18 @@ export type MutationDeleteWaterRoutePresetsArgs = {
 };
 
 
-export type MutationIngestQrArgs = {
-  qr: Scalars['String'];
+export type MutationUpdateAutomationClockMetaArgs = {
+  input: UpdateAutomationClockMetaInput;
+};
+
+
+export type MutationUpdateChosenDriveOutputPresetArgs = {
+  input: UpdateChosenDriveOutputPresetInput;
+};
+
+
+export type MutationUpdateClockNodePointArgs = {
+  input: UpdateClockNodePointInput;
 };
 
 
@@ -1986,21 +2282,21 @@ export type MutationUpdateWaterRoutePresetsArgs = {
 
 export type NearFilter = {
   coordinate: PointRef;
-  distance: Scalars['Float'];
+  distance: Scalars['Float']['input'];
 };
 
 export type Nursery = {
   __typename?: 'Nursery';
   GerminationTrays: Array<GerminationTray>;
   GerminationTraysAggregate?: Maybe<GerminationTrayAggregateResult>;
-  id: Scalars['ID'];
+  id: Scalars['ID']['output'];
 };
 
 
 export type NurseryGerminationTraysArgs = {
   filter?: InputMaybe<GerminationTrayFilter>;
-  first?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
 };
 
 
@@ -2010,13 +2306,13 @@ export type NurseryGerminationTraysAggregateArgs = {
 
 export type NurseryAggregateResult = {
   __typename?: 'NurseryAggregateResult';
-  count?: Maybe<Scalars['Int']>;
+  count?: Maybe<Scalars['Int']['output']>;
 };
 
 export type NurseryFilter = {
   and?: InputMaybe<Array<InputMaybe<NurseryFilter>>>;
   has?: InputMaybe<Array<InputMaybe<NurseryHasFilter>>>;
-  id?: InputMaybe<Array<Scalars['ID']>>;
+  id?: InputMaybe<Array<Scalars['ID']['input']>>;
   not?: InputMaybe<NurseryFilter>;
   or?: InputMaybe<Array<InputMaybe<NurseryFilter>>>;
 };
@@ -2031,7 +2327,7 @@ export type NurseryPatch = {
 
 export type NurseryRef = {
   GerminationTrays?: InputMaybe<Array<GerminationTrayRef>>;
-  id?: InputMaybe<Scalars['ID']>;
+  id?: InputMaybe<Scalars['ID']['input']>;
 };
 
 export enum NutrientMix {
@@ -2041,11 +2337,11 @@ export enum NutrientMix {
 
 export type PhysicalSolenoid = {
   __typename?: 'PhysicalSolenoid';
-  driveState: Scalars['Boolean'];
-  id: Scalars['ID'];
+  driveState: Scalars['Boolean']['output'];
+  id: Scalars['ID']['output'];
   influxOutputCurrentTimeSeries?: Maybe<TimeSeries>;
   outputDriveAddr: IpAddr;
-  outputDriveIndex: Scalars['Int'];
+  outputDriveIndex: Scalars['Int']['output'];
 };
 
 
@@ -2060,17 +2356,17 @@ export type PhysicalSolenoidOutputDriveAddrArgs = {
 
 export type PhysicalSolenoidAggregateResult = {
   __typename?: 'PhysicalSolenoidAggregateResult';
-  count?: Maybe<Scalars['Int']>;
-  outputDriveIndexAvg?: Maybe<Scalars['Float']>;
-  outputDriveIndexMax?: Maybe<Scalars['Int']>;
-  outputDriveIndexMin?: Maybe<Scalars['Int']>;
-  outputDriveIndexSum?: Maybe<Scalars['Int']>;
+  count?: Maybe<Scalars['Int']['output']>;
+  outputDriveIndexAvg?: Maybe<Scalars['Float']['output']>;
+  outputDriveIndexMax?: Maybe<Scalars['Int']['output']>;
+  outputDriveIndexMin?: Maybe<Scalars['Int']['output']>;
+  outputDriveIndexSum?: Maybe<Scalars['Int']['output']>;
 };
 
 export type PhysicalSolenoidFilter = {
   and?: InputMaybe<Array<InputMaybe<PhysicalSolenoidFilter>>>;
   has?: InputMaybe<Array<InputMaybe<PhysicalSolenoidHasFilter>>>;
-  id?: InputMaybe<Array<Scalars['ID']>>;
+  id?: InputMaybe<Array<Scalars['ID']['input']>>;
   not?: InputMaybe<PhysicalSolenoidFilter>;
   or?: InputMaybe<Array<InputMaybe<PhysicalSolenoidFilter>>>;
 };
@@ -2093,30 +2389,30 @@ export enum PhysicalSolenoidOrderable {
 }
 
 export type PhysicalSolenoidPatch = {
-  driveState?: InputMaybe<Scalars['Boolean']>;
+  driveState?: InputMaybe<Scalars['Boolean']['input']>;
   influxOutputCurrentTimeSeries?: InputMaybe<TimeSeriesRef>;
   outputDriveAddr?: InputMaybe<IpAddrRef>;
-  outputDriveIndex?: InputMaybe<Scalars['Int']>;
+  outputDriveIndex?: InputMaybe<Scalars['Int']['input']>;
 };
 
 export type PhysicalSolenoidRef = {
-  driveState?: InputMaybe<Scalars['Boolean']>;
-  id?: InputMaybe<Scalars['ID']>;
+  driveState?: InputMaybe<Scalars['Boolean']['input']>;
+  id?: InputMaybe<Scalars['ID']['input']>;
   influxOutputCurrentTimeSeries?: InputMaybe<TimeSeriesRef>;
   outputDriveAddr?: InputMaybe<IpAddrRef>;
-  outputDriveIndex?: InputMaybe<Scalars['Int']>;
+  outputDriveIndex?: InputMaybe<Scalars['Int']['input']>;
 };
 
 export type Plant = {
   __typename?: 'Plant';
-  cropName: Scalars['String'];
-  germinatedDate?: Maybe<Scalars['DateTime']>;
-  harvestedDate?: Maybe<Scalars['DateTime']>;
-  id: Scalars['ID'];
+  cropName: Scalars['String']['output'];
+  germinatedDate?: Maybe<Scalars['DateTime']['output']>;
+  harvestedDate?: Maybe<Scalars['DateTime']['output']>;
+  id: Scalars['ID']['output'];
   location?: Maybe<Site>;
-  nutrientType: Scalars['String'];
-  repeater: Scalars['Boolean'];
-  transferredDate?: Maybe<Scalars['DateTime']>;
+  nutrientType: Scalars['String']['output'];
+  repeater: Scalars['Boolean']['output'];
+  transferredDate?: Maybe<Scalars['DateTime']['output']>;
 };
 
 
@@ -2126,28 +2422,28 @@ export type PlantLocationArgs = {
 
 export type PlantAggregateResult = {
   __typename?: 'PlantAggregateResult';
-  count?: Maybe<Scalars['Int']>;
-  cropNameMax?: Maybe<Scalars['String']>;
-  cropNameMin?: Maybe<Scalars['String']>;
-  germinatedDateMax?: Maybe<Scalars['DateTime']>;
-  germinatedDateMin?: Maybe<Scalars['DateTime']>;
-  harvestedDateMax?: Maybe<Scalars['DateTime']>;
-  harvestedDateMin?: Maybe<Scalars['DateTime']>;
-  nutrientTypeMax?: Maybe<Scalars['String']>;
-  nutrientTypeMin?: Maybe<Scalars['String']>;
-  transferredDateMax?: Maybe<Scalars['DateTime']>;
-  transferredDateMin?: Maybe<Scalars['DateTime']>;
+  count?: Maybe<Scalars['Int']['output']>;
+  cropNameMax?: Maybe<Scalars['String']['output']>;
+  cropNameMin?: Maybe<Scalars['String']['output']>;
+  germinatedDateMax?: Maybe<Scalars['DateTime']['output']>;
+  germinatedDateMin?: Maybe<Scalars['DateTime']['output']>;
+  harvestedDateMax?: Maybe<Scalars['DateTime']['output']>;
+  harvestedDateMin?: Maybe<Scalars['DateTime']['output']>;
+  nutrientTypeMax?: Maybe<Scalars['String']['output']>;
+  nutrientTypeMin?: Maybe<Scalars['String']['output']>;
+  transferredDateMax?: Maybe<Scalars['DateTime']['output']>;
+  transferredDateMin?: Maybe<Scalars['DateTime']['output']>;
 };
 
 export type PlantFilter = {
   and?: InputMaybe<Array<InputMaybe<PlantFilter>>>;
   cropName?: InputMaybe<StringTermFilter>;
   has?: InputMaybe<Array<InputMaybe<PlantHasFilter>>>;
-  id?: InputMaybe<Array<Scalars['ID']>>;
+  id?: InputMaybe<Array<Scalars['ID']['input']>>;
   not?: InputMaybe<PlantFilter>;
   nutrientType?: InputMaybe<StringTermFilter>;
   or?: InputMaybe<Array<InputMaybe<PlantFilter>>>;
-  repeater?: InputMaybe<Scalars['Boolean']>;
+  repeater?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 export enum PlantHasFilter {
@@ -2175,30 +2471,30 @@ export enum PlantOrderable {
 }
 
 export type PlantPatch = {
-  cropName?: InputMaybe<Scalars['String']>;
-  germinatedDate?: InputMaybe<Scalars['DateTime']>;
-  harvestedDate?: InputMaybe<Scalars['DateTime']>;
+  cropName?: InputMaybe<Scalars['String']['input']>;
+  germinatedDate?: InputMaybe<Scalars['DateTime']['input']>;
+  harvestedDate?: InputMaybe<Scalars['DateTime']['input']>;
   location?: InputMaybe<SiteRef>;
-  nutrientType?: InputMaybe<Scalars['String']>;
-  repeater?: InputMaybe<Scalars['Boolean']>;
-  transferredDate?: InputMaybe<Scalars['DateTime']>;
+  nutrientType?: InputMaybe<Scalars['String']['input']>;
+  repeater?: InputMaybe<Scalars['Boolean']['input']>;
+  transferredDate?: InputMaybe<Scalars['DateTime']['input']>;
 };
 
 export type PlantRef = {
-  cropName?: InputMaybe<Scalars['String']>;
-  germinatedDate?: InputMaybe<Scalars['DateTime']>;
-  harvestedDate?: InputMaybe<Scalars['DateTime']>;
-  id?: InputMaybe<Scalars['ID']>;
+  cropName?: InputMaybe<Scalars['String']['input']>;
+  germinatedDate?: InputMaybe<Scalars['DateTime']['input']>;
+  harvestedDate?: InputMaybe<Scalars['DateTime']['input']>;
+  id?: InputMaybe<Scalars['ID']['input']>;
   location?: InputMaybe<SiteRef>;
-  nutrientType?: InputMaybe<Scalars['String']>;
-  repeater?: InputMaybe<Scalars['Boolean']>;
-  transferredDate?: InputMaybe<Scalars['DateTime']>;
+  nutrientType?: InputMaybe<Scalars['String']['input']>;
+  repeater?: InputMaybe<Scalars['Boolean']['input']>;
+  transferredDate?: InputMaybe<Scalars['DateTime']['input']>;
 };
 
 export type Point = {
   __typename?: 'Point';
-  latitude: Scalars['Float'];
-  longitude: Scalars['Float'];
+  latitude: Scalars['Float']['output'];
+  longitude: Scalars['Float']['output'];
 };
 
 export type PointGeoFilter = {
@@ -2216,8 +2512,8 @@ export type PointListRef = {
 };
 
 export type PointRef = {
-  latitude: Scalars['Float'];
-  longitude: Scalars['Float'];
+  latitude: Scalars['Float']['input'];
+  longitude: Scalars['Float']['input'];
 };
 
 export type Polygon = {
@@ -2238,16 +2534,16 @@ export type PolygonRef = {
 
 export type Port = {
   __typename?: 'Port';
-  port: Scalars['Int'];
+  port: Scalars['Int']['output'];
 };
 
 export type PortAggregateResult = {
   __typename?: 'PortAggregateResult';
-  count?: Maybe<Scalars['Int']>;
-  portAvg?: Maybe<Scalars['Float']>;
-  portMax?: Maybe<Scalars['Int']>;
-  portMin?: Maybe<Scalars['Int']>;
-  portSum?: Maybe<Scalars['Int']>;
+  count?: Maybe<Scalars['Int']['output']>;
+  portAvg?: Maybe<Scalars['Float']['output']>;
+  portMax?: Maybe<Scalars['Int']['output']>;
+  portMin?: Maybe<Scalars['Int']['output']>;
+  portSum?: Maybe<Scalars['Int']['output']>;
 };
 
 export type PortFilter = {
@@ -2272,16 +2568,18 @@ export enum PortOrderable {
 }
 
 export type PortPatch = {
-  port?: InputMaybe<Scalars['Int']>;
+  port?: InputMaybe<Scalars['Int']['input']>;
 };
 
 export type PortRef = {
-  port?: InputMaybe<Scalars['Int']>;
+  port?: InputMaybe<Scalars['Int']['input']>;
 };
 
 export type Query = {
   __typename?: 'Query';
-  addTwo: Scalars['Int'];
+  aggregateAutomationClockMeta?: Maybe<AutomationClockMetaAggregateResult>;
+  aggregateChosenDriveOutputPreset?: Maybe<ChosenDriveOutputPresetAggregateResult>;
+  aggregateClockNodePoint?: Maybe<ClockNodePointAggregateResult>;
   aggregateCrop?: Maybe<CropAggregateResult>;
   aggregateCropIntention?: Maybe<CropIntentionAggregateResult>;
   aggregateCropIntentionsList?: Maybe<CropIntentionsListAggregateResult>;
@@ -2305,7 +2603,9 @@ export type Query = {
   aggregateSite?: Maybe<SiteAggregateResult>;
   aggregateTimeSeries?: Maybe<TimeSeriesAggregateResult>;
   aggregateWaterRoutePresets?: Maybe<WaterRoutePresetsAggregateResult>;
-  exampleLambda: Scalars['String'];
+  getAutomationClockMeta?: Maybe<AutomationClockMeta>;
+  getChosenDriveOutputPreset?: Maybe<ChosenDriveOutputPreset>;
+  getClockNodePoint?: Maybe<ClockNodePoint>;
   getCrop?: Maybe<Crop>;
   getDriveOutputsPreset?: Maybe<DriveOutputsPreset>;
   getEndpoint?: Maybe<Endpoint>;
@@ -2321,6 +2621,9 @@ export type Query = {
   getSite?: Maybe<Site>;
   getTimeSeries?: Maybe<TimeSeries>;
   getWaterRoutePresets?: Maybe<WaterRoutePresets>;
+  queryAutomationClockMeta?: Maybe<Array<Maybe<AutomationClockMeta>>>;
+  queryChosenDriveOutputPreset?: Maybe<Array<Maybe<ChosenDriveOutputPreset>>>;
+  queryClockNodePoint?: Maybe<Array<Maybe<ClockNodePoint>>>;
   queryCrop?: Maybe<Array<Maybe<Crop>>>;
   queryCropIntention?: Maybe<Array<Maybe<CropIntention>>>;
   queryCropIntentionsList?: Maybe<Array<Maybe<CropIntentionsList>>>;
@@ -2347,9 +2650,18 @@ export type Query = {
 };
 
 
-export type QueryAddTwoArgs = {
-  one: Scalars['Int'];
-  two: Scalars['Int'];
+export type QueryAggregateAutomationClockMetaArgs = {
+  filter?: InputMaybe<AutomationClockMetaFilter>;
+};
+
+
+export type QueryAggregateChosenDriveOutputPresetArgs = {
+  filter?: InputMaybe<ChosenDriveOutputPresetFilter>;
+};
+
+
+export type QueryAggregateClockNodePointArgs = {
+  filter?: InputMaybe<ClockNodePointFilter>;
 };
 
 
@@ -2468,270 +2780,303 @@ export type QueryAggregateWaterRoutePresetsArgs = {
 };
 
 
-export type QueryExampleLambdaArgs = {
-  exampleStringInput: Scalars['String'];
+export type QueryGetAutomationClockMetaArgs = {
+  id: Scalars['ID']['input'];
+};
+
+
+export type QueryGetChosenDriveOutputPresetArgs = {
+  id: Scalars['ID']['input'];
+};
+
+
+export type QueryGetClockNodePointArgs = {
+  id?: InputMaybe<Scalars['ID']['input']>;
+  xid?: InputMaybe<Scalars['Int']['input']>;
 };
 
 
 export type QueryGetCropArgs = {
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
 };
 
 
 export type QueryGetDriveOutputsPresetArgs = {
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
 };
 
 
 export type QueryGetEndpointArgs = {
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
 };
 
 
 export type QueryGetGerminationTrayArgs = {
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
 };
 
 
 export type QueryGetModuleArgs = {
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
 };
 
 
 export type QueryGetModuleMapArgs = {
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
 };
 
 
 export type QueryGetNurseryArgs = {
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
 };
 
 
 export type QueryGetPhysicalSolenoidArgs = {
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
 };
 
 
 export type QueryGetPlantArgs = {
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
 };
 
 
 export type QueryGetShelfArgs = {
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
 };
 
 
 export type QueryGetSignalArgs = {
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
 };
 
 
 export type QueryGetSignalTableArgs = {
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
 };
 
 
 export type QueryGetSiteArgs = {
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
 };
 
 
 export type QueryGetTimeSeriesArgs = {
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
 };
 
 
 export type QueryGetWaterRoutePresetsArgs = {
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
+};
+
+
+export type QueryQueryAutomationClockMetaArgs = {
+  filter?: InputMaybe<AutomationClockMetaFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+};
+
+
+export type QueryQueryChosenDriveOutputPresetArgs = {
+  filter?: InputMaybe<ChosenDriveOutputPresetFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+};
+
+
+export type QueryQueryClockNodePointArgs = {
+  filter?: InputMaybe<ClockNodePointFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order?: InputMaybe<ClockNodePointOrder>;
 };
 
 
 export type QueryQueryCropArgs = {
   filter?: InputMaybe<CropFilter>;
-  first?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   order?: InputMaybe<CropOrder>;
 };
 
 
 export type QueryQueryCropIntentionArgs = {
   filter?: InputMaybe<CropIntentionFilter>;
-  first?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   order?: InputMaybe<CropIntentionOrder>;
 };
 
 
 export type QueryQueryCropIntentionsListArgs = {
   filter?: InputMaybe<CropIntentionsListFilter>;
-  first?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
 };
 
 
 export type QueryQueryDrawerArgs = {
   filter?: InputMaybe<DrawerFilter>;
-  first?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   order?: InputMaybe<DrawerOrder>;
 };
 
 
 export type QueryQueryDriveOutputsPresetArgs = {
   filter?: InputMaybe<DriveOutputsPresetFilter>;
-  first?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   order?: InputMaybe<DriveOutputsPresetOrder>;
 };
 
 
 export type QueryQueryEndpointArgs = {
   filter?: InputMaybe<EndpointFilter>;
-  first?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
 };
 
 
 export type QueryQueryGerminationTrayArgs = {
   filter?: InputMaybe<GerminationTrayFilter>;
-  first?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
 };
 
 
 export type QueryQueryGrowPlateArgs = {
   filter?: InputMaybe<GrowPlateFilter>;
-  first?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   order?: InputMaybe<GrowPlateOrder>;
 };
 
 
 export type QueryQueryIpAddrArgs = {
   filter?: InputMaybe<IpAddrFilter>;
-  first?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   order?: InputMaybe<IpAddrOrder>;
 };
 
 
 export type QueryQueryLocationArgs = {
   filter?: InputMaybe<LocationFilter>;
-  first?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   order?: InputMaybe<LocationOrder>;
 };
 
 
 export type QueryQueryModuleArgs = {
   filter?: InputMaybe<ModuleFilter>;
-  first?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
 };
 
 
 export type QueryQueryModuleMapArgs = {
   filter?: InputMaybe<ModuleMapFilter>;
-  first?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
 };
 
 
 export type QueryQueryNurseryArgs = {
   filter?: InputMaybe<NurseryFilter>;
-  first?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
 };
 
 
 export type QueryQueryPhysicalSolenoidArgs = {
   filter?: InputMaybe<PhysicalSolenoidFilter>;
-  first?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   order?: InputMaybe<PhysicalSolenoidOrder>;
 };
 
 
 export type QueryQueryPlantArgs = {
   filter?: InputMaybe<PlantFilter>;
-  first?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   order?: InputMaybe<PlantOrder>;
 };
 
 
 export type QueryQueryPortArgs = {
   filter?: InputMaybe<PortFilter>;
-  first?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   order?: InputMaybe<PortOrder>;
 };
 
 
 export type QueryQuerySeedArgs = {
   filter?: InputMaybe<SeedFilter>;
-  first?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   order?: InputMaybe<SeedOrder>;
 };
 
 
 export type QueryQueryShelfArgs = {
   filter?: InputMaybe<ShelfFilter>;
-  first?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   order?: InputMaybe<ShelfOrder>;
 };
 
 
 export type QueryQuerySignalArgs = {
   filter?: InputMaybe<SignalFilter>;
-  first?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   order?: InputMaybe<SignalOrder>;
 };
 
 
 export type QueryQuerySignalTableArgs = {
   filter?: InputMaybe<SignalTableFilter>;
-  first?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
 };
 
 
 export type QueryQuerySiteArgs = {
   filter?: InputMaybe<SiteFilter>;
-  first?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
 };
 
 
 export type QueryQueryTimeSeriesArgs = {
   filter?: InputMaybe<TimeSeriesFilter>;
-  first?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   order?: InputMaybe<TimeSeriesOrder>;
 };
 
 
 export type QueryQueryWaterRoutePresetsArgs = {
   filter?: InputMaybe<WaterRoutePresetsFilter>;
-  first?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
 };
 
 export type Seed = {
   __typename?: 'Seed';
-  qr: Scalars['String'];
+  qr: Scalars['String']['output'];
 };
 
 export type SeedAggregateResult = {
   __typename?: 'SeedAggregateResult';
-  count?: Maybe<Scalars['Int']>;
-  qrMax?: Maybe<Scalars['String']>;
-  qrMin?: Maybe<Scalars['String']>;
+  count?: Maybe<Scalars['Int']['output']>;
+  qrMax?: Maybe<Scalars['String']['output']>;
+  qrMin?: Maybe<Scalars['String']['output']>;
 };
 
 export type SeedFilter = {
@@ -2756,21 +3101,20 @@ export enum SeedOrderable {
 }
 
 export type SeedPatch = {
-  qr?: InputMaybe<Scalars['String']>;
+  qr?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type SeedRef = {
-  qr?: InputMaybe<Scalars['String']>;
+  qr?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type Shelf = {
   __typename?: 'Shelf';
-  id: Scalars['ID'];
-  numSites: Scalars['Int'];
+  id: Scalars['ID']['output'];
   parentModule?: Maybe<Module>;
   sites?: Maybe<Array<Maybe<Site>>>;
   sitesAggregate?: Maybe<SiteAggregateResult>;
-  verticalClearanceHeightToNextShelf: Scalars['Int'];
+  verticalClearanceHeightToNextShelf: Scalars['Int']['output'];
 };
 
 
@@ -2781,8 +3125,8 @@ export type ShelfParentModuleArgs = {
 
 export type ShelfSitesArgs = {
   filter?: InputMaybe<SiteFilter>;
-  first?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
 };
 
 
@@ -2792,17 +3136,17 @@ export type ShelfSitesAggregateArgs = {
 
 export type ShelfAggregateResult = {
   __typename?: 'ShelfAggregateResult';
-  count?: Maybe<Scalars['Int']>;
-  verticalClearanceHeightToNextShelfAvg?: Maybe<Scalars['Float']>;
-  verticalClearanceHeightToNextShelfMax?: Maybe<Scalars['Int']>;
-  verticalClearanceHeightToNextShelfMin?: Maybe<Scalars['Int']>;
-  verticalClearanceHeightToNextShelfSum?: Maybe<Scalars['Int']>;
+  count?: Maybe<Scalars['Int']['output']>;
+  verticalClearanceHeightToNextShelfAvg?: Maybe<Scalars['Float']['output']>;
+  verticalClearanceHeightToNextShelfMax?: Maybe<Scalars['Int']['output']>;
+  verticalClearanceHeightToNextShelfMin?: Maybe<Scalars['Int']['output']>;
+  verticalClearanceHeightToNextShelfSum?: Maybe<Scalars['Int']['output']>;
 };
 
 export type ShelfFilter = {
   and?: InputMaybe<Array<InputMaybe<ShelfFilter>>>;
   has?: InputMaybe<Array<InputMaybe<ShelfHasFilter>>>;
-  id?: InputMaybe<Array<Scalars['ID']>>;
+  id?: InputMaybe<Array<Scalars['ID']['input']>>;
   not?: InputMaybe<ShelfFilter>;
   or?: InputMaybe<Array<InputMaybe<ShelfFilter>>>;
 };
@@ -2826,64 +3170,64 @@ export enum ShelfOrderable {
 export type ShelfPatch = {
   parentModule?: InputMaybe<ModuleRef>;
   sites?: InputMaybe<Array<InputMaybe<SiteRef>>>;
-  verticalClearanceHeightToNextShelf?: InputMaybe<Scalars['Int']>;
+  verticalClearanceHeightToNextShelf?: InputMaybe<Scalars['Int']['input']>;
 };
 
 export type ShelfRef = {
-  id?: InputMaybe<Scalars['ID']>;
+  id?: InputMaybe<Scalars['ID']['input']>;
   parentModule?: InputMaybe<ModuleRef>;
   sites?: InputMaybe<Array<InputMaybe<SiteRef>>>;
-  verticalClearanceHeightToNextShelf?: InputMaybe<Scalars['Int']>;
+  verticalClearanceHeightToNextShelf?: InputMaybe<Scalars['Int']['input']>;
 };
 
 export type Signal = {
   __typename?: 'Signal';
-  algoString?: Maybe<Scalars['String']>;
-  daysToGerminate?: Maybe<Scalars['Int']>;
-  growTime?: Maybe<Scalars['Int']>;
-  id: Scalars['ID'];
-  maxHarvTime?: Maybe<Scalars['Int']>;
-  moduleType?: Maybe<Scalars['String']>;
-  plantId?: Maybe<Scalars['String']>;
-  plantName?: Maybe<Scalars['String']>;
-  signalDate: Scalars['DateTime'];
+  algoString?: Maybe<Scalars['String']['output']>;
+  daysToGerminate?: Maybe<Scalars['Int']['output']>;
+  growTime?: Maybe<Scalars['Int']['output']>;
+  id: Scalars['ID']['output'];
+  maxHarvTime?: Maybe<Scalars['Int']['output']>;
+  moduleType?: Maybe<Scalars['String']['output']>;
+  plantId?: Maybe<Scalars['String']['output']>;
+  plantName?: Maybe<Scalars['String']['output']>;
+  signalDate: Scalars['DateTime']['output'];
   signalType: SignalType;
-  targetMessage?: Maybe<Scalars['String']>;
+  targetMessage?: Maybe<Scalars['String']['output']>;
 };
 
 export type SignalAggregateResult = {
   __typename?: 'SignalAggregateResult';
-  algoStringMax?: Maybe<Scalars['String']>;
-  algoStringMin?: Maybe<Scalars['String']>;
-  count?: Maybe<Scalars['Int']>;
-  daysToGerminateAvg?: Maybe<Scalars['Float']>;
-  daysToGerminateMax?: Maybe<Scalars['Int']>;
-  daysToGerminateMin?: Maybe<Scalars['Int']>;
-  daysToGerminateSum?: Maybe<Scalars['Int']>;
-  growTimeAvg?: Maybe<Scalars['Float']>;
-  growTimeMax?: Maybe<Scalars['Int']>;
-  growTimeMin?: Maybe<Scalars['Int']>;
-  growTimeSum?: Maybe<Scalars['Int']>;
-  maxHarvTimeAvg?: Maybe<Scalars['Float']>;
-  maxHarvTimeMax?: Maybe<Scalars['Int']>;
-  maxHarvTimeMin?: Maybe<Scalars['Int']>;
-  maxHarvTimeSum?: Maybe<Scalars['Int']>;
-  moduleTypeMax?: Maybe<Scalars['String']>;
-  moduleTypeMin?: Maybe<Scalars['String']>;
-  plantIdMax?: Maybe<Scalars['String']>;
-  plantIdMin?: Maybe<Scalars['String']>;
-  plantNameMax?: Maybe<Scalars['String']>;
-  plantNameMin?: Maybe<Scalars['String']>;
-  signalDateMax?: Maybe<Scalars['DateTime']>;
-  signalDateMin?: Maybe<Scalars['DateTime']>;
-  targetMessageMax?: Maybe<Scalars['String']>;
-  targetMessageMin?: Maybe<Scalars['String']>;
+  algoStringMax?: Maybe<Scalars['String']['output']>;
+  algoStringMin?: Maybe<Scalars['String']['output']>;
+  count?: Maybe<Scalars['Int']['output']>;
+  daysToGerminateAvg?: Maybe<Scalars['Float']['output']>;
+  daysToGerminateMax?: Maybe<Scalars['Int']['output']>;
+  daysToGerminateMin?: Maybe<Scalars['Int']['output']>;
+  daysToGerminateSum?: Maybe<Scalars['Int']['output']>;
+  growTimeAvg?: Maybe<Scalars['Float']['output']>;
+  growTimeMax?: Maybe<Scalars['Int']['output']>;
+  growTimeMin?: Maybe<Scalars['Int']['output']>;
+  growTimeSum?: Maybe<Scalars['Int']['output']>;
+  maxHarvTimeAvg?: Maybe<Scalars['Float']['output']>;
+  maxHarvTimeMax?: Maybe<Scalars['Int']['output']>;
+  maxHarvTimeMin?: Maybe<Scalars['Int']['output']>;
+  maxHarvTimeSum?: Maybe<Scalars['Int']['output']>;
+  moduleTypeMax?: Maybe<Scalars['String']['output']>;
+  moduleTypeMin?: Maybe<Scalars['String']['output']>;
+  plantIdMax?: Maybe<Scalars['String']['output']>;
+  plantIdMin?: Maybe<Scalars['String']['output']>;
+  plantNameMax?: Maybe<Scalars['String']['output']>;
+  plantNameMin?: Maybe<Scalars['String']['output']>;
+  signalDateMax?: Maybe<Scalars['DateTime']['output']>;
+  signalDateMin?: Maybe<Scalars['DateTime']['output']>;
+  targetMessageMax?: Maybe<Scalars['String']['output']>;
+  targetMessageMin?: Maybe<Scalars['String']['output']>;
 };
 
 export type SignalFilter = {
   and?: InputMaybe<Array<InputMaybe<SignalFilter>>>;
   has?: InputMaybe<Array<InputMaybe<SignalHasFilter>>>;
-  id?: InputMaybe<Array<Scalars['ID']>>;
+  id?: InputMaybe<Array<Scalars['ID']['input']>>;
   not?: InputMaybe<SignalFilter>;
   or?: InputMaybe<Array<InputMaybe<SignalFilter>>>;
   signalDate?: InputMaybe<DateTimeFilter>;
@@ -2921,35 +3265,35 @@ export enum SignalOrderable {
 }
 
 export type SignalPatch = {
-  algoString?: InputMaybe<Scalars['String']>;
-  daysToGerminate?: InputMaybe<Scalars['Int']>;
-  growTime?: InputMaybe<Scalars['Int']>;
-  maxHarvTime?: InputMaybe<Scalars['Int']>;
-  moduleType?: InputMaybe<Scalars['String']>;
-  plantId?: InputMaybe<Scalars['String']>;
-  plantName?: InputMaybe<Scalars['String']>;
-  signalDate?: InputMaybe<Scalars['DateTime']>;
+  algoString?: InputMaybe<Scalars['String']['input']>;
+  daysToGerminate?: InputMaybe<Scalars['Int']['input']>;
+  growTime?: InputMaybe<Scalars['Int']['input']>;
+  maxHarvTime?: InputMaybe<Scalars['Int']['input']>;
+  moduleType?: InputMaybe<Scalars['String']['input']>;
+  plantId?: InputMaybe<Scalars['String']['input']>;
+  plantName?: InputMaybe<Scalars['String']['input']>;
+  signalDate?: InputMaybe<Scalars['DateTime']['input']>;
   signalType?: InputMaybe<SignalType>;
-  targetMessage?: InputMaybe<Scalars['String']>;
+  targetMessage?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type SignalRef = {
-  algoString?: InputMaybe<Scalars['String']>;
-  daysToGerminate?: InputMaybe<Scalars['Int']>;
-  growTime?: InputMaybe<Scalars['Int']>;
-  id?: InputMaybe<Scalars['ID']>;
-  maxHarvTime?: InputMaybe<Scalars['Int']>;
-  moduleType?: InputMaybe<Scalars['String']>;
-  plantId?: InputMaybe<Scalars['String']>;
-  plantName?: InputMaybe<Scalars['String']>;
-  signalDate?: InputMaybe<Scalars['DateTime']>;
+  algoString?: InputMaybe<Scalars['String']['input']>;
+  daysToGerminate?: InputMaybe<Scalars['Int']['input']>;
+  growTime?: InputMaybe<Scalars['Int']['input']>;
+  id?: InputMaybe<Scalars['ID']['input']>;
+  maxHarvTime?: InputMaybe<Scalars['Int']['input']>;
+  moduleType?: InputMaybe<Scalars['String']['input']>;
+  plantId?: InputMaybe<Scalars['String']['input']>;
+  plantName?: InputMaybe<Scalars['String']['input']>;
+  signalDate?: InputMaybe<Scalars['DateTime']['input']>;
   signalType?: InputMaybe<SignalType>;
-  targetMessage?: InputMaybe<Scalars['String']>;
+  targetMessage?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type SignalTable = {
   __typename?: 'SignalTable';
-  id: Scalars['ID'];
+  id: Scalars['ID']['output'];
   signals: Array<Signal>;
   signalsAggregate?: Maybe<SignalAggregateResult>;
 };
@@ -2957,8 +3301,8 @@ export type SignalTable = {
 
 export type SignalTableSignalsArgs = {
   filter?: InputMaybe<SignalFilter>;
-  first?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   order?: InputMaybe<SignalOrder>;
 };
 
@@ -2969,13 +3313,13 @@ export type SignalTableSignalsAggregateArgs = {
 
 export type SignalTableAggregateResult = {
   __typename?: 'SignalTableAggregateResult';
-  count?: Maybe<Scalars['Int']>;
+  count?: Maybe<Scalars['Int']['output']>;
 };
 
 export type SignalTableFilter = {
   and?: InputMaybe<Array<InputMaybe<SignalTableFilter>>>;
   has?: InputMaybe<Array<InputMaybe<SignalTableHasFilter>>>;
-  id?: InputMaybe<Array<Scalars['ID']>>;
+  id?: InputMaybe<Array<Scalars['ID']['input']>>;
   not?: InputMaybe<SignalTableFilter>;
   or?: InputMaybe<Array<InputMaybe<SignalTableFilter>>>;
 };
@@ -2989,7 +3333,7 @@ export type SignalTablePatch = {
 };
 
 export type SignalTableRef = {
-  id?: InputMaybe<Scalars['ID']>;
+  id?: InputMaybe<Scalars['ID']['input']>;
   signals?: InputMaybe<Array<SignalRef>>;
 };
 
@@ -3001,7 +3345,7 @@ export enum SignalType {
 
 export type Site = {
   __typename?: 'Site';
-  id: Scalars['ID'];
+  id: Scalars['ID']['output'];
   occupant?: Maybe<Plant>;
   signal?: Maybe<Signal>;
 };
@@ -3018,13 +3362,13 @@ export type SiteSignalArgs = {
 
 export type SiteAggregateResult = {
   __typename?: 'SiteAggregateResult';
-  count?: Maybe<Scalars['Int']>;
+  count?: Maybe<Scalars['Int']['output']>;
 };
 
 export type SiteFilter = {
   and?: InputMaybe<Array<InputMaybe<SiteFilter>>>;
   has?: InputMaybe<Array<InputMaybe<SiteHasFilter>>>;
-  id?: InputMaybe<Array<Scalars['ID']>>;
+  id?: InputMaybe<Array<Scalars['ID']['input']>>;
   not?: InputMaybe<SiteFilter>;
   or?: InputMaybe<Array<InputMaybe<SiteFilter>>>;
 };
@@ -3040,51 +3384,75 @@ export type SitePatch = {
 };
 
 export type SiteRef = {
-  id?: InputMaybe<Scalars['ID']>;
+  id?: InputMaybe<Scalars['ID']['input']>;
   occupant?: InputMaybe<PlantRef>;
   signal?: InputMaybe<SignalRef>;
 };
 
 export type StringExactFilter = {
   between?: InputMaybe<StringRange>;
-  eq?: InputMaybe<Scalars['String']>;
-  ge?: InputMaybe<Scalars['String']>;
-  gt?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  le?: InputMaybe<Scalars['String']>;
-  lt?: InputMaybe<Scalars['String']>;
+  eq?: InputMaybe<Scalars['String']['input']>;
+  ge?: InputMaybe<Scalars['String']['input']>;
+  gt?: InputMaybe<Scalars['String']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  le?: InputMaybe<Scalars['String']['input']>;
+  lt?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type StringFullTextFilter = {
-  alloftext?: InputMaybe<Scalars['String']>;
-  anyoftext?: InputMaybe<Scalars['String']>;
+  alloftext?: InputMaybe<Scalars['String']['input']>;
+  anyoftext?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type StringHashFilter = {
-  eq?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  eq?: InputMaybe<Scalars['String']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
 
 export type StringRange = {
-  max: Scalars['String'];
-  min: Scalars['String'];
+  max: Scalars['String']['input'];
+  min: Scalars['String']['input'];
 };
 
 export type StringRegExpFilter = {
-  regexp?: InputMaybe<Scalars['String']>;
+  regexp?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type StringTermFilter = {
-  allofterms?: InputMaybe<Scalars['String']>;
-  anyofterms?: InputMaybe<Scalars['String']>;
+  allofterms?: InputMaybe<Scalars['String']['input']>;
+  anyofterms?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type Subscription = {
+  __typename?: 'Subscription';
+  aggregateChosenDriveOutputPreset?: Maybe<ChosenDriveOutputPresetAggregateResult>;
+  getChosenDriveOutputPreset?: Maybe<ChosenDriveOutputPreset>;
+  queryChosenDriveOutputPreset?: Maybe<Array<Maybe<ChosenDriveOutputPreset>>>;
+};
+
+
+export type SubscriptionAggregateChosenDriveOutputPresetArgs = {
+  filter?: InputMaybe<ChosenDriveOutputPresetFilter>;
+};
+
+
+export type SubscriptionGetChosenDriveOutputPresetArgs = {
+  id: Scalars['ID']['input'];
+};
+
+
+export type SubscriptionQueryChosenDriveOutputPresetArgs = {
+  filter?: InputMaybe<ChosenDriveOutputPresetFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
 };
 
 export type TimeSeries = {
   __typename?: 'TimeSeries';
   addrInfluxInstance: IpAddr;
-  id: Scalars['ID'];
+  id: Scalars['ID']['output'];
   portInfluxInstance: Port;
-  streamPath: Scalars['String'];
+  streamPath: Scalars['String']['output'];
 };
 
 
@@ -3099,15 +3467,15 @@ export type TimeSeriesPortInfluxInstanceArgs = {
 
 export type TimeSeriesAggregateResult = {
   __typename?: 'TimeSeriesAggregateResult';
-  count?: Maybe<Scalars['Int']>;
-  streamPathMax?: Maybe<Scalars['String']>;
-  streamPathMin?: Maybe<Scalars['String']>;
+  count?: Maybe<Scalars['Int']['output']>;
+  streamPathMax?: Maybe<Scalars['String']['output']>;
+  streamPathMin?: Maybe<Scalars['String']['output']>;
 };
 
 export type TimeSeriesFilter = {
   and?: InputMaybe<Array<InputMaybe<TimeSeriesFilter>>>;
   has?: InputMaybe<Array<InputMaybe<TimeSeriesHasFilter>>>;
-  id?: InputMaybe<Array<Scalars['ID']>>;
+  id?: InputMaybe<Array<Scalars['ID']['input']>>;
   not?: InputMaybe<TimeSeriesFilter>;
   or?: InputMaybe<Array<InputMaybe<TimeSeriesFilter>>>;
 };
@@ -3131,14 +3499,72 @@ export enum TimeSeriesOrderable {
 export type TimeSeriesPatch = {
   addrInfluxInstance?: InputMaybe<IpAddrRef>;
   portInfluxInstance?: InputMaybe<PortRef>;
-  streamPath?: InputMaybe<Scalars['String']>;
+  streamPath?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type TimeSeriesRef = {
   addrInfluxInstance?: InputMaybe<IpAddrRef>;
-  id?: InputMaybe<Scalars['ID']>;
+  id?: InputMaybe<Scalars['ID']['input']>;
   portInfluxInstance?: InputMaybe<PortRef>;
-  streamPath?: InputMaybe<Scalars['String']>;
+  streamPath?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type UpdateAutomationClockMetaInput = {
+  filter: AutomationClockMetaFilter;
+  remove?: InputMaybe<AutomationClockMetaPatch>;
+  set?: InputMaybe<AutomationClockMetaPatch>;
+};
+
+export type UpdateAutomationClockMetaPayload = {
+  __typename?: 'UpdateAutomationClockMetaPayload';
+  automationClockMeta?: Maybe<Array<Maybe<AutomationClockMeta>>>;
+  numUids?: Maybe<Scalars['Int']['output']>;
+};
+
+
+export type UpdateAutomationClockMetaPayloadAutomationClockMetaArgs = {
+  filter?: InputMaybe<AutomationClockMetaFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+};
+
+export type UpdateChosenDriveOutputPresetInput = {
+  filter: ChosenDriveOutputPresetFilter;
+  remove?: InputMaybe<ChosenDriveOutputPresetPatch>;
+  set?: InputMaybe<ChosenDriveOutputPresetPatch>;
+};
+
+export type UpdateChosenDriveOutputPresetPayload = {
+  __typename?: 'UpdateChosenDriveOutputPresetPayload';
+  chosenDriveOutputPreset?: Maybe<Array<Maybe<ChosenDriveOutputPreset>>>;
+  numUids?: Maybe<Scalars['Int']['output']>;
+};
+
+
+export type UpdateChosenDriveOutputPresetPayloadChosenDriveOutputPresetArgs = {
+  filter?: InputMaybe<ChosenDriveOutputPresetFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+};
+
+export type UpdateClockNodePointInput = {
+  filter: ClockNodePointFilter;
+  remove?: InputMaybe<ClockNodePointPatch>;
+  set?: InputMaybe<ClockNodePointPatch>;
+};
+
+export type UpdateClockNodePointPayload = {
+  __typename?: 'UpdateClockNodePointPayload';
+  clockNodePoint?: Maybe<Array<Maybe<ClockNodePoint>>>;
+  numUids?: Maybe<Scalars['Int']['output']>;
+};
+
+
+export type UpdateClockNodePointPayloadClockNodePointArgs = {
+  filter?: InputMaybe<ClockNodePointFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order?: InputMaybe<ClockNodePointOrder>;
 };
 
 export type UpdateCropInput = {
@@ -3156,14 +3582,14 @@ export type UpdateCropIntentionInput = {
 export type UpdateCropIntentionPayload = {
   __typename?: 'UpdateCropIntentionPayload';
   cropIntention?: Maybe<Array<Maybe<CropIntention>>>;
-  numUids?: Maybe<Scalars['Int']>;
+  numUids?: Maybe<Scalars['Int']['output']>;
 };
 
 
 export type UpdateCropIntentionPayloadCropIntentionArgs = {
   filter?: InputMaybe<CropIntentionFilter>;
-  first?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   order?: InputMaybe<CropIntentionOrder>;
 };
 
@@ -3176,27 +3602,27 @@ export type UpdateCropIntentionsListInput = {
 export type UpdateCropIntentionsListPayload = {
   __typename?: 'UpdateCropIntentionsListPayload';
   cropIntentionsList?: Maybe<Array<Maybe<CropIntentionsList>>>;
-  numUids?: Maybe<Scalars['Int']>;
+  numUids?: Maybe<Scalars['Int']['output']>;
 };
 
 
 export type UpdateCropIntentionsListPayloadCropIntentionsListArgs = {
   filter?: InputMaybe<CropIntentionsListFilter>;
-  first?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
 };
 
 export type UpdateCropPayload = {
   __typename?: 'UpdateCropPayload';
   crop?: Maybe<Array<Maybe<Crop>>>;
-  numUids?: Maybe<Scalars['Int']>;
+  numUids?: Maybe<Scalars['Int']['output']>;
 };
 
 
 export type UpdateCropPayloadCropArgs = {
   filter?: InputMaybe<CropFilter>;
-  first?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   order?: InputMaybe<CropOrder>;
 };
 
@@ -3209,14 +3635,14 @@ export type UpdateDrawerInput = {
 export type UpdateDrawerPayload = {
   __typename?: 'UpdateDrawerPayload';
   drawer?: Maybe<Array<Maybe<Drawer>>>;
-  numUids?: Maybe<Scalars['Int']>;
+  numUids?: Maybe<Scalars['Int']['output']>;
 };
 
 
 export type UpdateDrawerPayloadDrawerArgs = {
   filter?: InputMaybe<DrawerFilter>;
-  first?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   order?: InputMaybe<DrawerOrder>;
 };
 
@@ -3229,14 +3655,14 @@ export type UpdateDriveOutputsPresetInput = {
 export type UpdateDriveOutputsPresetPayload = {
   __typename?: 'UpdateDriveOutputsPresetPayload';
   driveOutputsPreset?: Maybe<Array<Maybe<DriveOutputsPreset>>>;
-  numUids?: Maybe<Scalars['Int']>;
+  numUids?: Maybe<Scalars['Int']['output']>;
 };
 
 
 export type UpdateDriveOutputsPresetPayloadDriveOutputsPresetArgs = {
   filter?: InputMaybe<DriveOutputsPresetFilter>;
-  first?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   order?: InputMaybe<DriveOutputsPresetOrder>;
 };
 
@@ -3249,14 +3675,14 @@ export type UpdateEndpointInput = {
 export type UpdateEndpointPayload = {
   __typename?: 'UpdateEndpointPayload';
   endpoint?: Maybe<Array<Maybe<Endpoint>>>;
-  numUids?: Maybe<Scalars['Int']>;
+  numUids?: Maybe<Scalars['Int']['output']>;
 };
 
 
 export type UpdateEndpointPayloadEndpointArgs = {
   filter?: InputMaybe<EndpointFilter>;
-  first?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
 };
 
 export type UpdateGerminationTrayInput = {
@@ -3268,14 +3694,14 @@ export type UpdateGerminationTrayInput = {
 export type UpdateGerminationTrayPayload = {
   __typename?: 'UpdateGerminationTrayPayload';
   germinationTray?: Maybe<Array<Maybe<GerminationTray>>>;
-  numUids?: Maybe<Scalars['Int']>;
+  numUids?: Maybe<Scalars['Int']['output']>;
 };
 
 
 export type UpdateGerminationTrayPayloadGerminationTrayArgs = {
   filter?: InputMaybe<GerminationTrayFilter>;
-  first?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
 };
 
 export type UpdateGrowPlateInput = {
@@ -3287,14 +3713,14 @@ export type UpdateGrowPlateInput = {
 export type UpdateGrowPlatePayload = {
   __typename?: 'UpdateGrowPlatePayload';
   growPlate?: Maybe<Array<Maybe<GrowPlate>>>;
-  numUids?: Maybe<Scalars['Int']>;
+  numUids?: Maybe<Scalars['Int']['output']>;
 };
 
 
 export type UpdateGrowPlatePayloadGrowPlateArgs = {
   filter?: InputMaybe<GrowPlateFilter>;
-  first?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   order?: InputMaybe<GrowPlateOrder>;
 };
 
@@ -3307,14 +3733,14 @@ export type UpdateIpAddrInput = {
 export type UpdateIpAddrPayload = {
   __typename?: 'UpdateIpAddrPayload';
   ipAddr?: Maybe<Array<Maybe<IpAddr>>>;
-  numUids?: Maybe<Scalars['Int']>;
+  numUids?: Maybe<Scalars['Int']['output']>;
 };
 
 
 export type UpdateIpAddrPayloadIpAddrArgs = {
   filter?: InputMaybe<IpAddrFilter>;
-  first?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   order?: InputMaybe<IpAddrOrder>;
 };
 
@@ -3327,14 +3753,14 @@ export type UpdateLocationInput = {
 export type UpdateLocationPayload = {
   __typename?: 'UpdateLocationPayload';
   location?: Maybe<Array<Maybe<Location>>>;
-  numUids?: Maybe<Scalars['Int']>;
+  numUids?: Maybe<Scalars['Int']['output']>;
 };
 
 
 export type UpdateLocationPayloadLocationArgs = {
   filter?: InputMaybe<LocationFilter>;
-  first?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   order?: InputMaybe<LocationOrder>;
 };
 
@@ -3353,27 +3779,27 @@ export type UpdateModuleMapInput = {
 export type UpdateModuleMapPayload = {
   __typename?: 'UpdateModuleMapPayload';
   moduleMap?: Maybe<Array<Maybe<ModuleMap>>>;
-  numUids?: Maybe<Scalars['Int']>;
+  numUids?: Maybe<Scalars['Int']['output']>;
 };
 
 
 export type UpdateModuleMapPayloadModuleMapArgs = {
   filter?: InputMaybe<ModuleMapFilter>;
-  first?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
 };
 
 export type UpdateModulePayload = {
   __typename?: 'UpdateModulePayload';
   module?: Maybe<Array<Maybe<Module>>>;
-  numUids?: Maybe<Scalars['Int']>;
+  numUids?: Maybe<Scalars['Int']['output']>;
 };
 
 
 export type UpdateModulePayloadModuleArgs = {
   filter?: InputMaybe<ModuleFilter>;
-  first?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
 };
 
 export type UpdateNurseryInput = {
@@ -3384,15 +3810,15 @@ export type UpdateNurseryInput = {
 
 export type UpdateNurseryPayload = {
   __typename?: 'UpdateNurseryPayload';
-  numUids?: Maybe<Scalars['Int']>;
+  numUids?: Maybe<Scalars['Int']['output']>;
   nursery?: Maybe<Array<Maybe<Nursery>>>;
 };
 
 
 export type UpdateNurseryPayloadNurseryArgs = {
   filter?: InputMaybe<NurseryFilter>;
-  first?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
 };
 
 export type UpdatePhysicalSolenoidInput = {
@@ -3403,15 +3829,15 @@ export type UpdatePhysicalSolenoidInput = {
 
 export type UpdatePhysicalSolenoidPayload = {
   __typename?: 'UpdatePhysicalSolenoidPayload';
-  numUids?: Maybe<Scalars['Int']>;
+  numUids?: Maybe<Scalars['Int']['output']>;
   physicalSolenoid?: Maybe<Array<Maybe<PhysicalSolenoid>>>;
 };
 
 
 export type UpdatePhysicalSolenoidPayloadPhysicalSolenoidArgs = {
   filter?: InputMaybe<PhysicalSolenoidFilter>;
-  first?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   order?: InputMaybe<PhysicalSolenoidOrder>;
 };
 
@@ -3423,15 +3849,15 @@ export type UpdatePlantInput = {
 
 export type UpdatePlantPayload = {
   __typename?: 'UpdatePlantPayload';
-  numUids?: Maybe<Scalars['Int']>;
+  numUids?: Maybe<Scalars['Int']['output']>;
   plant?: Maybe<Array<Maybe<Plant>>>;
 };
 
 
 export type UpdatePlantPayloadPlantArgs = {
   filter?: InputMaybe<PlantFilter>;
-  first?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   order?: InputMaybe<PlantOrder>;
 };
 
@@ -3443,15 +3869,15 @@ export type UpdatePortInput = {
 
 export type UpdatePortPayload = {
   __typename?: 'UpdatePortPayload';
-  numUids?: Maybe<Scalars['Int']>;
+  numUids?: Maybe<Scalars['Int']['output']>;
   port?: Maybe<Array<Maybe<Port>>>;
 };
 
 
 export type UpdatePortPayloadPortArgs = {
   filter?: InputMaybe<PortFilter>;
-  first?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   order?: InputMaybe<PortOrder>;
 };
 
@@ -3463,15 +3889,15 @@ export type UpdateSeedInput = {
 
 export type UpdateSeedPayload = {
   __typename?: 'UpdateSeedPayload';
-  numUids?: Maybe<Scalars['Int']>;
+  numUids?: Maybe<Scalars['Int']['output']>;
   seed?: Maybe<Array<Maybe<Seed>>>;
 };
 
 
 export type UpdateSeedPayloadSeedArgs = {
   filter?: InputMaybe<SeedFilter>;
-  first?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   order?: InputMaybe<SeedOrder>;
 };
 
@@ -3483,15 +3909,15 @@ export type UpdateShelfInput = {
 
 export type UpdateShelfPayload = {
   __typename?: 'UpdateShelfPayload';
-  numUids?: Maybe<Scalars['Int']>;
+  numUids?: Maybe<Scalars['Int']['output']>;
   shelf?: Maybe<Array<Maybe<Shelf>>>;
 };
 
 
 export type UpdateShelfPayloadShelfArgs = {
   filter?: InputMaybe<ShelfFilter>;
-  first?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   order?: InputMaybe<ShelfOrder>;
 };
 
@@ -3503,15 +3929,15 @@ export type UpdateSignalInput = {
 
 export type UpdateSignalPayload = {
   __typename?: 'UpdateSignalPayload';
-  numUids?: Maybe<Scalars['Int']>;
+  numUids?: Maybe<Scalars['Int']['output']>;
   signal?: Maybe<Array<Maybe<Signal>>>;
 };
 
 
 export type UpdateSignalPayloadSignalArgs = {
   filter?: InputMaybe<SignalFilter>;
-  first?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   order?: InputMaybe<SignalOrder>;
 };
 
@@ -3523,15 +3949,15 @@ export type UpdateSignalTableInput = {
 
 export type UpdateSignalTablePayload = {
   __typename?: 'UpdateSignalTablePayload';
-  numUids?: Maybe<Scalars['Int']>;
+  numUids?: Maybe<Scalars['Int']['output']>;
   signalTable?: Maybe<Array<Maybe<SignalTable>>>;
 };
 
 
 export type UpdateSignalTablePayloadSignalTableArgs = {
   filter?: InputMaybe<SignalTableFilter>;
-  first?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
 };
 
 export type UpdateSiteInput = {
@@ -3542,15 +3968,15 @@ export type UpdateSiteInput = {
 
 export type UpdateSitePayload = {
   __typename?: 'UpdateSitePayload';
-  numUids?: Maybe<Scalars['Int']>;
+  numUids?: Maybe<Scalars['Int']['output']>;
   site?: Maybe<Array<Maybe<Site>>>;
 };
 
 
 export type UpdateSitePayloadSiteArgs = {
   filter?: InputMaybe<SiteFilter>;
-  first?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
 };
 
 export type UpdateTimeSeriesInput = {
@@ -3561,15 +3987,15 @@ export type UpdateTimeSeriesInput = {
 
 export type UpdateTimeSeriesPayload = {
   __typename?: 'UpdateTimeSeriesPayload';
-  numUids?: Maybe<Scalars['Int']>;
+  numUids?: Maybe<Scalars['Int']['output']>;
   timeSeries?: Maybe<Array<Maybe<TimeSeries>>>;
 };
 
 
 export type UpdateTimeSeriesPayloadTimeSeriesArgs = {
   filter?: InputMaybe<TimeSeriesFilter>;
-  first?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   order?: InputMaybe<TimeSeriesOrder>;
 };
 
@@ -3581,20 +4007,20 @@ export type UpdateWaterRoutePresetsInput = {
 
 export type UpdateWaterRoutePresetsPayload = {
   __typename?: 'UpdateWaterRoutePresetsPayload';
-  numUids?: Maybe<Scalars['Int']>;
+  numUids?: Maybe<Scalars['Int']['output']>;
   waterRoutePresets?: Maybe<Array<Maybe<WaterRoutePresets>>>;
 };
 
 
 export type UpdateWaterRoutePresetsPayloadWaterRoutePresetsArgs = {
   filter?: InputMaybe<WaterRoutePresetsFilter>;
-  first?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
 };
 
 export type WaterRoutePresets = {
   __typename?: 'WaterRoutePresets';
-  id: Scalars['ID'];
+  id: Scalars['ID']['output'];
   presets: Array<DriveOutputsPreset>;
   presetsAggregate?: Maybe<DriveOutputsPresetAggregateResult>;
 };
@@ -3602,8 +4028,8 @@ export type WaterRoutePresets = {
 
 export type WaterRoutePresetsPresetsArgs = {
   filter?: InputMaybe<DriveOutputsPresetFilter>;
-  first?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   order?: InputMaybe<DriveOutputsPresetOrder>;
 };
 
@@ -3614,13 +4040,13 @@ export type WaterRoutePresetsPresetsAggregateArgs = {
 
 export type WaterRoutePresetsAggregateResult = {
   __typename?: 'WaterRoutePresetsAggregateResult';
-  count?: Maybe<Scalars['Int']>;
+  count?: Maybe<Scalars['Int']['output']>;
 };
 
 export type WaterRoutePresetsFilter = {
   and?: InputMaybe<Array<InputMaybe<WaterRoutePresetsFilter>>>;
   has?: InputMaybe<Array<InputMaybe<WaterRoutePresetsHasFilter>>>;
-  id?: InputMaybe<Array<Scalars['ID']>>;
+  id?: InputMaybe<Array<Scalars['ID']['input']>>;
   not?: InputMaybe<WaterRoutePresetsFilter>;
   or?: InputMaybe<Array<InputMaybe<WaterRoutePresetsFilter>>>;
 };
@@ -3634,7 +4060,7 @@ export type WaterRoutePresetsPatch = {
 };
 
 export type WaterRoutePresetsRef = {
-  id?: InputMaybe<Scalars['ID']>;
+  id?: InputMaybe<Scalars['ID']['input']>;
   presets?: InputMaybe<Array<DriveOutputsPresetRef>>;
 };
 
@@ -3643,39 +4069,31 @@ export type WithinFilter = {
 };
 
 export type TwoNums = {
-  one: Scalars['Int'];
-  two: Scalars['Int'];
+  one: Scalars['Int']['input'];
+  two: Scalars['Int']['input'];
 };
 
-export type IngestQrMutationVariables = Exact<{ [key: string]: never; }>;
-
-
-export type IngestQrMutation = { __typename?: 'Mutation', ingestQR: string };
-
-export type GetIntentionListQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type GetIntentionListQuery = { __typename?: 'Query', queryCropIntentionsList?: Array<{ __typename?: 'CropIntentionsList', cropIntentions: Array<{ __typename?: 'CropIntention', harvestPerWeek: number, crop: { __typename?: 'Crop', id: string, name: string, required_module_type: string } }> } | null> | null, queryModuleMap?: Array<{ __typename?: 'ModuleMap', modules?: Array<{ __typename?: 'Module', id: string, instantiationTemplateUsed: ModuleType, totalNumberOfSites: number, shelves?: Array<{ __typename?: 'Shelf', id: string } | null> | null } | null> | null } | null> | null };
-
 export type GetDriveOutputStringQueryVariables = Exact<{
-  driveOutputsID: Scalars['ID'];
+  driveOutputsID: Scalars['ID']['input'];
 }>;
 
 
 export type GetDriveOutputStringQuery = { __typename?: 'Query', getDriveOutputsPreset?: { __typename?: 'DriveOutputsPreset', id: string, boolArrayString: string, lxEndpoint: { __typename?: 'Endpoint', addr: { __typename?: 'IpAddr', addr: string }, port: { __typename?: 'Port', port: number } } } | null };
-
-export type ExampleLambdaQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type ExampleLambdaQuery = { __typename?: 'Query', exampleLambda: string };
 
 export type WheresChuckQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type WheresChuckQuery = { __typename?: 'Query', querySite?: Array<{ __typename?: 'Site', id: string } | null> | null };
 
+export type CreateClockMutationMutationVariables = Exact<{
+  pointsList: Array<ClockNodePointRef> | ClockNodePointRef;
+}>;
+
+
+export type CreateClockMutationMutation = { __typename?: 'Mutation', addAutomationClockMeta?: { __typename?: 'AddAutomationClockMetaPayload', numUids?: number | null, automationClockMeta?: Array<{ __typename?: 'AutomationClockMeta', clockNodes: Array<{ __typename?: 'ClockNodePoint', xid: number, outputState: number }> } | null> | null } | null };
+
 export type InstallTwoModulesMutationVariables = Exact<{
-  moduleInput: Scalars['String'];
+  moduleInput: Scalars['String']['input'];
 }>;
 
 
@@ -3687,7 +4105,7 @@ export type InstantiateCropIntentionsMutationVariables = Exact<{ [key: string]: 
 export type InstantiateCropIntentionsMutation = { __typename?: 'Mutation', addCropIntentionsList?: { __typename?: 'AddCropIntentionsListPayload', numUids?: number | null, cropIntentionsList?: Array<{ __typename?: 'CropIntentionsList', cropIntentions: Array<{ __typename?: 'CropIntention', crop: { __typename?: 'Crop', required_module_type: string, repeater: boolean } }> } | null> | null } | null };
 
 export type CreateGermTrayMutationVariables = Exact<{
-  xidInput: Scalars['String'];
+  xidInput: Scalars['String']['input'];
   sitesInput: Array<SiteRef> | SiteRef;
 }>;
 
@@ -3702,18 +4120,16 @@ export type InstantiateNurseryMutationVariables = Exact<{
 export type InstantiateNurseryMutation = { __typename?: 'Mutation', addNursery?: { __typename?: 'AddNurseryPayload', nursery?: Array<{ __typename?: 'Nursery', id: string, GerminationTrays: Array<{ __typename?: 'GerminationTray', sites: Array<{ __typename?: 'Site', signal?: { __typename?: 'Signal', signalType: SignalType } | null }> }> } | null> | null } | null };
 
 export type AddDriveOutputsPresetMutationVariables = Exact<{
-  driveOutputSerialString: Scalars['String'];
+  driveOutputSerialString: Scalars['String']['input'];
 }>;
 
 
 export type AddDriveOutputsPresetMutation = { __typename?: 'Mutation', addDriveOutputsPreset?: { __typename?: 'AddDriveOutputsPresetPayload', driveOutputsPreset?: Array<{ __typename?: 'DriveOutputsPreset', id: string, boolArrayString: string, lxEndpoint: { __typename?: 'Endpoint', addr: { __typename?: 'IpAddr', addr: string }, port: { __typename?: 'Port', port: number } } } | null> | null } | null };
 
 
-export const IngestQrDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"IngestQR"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"ingestQR"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"qr"},"value":{"kind":"StringValue","value":"0xdeadbeef","block":false}}]}]}}]} as unknown as DocumentNode<IngestQrMutation, IngestQrMutationVariables>;
-export const GetIntentionListDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetIntentionList"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"queryCropIntentionsList"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"cropIntentions"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"crop"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"required_module_type"}}]}},{"kind":"Field","name":{"kind":"Name","value":"harvestPerWeek"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"queryModuleMap"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modules"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"instantiationTemplateUsed"}},{"kind":"Field","name":{"kind":"Name","value":"shelves"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"totalNumberOfSites"}}]}}]}}]}}]} as unknown as DocumentNode<GetIntentionListQuery, GetIntentionListQueryVariables>;
 export const GetDriveOutputStringDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetDriveOutputString"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"driveOutputsID"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"getDriveOutputsPreset"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"driveOutputsID"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"boolArrayString"}},{"kind":"Field","name":{"kind":"Name","value":"lxEndpoint"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"addr"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"addr"}}]}},{"kind":"Field","name":{"kind":"Name","value":"port"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"port"}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetDriveOutputStringQuery, GetDriveOutputStringQueryVariables>;
-export const ExampleLambdaDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"ExampleLambda"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"exampleLambda"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"exampleStringInput"},"value":{"kind":"StringValue","value":"gahhhh","block":false}}]}]}}]} as unknown as DocumentNode<ExampleLambdaQuery, ExampleLambdaQueryVariables>;
 export const WheresChuckDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"WheresChuck"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"querySite"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<WheresChuckQuery, WheresChuckQueryVariables>;
+export const CreateClockMutationDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateClockMutation"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"pointsList"}},"type":{"kind":"NonNullType","type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ClockNodePointRef"}}}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"addAutomationClockMeta"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"clockNodes"},"value":{"kind":"Variable","name":{"kind":"Name","value":"pointsList"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"numUids"}},{"kind":"Field","name":{"kind":"Name","value":"automationClockMeta"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"clockNodes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"xid"}},{"kind":"Field","name":{"kind":"Name","value":"outputState"}}]}}]}}]}}]}}]} as unknown as DocumentNode<CreateClockMutationMutation, CreateClockMutationMutationVariables>;
 export const InstallTwoModulesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"InstallTwoModules"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"moduleInput"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"addModuleMap"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"modules"},"value":{"kind":"ListValue","values":[{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"instantiationTemplateUsed"},"value":{"kind":"EnumValue","value":"DWC_12in_NutrientMixA"}},{"kind":"ObjectField","name":{"kind":"Name","value":"shelves"},"value":{"kind":"ListValue","values":[{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"verticalClearanceHeightToNextShelf"},"value":{"kind":"IntValue","value":"13"}},{"kind":"ObjectField","name":{"kind":"Name","value":"sites"},"value":{"kind":"ListValue","values":[{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"occupant"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"cropName"},"value":{"kind":"StringValue","value":"someCrop","block":false}},{"kind":"ObjectField","name":{"kind":"Name","value":"repeater"},"value":{"kind":"BooleanValue","value":true}},{"kind":"ObjectField","name":{"kind":"Name","value":"nutrientType"},"value":{"kind":"StringValue","value":"0.3:A|0.7:B","block":false}},{"kind":"ObjectField","name":{"kind":"Name","value":"germinatedDate"},"value":{"kind":"StringValue","value":"2023-05-09T02:45:48Z","block":false}}]}}]}]}}]}]}}]}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"moduleMap"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modules"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"shelves"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"sites"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"occupant"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"cropName"}},{"kind":"Field","name":{"kind":"Name","value":"germinatedDate"}}]}}]}}]}}]}}]}}]}}]}}]} as unknown as DocumentNode<InstallTwoModulesMutation, InstallTwoModulesMutationVariables>;
 export const InstantiateCropIntentionsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"InstantiateCropIntentions"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"addCropIntentionsList"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"cropIntentions"},"value":{"kind":"ListValue","values":[{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"crop"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"name"},"value":{"kind":"StringValue","value":"arugi","block":false}},{"kind":"ObjectField","name":{"kind":"Name","value":"required_module_type"},"value":{"kind":"StringValue","value":"nutA","block":false}},{"kind":"ObjectField","name":{"kind":"Name","value":"repeater"},"value":{"kind":"BooleanValue","value":true}},{"kind":"ObjectField","name":{"kind":"Name","value":"days_harvestable"},"value":{"kind":"IntValue","value":"5"}},{"kind":"ObjectField","name":{"kind":"Name","value":"days_from_transfer_to_first_harvest"},"value":{"kind":"IntValue","value":"6"}}]}},{"kind":"ObjectField","name":{"kind":"Name","value":"harvestPerWeek"},"value":{"kind":"IntValue","value":"3"}}]}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"numUids"}},{"kind":"Field","name":{"kind":"Name","value":"cropIntentionsList"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"cropIntentions"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"crop"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"required_module_type"}},{"kind":"Field","name":{"kind":"Name","value":"repeater"}}]}}]}}]}}]}}]}}]} as unknown as DocumentNode<InstantiateCropIntentionsMutation, InstantiateCropIntentionsMutationVariables>;
 export const CreateGermTrayDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"createGermTray"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"xidInput"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"sitesInput"}},"type":{"kind":"NonNullType","type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"SiteRef"}}}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"addGerminationTray"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"sites"},"value":{"kind":"Variable","name":{"kind":"Name","value":"sitesInput"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"germinationTray"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"sites"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"signal"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"signalDate"}}]}}]}}]}}]}}]}}]} as unknown as DocumentNode<CreateGermTrayMutation, CreateGermTrayMutationVariables>;
