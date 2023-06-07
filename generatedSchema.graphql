@@ -194,7 +194,7 @@ type ClockNodePoint {
 	xid: Int! @id
 	ownedByClock(filter: AutomationClockMetaFilter): AutomationClockMeta @hasInverse(field: clockNodes)
 	azimuth: Float! @lambda
-	timeOfDay: DateTime! @lambda
+	timeOfDay: DateTime! @search
 	outputState: Int!
 }
 
@@ -608,6 +608,8 @@ type ClockNodePointAggregateResult {
 	xidMax: Int
 	xidSum: Int
 	xidAvg: Float
+	timeOfDayMin: DateTime
+	timeOfDayMax: DateTime
 	outputStateMin: Int
 	outputStateMax: Int
 	outputStateSum: Int
@@ -1093,11 +1095,13 @@ enum ChosenDriveOutputPresetHasFilter {
 enum ClockNodePointHasFilter {
 	xid
 	ownedByClock
+	timeOfDay
 	outputState
 }
 
 enum ClockNodePointOrderable {
 	xid
+	timeOfDay
 	outputState
 }
 
@@ -1315,6 +1319,7 @@ input AddChosenDriveOutputPresetInput {
 input AddClockNodePointInput {
 	xid: Int!
 	ownedByClock: AutomationClockMetaRef
+	timeOfDay: DateTime!
 	outputState: Int!
 }
 
@@ -1482,6 +1487,7 @@ input ChosenDriveOutputPresetRef {
 input ClockNodePointFilter {
 	id: [ID!]
 	xid: IntFilter
+	timeOfDay: DateTimeFilter
 	has: [ClockNodePointHasFilter]
 	and: [ClockNodePointFilter]
 	or: [ClockNodePointFilter]
@@ -1496,6 +1502,7 @@ input ClockNodePointOrder {
 
 input ClockNodePointPatch {
 	ownedByClock: AutomationClockMetaRef
+	timeOfDay: DateTime
 	outputState: Int
 }
 
@@ -1503,6 +1510,7 @@ input ClockNodePointRef {
 	id: ID
 	xid: Int
 	ownedByClock: AutomationClockMetaRef
+	timeOfDay: DateTime
 	outputState: Int
 }
 

@@ -1,0 +1,24 @@
+query GetClockPoint_FifteenSecondRange
+($min:DateTime!, $max:DateTime!)
+{
+    queryClockNodePoint
+    (
+        filter:
+        {
+            timeOfDay:
+            {
+                between:
+                {
+                    min: $min,
+                    max: $max
+                }
+            }
+        }
+    )
+    {
+        id
+        xid
+        timeOfDay
+        outputState
+    }
+}

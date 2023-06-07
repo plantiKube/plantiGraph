@@ -62,6 +62,7 @@ export type AddChosenDriveOutputPresetPayloadChosenDriveOutputPresetArgs = {
 export type AddClockNodePointInput = {
   outputState: Scalars['Int']['input'];
   ownedByClock?: InputMaybe<AutomationClockMetaRef>;
+  timeOfDay: Scalars['DateTime']['input'];
   xid: Scalars['Int']['input'];
 };
 
@@ -631,6 +632,8 @@ export type ClockNodePointAggregateResult = {
   outputStateMax?: Maybe<Scalars['Int']['output']>;
   outputStateMin?: Maybe<Scalars['Int']['output']>;
   outputStateSum?: Maybe<Scalars['Int']['output']>;
+  timeOfDayMax?: Maybe<Scalars['DateTime']['output']>;
+  timeOfDayMin?: Maybe<Scalars['DateTime']['output']>;
   xidAvg?: Maybe<Scalars['Float']['output']>;
   xidMax?: Maybe<Scalars['Int']['output']>;
   xidMin?: Maybe<Scalars['Int']['output']>;
@@ -643,12 +646,14 @@ export type ClockNodePointFilter = {
   id?: InputMaybe<Array<Scalars['ID']['input']>>;
   not?: InputMaybe<ClockNodePointFilter>;
   or?: InputMaybe<Array<InputMaybe<ClockNodePointFilter>>>;
+  timeOfDay?: InputMaybe<DateTimeFilter>;
   xid?: InputMaybe<IntFilter>;
 };
 
 export enum ClockNodePointHasFilter {
   OutputState = 'outputState',
   OwnedByClock = 'ownedByClock',
+  TimeOfDay = 'timeOfDay',
   Xid = 'xid'
 }
 
@@ -660,18 +665,21 @@ export type ClockNodePointOrder = {
 
 export enum ClockNodePointOrderable {
   OutputState = 'outputState',
+  TimeOfDay = 'timeOfDay',
   Xid = 'xid'
 }
 
 export type ClockNodePointPatch = {
   outputState?: InputMaybe<Scalars['Int']['input']>;
   ownedByClock?: InputMaybe<AutomationClockMetaRef>;
+  timeOfDay?: InputMaybe<Scalars['DateTime']['input']>;
 };
 
 export type ClockNodePointRef = {
   id?: InputMaybe<Scalars['ID']['input']>;
   outputState?: InputMaybe<Scalars['Int']['input']>;
   ownedByClock?: InputMaybe<AutomationClockMetaRef>;
+  timeOfDay?: InputMaybe<Scalars['DateTime']['input']>;
   xid?: InputMaybe<Scalars['Int']['input']>;
 };
 
@@ -4080,6 +4088,14 @@ export type GetDriveOutputStringQueryVariables = Exact<{
 
 export type GetDriveOutputStringQuery = { __typename?: 'Query', getDriveOutputsPreset?: { __typename?: 'DriveOutputsPreset', id: string, boolArrayString: string, lxEndpoint: { __typename?: 'Endpoint', addr: { __typename?: 'IpAddr', addr: string }, port: { __typename?: 'Port', port: number } } } | null };
 
+export type GetClockPoint_FifteenSecondRangeQueryVariables = Exact<{
+  min: Scalars['DateTime']['input'];
+  max: Scalars['DateTime']['input'];
+}>;
+
+
+export type GetClockPoint_FifteenSecondRangeQuery = { __typename?: 'Query', queryClockNodePoint?: Array<{ __typename?: 'ClockNodePoint', id: string, xid: number, timeOfDay: any, outputState: number } | null> | null };
+
 export type WheresChuckQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -4128,6 +4144,7 @@ export type AddDriveOutputsPresetMutation = { __typename?: 'Mutation', addDriveO
 
 
 export const GetDriveOutputStringDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetDriveOutputString"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"driveOutputsID"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"getDriveOutputsPreset"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"driveOutputsID"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"boolArrayString"}},{"kind":"Field","name":{"kind":"Name","value":"lxEndpoint"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"addr"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"addr"}}]}},{"kind":"Field","name":{"kind":"Name","value":"port"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"port"}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetDriveOutputStringQuery, GetDriveOutputStringQueryVariables>;
+export const GetClockPoint_FifteenSecondRangeDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetClockPoint_FifteenSecondRange"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"min"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"DateTime"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"max"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"DateTime"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"queryClockNodePoint"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"filter"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"timeOfDay"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"between"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"min"},"value":{"kind":"Variable","name":{"kind":"Name","value":"min"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"max"},"value":{"kind":"Variable","name":{"kind":"Name","value":"max"}}}]}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"xid"}},{"kind":"Field","name":{"kind":"Name","value":"timeOfDay"}},{"kind":"Field","name":{"kind":"Name","value":"outputState"}}]}}]}}]} as unknown as DocumentNode<GetClockPoint_FifteenSecondRangeQuery, GetClockPoint_FifteenSecondRangeQueryVariables>;
 export const WheresChuckDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"WheresChuck"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"querySite"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<WheresChuckQuery, WheresChuckQueryVariables>;
 export const CreateClockMutationDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateClockMutation"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"pointsList"}},"type":{"kind":"NonNullType","type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ClockNodePointRef"}}}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"addAutomationClockMeta"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"clockNodes"},"value":{"kind":"Variable","name":{"kind":"Name","value":"pointsList"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"numUids"}},{"kind":"Field","name":{"kind":"Name","value":"automationClockMeta"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"clockNodes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"xid"}},{"kind":"Field","name":{"kind":"Name","value":"outputState"}}]}}]}}]}}]}}]} as unknown as DocumentNode<CreateClockMutationMutation, CreateClockMutationMutationVariables>;
 export const InstallTwoModulesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"InstallTwoModules"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"moduleInput"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"addModuleMap"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"modules"},"value":{"kind":"ListValue","values":[{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"instantiationTemplateUsed"},"value":{"kind":"EnumValue","value":"DWC_12in_NutrientMixA"}},{"kind":"ObjectField","name":{"kind":"Name","value":"shelves"},"value":{"kind":"ListValue","values":[{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"verticalClearanceHeightToNextShelf"},"value":{"kind":"IntValue","value":"13"}},{"kind":"ObjectField","name":{"kind":"Name","value":"sites"},"value":{"kind":"ListValue","values":[{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"occupant"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"cropName"},"value":{"kind":"StringValue","value":"someCrop","block":false}},{"kind":"ObjectField","name":{"kind":"Name","value":"repeater"},"value":{"kind":"BooleanValue","value":true}},{"kind":"ObjectField","name":{"kind":"Name","value":"nutrientType"},"value":{"kind":"StringValue","value":"0.3:A|0.7:B","block":false}},{"kind":"ObjectField","name":{"kind":"Name","value":"germinatedDate"},"value":{"kind":"StringValue","value":"2023-05-09T02:45:48Z","block":false}}]}}]}]}}]}]}}]}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"moduleMap"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modules"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"shelves"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"sites"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"occupant"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"cropName"}},{"kind":"Field","name":{"kind":"Name","value":"germinatedDate"}}]}}]}}]}}]}}]}}]}}]}}]} as unknown as DocumentNode<InstallTwoModulesMutation, InstallTwoModulesMutationVariables>;

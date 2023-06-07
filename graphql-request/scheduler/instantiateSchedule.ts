@@ -5,6 +5,10 @@ import {
 import {GraphQLClient} from "graphql-request";
 
 
+const getDateWithSecondsOffset = (date, seconds) => {
+    return new Date(date.getTime() + seconds*1000);
+}
+
 export const createSchedulerNodes = () => {
 
     const client = new GraphQLClient("http://localhost:8080/graphql", {fetch});
@@ -12,6 +16,7 @@ export const createSchedulerNodes = () => {
     let nodes: Array<ClockNodePointRef> = [];
 
 
+    let epochZero: Date = new Date(0);
     // non-functional way of instantiating this array.
     // const NODES_IN_A_DAY= 24 * 60 * 60; // the number of seconds
     const NODES_IN_A_DAY= 24 * 60 * 4; // once every 15 seconds.
@@ -24,7 +29,8 @@ export const createSchedulerNodes = () => {
         }
         nodes.push({
             xid: i,
-            outputState: outputState
+            outputState: outputState,
+            timeOfDay: getDateWithSecondsOffset(epochZero, i*15).toISOString()
         })
     }
 

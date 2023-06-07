@@ -240,7 +240,7 @@ type ClockNodePoint  {
 
     # the time of day this point correlates to.
     # .. also functionally derived.
-    timeOfDay: DateTime! @lambda
+    timeOfDay: DateTime! @search
 
     # the state of the solenoid at this time of day.  Either a bool (0 or 1) or an int.
     outputState: Int!
