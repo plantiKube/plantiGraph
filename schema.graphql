@@ -219,7 +219,7 @@ type TimeSeries {
 }
 
 
-type AutomationClockMeta {
+type AutomationClock {
     id: ID!
 
     clockNodes: [ClockNodePoint!]!
@@ -232,7 +232,7 @@ type ClockNodePoint  {
 
     xid: Int! @id # these xid are expected to be linearly ordered.
 
-    ownedByClock: AutomationClockMeta @hasInverse(field: clockNodes)
+    ownedByClock: AutomationClock @hasInverse(field: clockNodes)
 
     # radians along arc (out of 2*pi)
     # this is functionally derived from the number of nodes in the parent clock.
@@ -242,6 +242,11 @@ type ClockNodePoint  {
     # .. also functionally derived.
     timeOfDay: DateTime! @search
 
-    # the state of the solenoid at this time of day.  Either a bool (0 or 1) or an int.
+    # Either a bool (0 == false, any other value == true) or an int.
+    # usage of bool for binary outputs .. i.e. solenoids.
+    # usage of int for analog outputs .. i.e. PWM.
     outputState: Int!
 }
+
+
+
