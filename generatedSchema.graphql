@@ -205,6 +205,12 @@ type ExampleObject {
 	someTime: DateTime!
 }
 
+type JonsObject {
+	id: ID!
+	someData: String!
+	someTime: DateTime!
+}
+
 #######################
 # Extended Definitions
 #######################
@@ -536,6 +542,11 @@ type AddIpAddrPayload {
 	numUids: Int
 }
 
+type AddJonsObjectPayload {
+	jonsObject(filter: JonsObjectFilter, order: JonsObjectOrder, first: Int, offset: Int): [JonsObject]
+	numUids: Int
+}
+
 type AddLocationPayload {
 	location(filter: LocationFilter, order: LocationOrder, first: Int, offset: Int): [Location]
 	numUids: Int
@@ -736,6 +747,12 @@ type DeleteIpAddrPayload {
 	numUids: Int
 }
 
+type DeleteJonsObjectPayload {
+	jonsObject(filter: JonsObjectFilter, order: JonsObjectOrder, first: Int, offset: Int): [JonsObject]
+	msg: String
+	numUids: Int
+}
+
 type DeleteLocationPayload {
 	location(filter: LocationFilter, order: LocationOrder, first: Int, offset: Int): [Location]
 	msg: String
@@ -862,6 +879,14 @@ type IpAddrAggregateResult {
 	count: Int
 	addrMin: String
 	addrMax: String
+}
+
+type JonsObjectAggregateResult {
+	count: Int
+	someDataMin: String
+	someDataMax: String
+	someTimeMin: DateTime
+	someTimeMax: DateTime
 }
 
 type LocationAggregateResult {
@@ -1036,6 +1061,11 @@ type UpdateGrowPlatePayload {
 
 type UpdateIpAddrPayload {
 	ipAddr(filter: IpAddrFilter, order: IpAddrOrder, first: Int, offset: Int): [IpAddr]
+	numUids: Int
+}
+
+type UpdateJonsObjectPayload {
+	jonsObject(filter: JonsObjectFilter, order: JonsObjectOrder, first: Int, offset: Int): [JonsObject]
 	numUids: Int
 }
 
@@ -1220,6 +1250,16 @@ enum IpAddrHasFilter {
 
 enum IpAddrOrderable {
 	addr
+}
+
+enum JonsObjectHasFilter {
+	someData
+	someTime
+}
+
+enum JonsObjectOrderable {
+	someData
+	someTime
 }
 
 enum LocationHasFilter {
@@ -1417,6 +1457,11 @@ input AddGrowPlateInput {
 
 input AddIpAddrInput {
 	addr: String!
+}
+
+input AddJonsObjectInput {
+	someData: String!
+	someTime: DateTime!
 }
 
 input AddLocationInput {
@@ -1787,6 +1832,31 @@ input IpAddrPatch {
 
 input IpAddrRef {
 	addr: String
+}
+
+input JonsObjectFilter {
+	id: [ID!]
+	has: [JonsObjectHasFilter]
+	and: [JonsObjectFilter]
+	or: [JonsObjectFilter]
+	not: JonsObjectFilter
+}
+
+input JonsObjectOrder {
+	asc: JonsObjectOrderable
+	desc: JonsObjectOrderable
+	then: JonsObjectOrder
+}
+
+input JonsObjectPatch {
+	someData: String
+	someTime: DateTime
+}
+
+input JonsObjectRef {
+	id: ID
+	someData: String
+	someTime: DateTime
 }
 
 input LocationFilter {
@@ -2186,6 +2256,12 @@ input UpdateIpAddrInput {
 	remove: IpAddrPatch
 }
 
+input UpdateJonsObjectInput {
+	filter: JonsObjectFilter!
+	set: JonsObjectPatch
+	remove: JonsObjectPatch
+}
+
 input UpdateLocationInput {
 	filter: LocationFilter!
 	set: LocationPatch
@@ -2365,6 +2441,9 @@ type Query {
 	getExampleObject(id: ID!): ExampleObject
 	queryExampleObject(filter: ExampleObjectFilter, order: ExampleObjectOrder, first: Int, offset: Int): [ExampleObject]
 	aggregateExampleObject(filter: ExampleObjectFilter): ExampleObjectAggregateResult
+	getJonsObject(id: ID!): JonsObject
+	queryJonsObject(filter: JonsObjectFilter, order: JonsObjectOrder, first: Int, offset: Int): [JonsObject]
+	aggregateJonsObject(filter: JonsObjectFilter): JonsObjectAggregateResult
 }
 
 #######################
@@ -2453,6 +2532,9 @@ type Mutation {
 	addExampleObject(input: [AddExampleObjectInput!]!): AddExampleObjectPayload
 	updateExampleObject(input: UpdateExampleObjectInput!): UpdateExampleObjectPayload
 	deleteExampleObject(filter: ExampleObjectFilter!): DeleteExampleObjectPayload
+	addJonsObject(input: [AddJonsObjectInput!]!): AddJonsObjectPayload
+	updateJonsObject(input: UpdateJonsObjectInput!): UpdateJonsObjectPayload
+	deleteJonsObject(filter: JonsObjectFilter!): DeleteJonsObjectPayload
 }
 
 #######################

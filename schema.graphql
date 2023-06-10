@@ -257,3 +257,10 @@ type ExampleObject {
 }
 
 
+
+type JonsObject {
+    id: ID!
+    someData: String!
+    someTime: DateTime! @search
+}
+

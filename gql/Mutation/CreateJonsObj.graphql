@@ -1,0 +1,15 @@
+mutation CreateJonsObj ($jonStringData: String!, $someTime:DateTime!) {
+    addJonsObject (input:
+    {
+        someData: $jonStringData
+        someTime:$someTime
+    })
+    {
+        numUids
+        jonsObject {
+            id
+            someData
+            someTime
+        }
+    }
+}

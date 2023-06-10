@@ -268,6 +268,25 @@ export type AddIpAddrPayloadIpAddrArgs = {
   order?: InputMaybe<IpAddrOrder>;
 };
 
+export type AddJonsObjectInput = {
+  someData: Scalars['String']['input'];
+  someTime: Scalars['DateTime']['input'];
+};
+
+export type AddJonsObjectPayload = {
+  __typename?: 'AddJonsObjectPayload';
+  jonsObject?: Maybe<Array<Maybe<JonsObject>>>;
+  numUids?: Maybe<Scalars['Int']['output']>;
+};
+
+
+export type AddJonsObjectPayloadJonsObjectArgs = {
+  filter?: InputMaybe<JonsObjectFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order?: InputMaybe<JonsObjectOrder>;
+};
+
 export type AddLocationInput = {
   x: Scalars['Int']['input'];
   y: Scalars['Int']['input'];
@@ -1100,6 +1119,21 @@ export type DeleteIpAddrPayloadIpAddrArgs = {
   order?: InputMaybe<IpAddrOrder>;
 };
 
+export type DeleteJonsObjectPayload = {
+  __typename?: 'DeleteJonsObjectPayload';
+  jonsObject?: Maybe<Array<Maybe<JonsObject>>>;
+  msg?: Maybe<Scalars['String']['output']>;
+  numUids?: Maybe<Scalars['Int']['output']>;
+};
+
+
+export type DeleteJonsObjectPayloadJonsObjectArgs = {
+  filter?: InputMaybe<JonsObjectFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order?: InputMaybe<JonsObjectOrder>;
+};
+
 export type DeleteLocationPayload = {
   __typename?: 'DeleteLocationPayload';
   location?: Maybe<Array<Maybe<Location>>>;
@@ -1733,6 +1767,57 @@ export type IpAddrRef = {
   addr?: InputMaybe<Scalars['String']['input']>;
 };
 
+export type JonsObject = {
+  __typename?: 'JonsObject';
+  id: Scalars['ID']['output'];
+  someData: Scalars['String']['output'];
+  someTime: Scalars['DateTime']['output'];
+};
+
+export type JonsObjectAggregateResult = {
+  __typename?: 'JonsObjectAggregateResult';
+  count?: Maybe<Scalars['Int']['output']>;
+  someDataMax?: Maybe<Scalars['String']['output']>;
+  someDataMin?: Maybe<Scalars['String']['output']>;
+  someTimeMax?: Maybe<Scalars['DateTime']['output']>;
+  someTimeMin?: Maybe<Scalars['DateTime']['output']>;
+};
+
+export type JonsObjectFilter = {
+  and?: InputMaybe<Array<InputMaybe<JonsObjectFilter>>>;
+  has?: InputMaybe<Array<InputMaybe<JonsObjectHasFilter>>>;
+  id?: InputMaybe<Array<Scalars['ID']['input']>>;
+  not?: InputMaybe<JonsObjectFilter>;
+  or?: InputMaybe<Array<InputMaybe<JonsObjectFilter>>>;
+};
+
+export enum JonsObjectHasFilter {
+  SomeData = 'someData',
+  SomeTime = 'someTime'
+}
+
+export type JonsObjectOrder = {
+  asc?: InputMaybe<JonsObjectOrderable>;
+  desc?: InputMaybe<JonsObjectOrderable>;
+  then?: InputMaybe<JonsObjectOrder>;
+};
+
+export enum JonsObjectOrderable {
+  SomeData = 'someData',
+  SomeTime = 'someTime'
+}
+
+export type JonsObjectPatch = {
+  someData?: InputMaybe<Scalars['String']['input']>;
+  someTime?: InputMaybe<Scalars['DateTime']['input']>;
+};
+
+export type JonsObjectRef = {
+  id?: InputMaybe<Scalars['ID']['input']>;
+  someData?: InputMaybe<Scalars['String']['input']>;
+  someTime?: InputMaybe<Scalars['DateTime']['input']>;
+};
+
 export type Location = {
   __typename?: 'Location';
   x: Scalars['Int']['output'];
@@ -1923,6 +2008,7 @@ export type Mutation = {
   addGerminationTray?: Maybe<AddGerminationTrayPayload>;
   addGrowPlate?: Maybe<AddGrowPlatePayload>;
   addIpAddr?: Maybe<AddIpAddrPayload>;
+  addJonsObject?: Maybe<AddJonsObjectPayload>;
   addLocation?: Maybe<AddLocationPayload>;
   addModule?: Maybe<AddModulePayload>;
   addModuleMap?: Maybe<AddModuleMapPayload>;
@@ -1950,6 +2036,7 @@ export type Mutation = {
   deleteGerminationTray?: Maybe<DeleteGerminationTrayPayload>;
   deleteGrowPlate?: Maybe<DeleteGrowPlatePayload>;
   deleteIpAddr?: Maybe<DeleteIpAddrPayload>;
+  deleteJonsObject?: Maybe<DeleteJonsObjectPayload>;
   deleteLocation?: Maybe<DeleteLocationPayload>;
   deleteModule?: Maybe<DeleteModulePayload>;
   deleteModuleMap?: Maybe<DeleteModuleMapPayload>;
@@ -1977,6 +2064,7 @@ export type Mutation = {
   updateGerminationTray?: Maybe<UpdateGerminationTrayPayload>;
   updateGrowPlate?: Maybe<UpdateGrowPlatePayload>;
   updateIpAddr?: Maybe<UpdateIpAddrPayload>;
+  updateJonsObject?: Maybe<UpdateJonsObjectPayload>;
   updateLocation?: Maybe<UpdateLocationPayload>;
   updateModule?: Maybe<UpdateModulePayload>;
   updateModuleMap?: Maybe<UpdateModuleMapPayload>;
@@ -2057,6 +2145,11 @@ export type MutationAddGrowPlateArgs = {
 
 export type MutationAddIpAddrArgs = {
   input: Array<AddIpAddrInput>;
+};
+
+
+export type MutationAddJonsObjectArgs = {
+  input: Array<AddJonsObjectInput>;
 };
 
 
@@ -2195,6 +2288,11 @@ export type MutationDeleteIpAddrArgs = {
 };
 
 
+export type MutationDeleteJonsObjectArgs = {
+  filter: JonsObjectFilter;
+};
+
+
 export type MutationDeleteLocationArgs = {
   filter: LocationFilter;
 };
@@ -2327,6 +2425,11 @@ export type MutationUpdateGrowPlateArgs = {
 
 export type MutationUpdateIpAddrArgs = {
   input: UpdateIpAddrInput;
+};
+
+
+export type MutationUpdateJonsObjectArgs = {
+  input: UpdateJonsObjectInput;
 };
 
 
@@ -2709,6 +2812,7 @@ export type Query = {
   aggregateGerminationTray?: Maybe<GerminationTrayAggregateResult>;
   aggregateGrowPlate?: Maybe<GrowPlateAggregateResult>;
   aggregateIpAddr?: Maybe<IpAddrAggregateResult>;
+  aggregateJonsObject?: Maybe<JonsObjectAggregateResult>;
   aggregateLocation?: Maybe<LocationAggregateResult>;
   aggregateModule?: Maybe<ModuleAggregateResult>;
   aggregateModuleMap?: Maybe<ModuleMapAggregateResult>;
@@ -2731,6 +2835,7 @@ export type Query = {
   getEndpoint?: Maybe<Endpoint>;
   getExampleObject?: Maybe<ExampleObject>;
   getGerminationTray?: Maybe<GerminationTray>;
+  getJonsObject?: Maybe<JonsObject>;
   getModule?: Maybe<Module>;
   getModuleMap?: Maybe<ModuleMap>;
   getNursery?: Maybe<Nursery>;
@@ -2755,6 +2860,7 @@ export type Query = {
   queryGerminationTray?: Maybe<Array<Maybe<GerminationTray>>>;
   queryGrowPlate?: Maybe<Array<Maybe<GrowPlate>>>;
   queryIpAddr?: Maybe<Array<Maybe<IpAddr>>>;
+  queryJonsObject?: Maybe<Array<Maybe<JonsObject>>>;
   queryLocation?: Maybe<Array<Maybe<Location>>>;
   queryModule?: Maybe<Array<Maybe<Module>>>;
   queryModuleMap?: Maybe<Array<Maybe<ModuleMap>>>;
@@ -2834,6 +2940,11 @@ export type QueryAggregateGrowPlateArgs = {
 
 export type QueryAggregateIpAddrArgs = {
   filter?: InputMaybe<IpAddrFilter>;
+};
+
+
+export type QueryAggregateJonsObjectArgs = {
+  filter?: InputMaybe<JonsObjectFilter>;
 };
 
 
@@ -2944,6 +3055,11 @@ export type QueryGetExampleObjectArgs = {
 
 
 export type QueryGetGerminationTrayArgs = {
+  id: Scalars['ID']['input'];
+};
+
+
+export type QueryGetJonsObjectArgs = {
   id: Scalars['ID']['input'];
 };
 
@@ -3099,6 +3215,14 @@ export type QueryQueryIpAddrArgs = {
   first?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
   order?: InputMaybe<IpAddrOrder>;
+};
+
+
+export type QueryQueryJonsObjectArgs = {
+  filter?: InputMaybe<JonsObjectFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order?: InputMaybe<JonsObjectOrder>;
 };
 
 
@@ -3904,6 +4028,26 @@ export type UpdateIpAddrPayloadIpAddrArgs = {
   order?: InputMaybe<IpAddrOrder>;
 };
 
+export type UpdateJonsObjectInput = {
+  filter: JonsObjectFilter;
+  remove?: InputMaybe<JonsObjectPatch>;
+  set?: InputMaybe<JonsObjectPatch>;
+};
+
+export type UpdateJonsObjectPayload = {
+  __typename?: 'UpdateJonsObjectPayload';
+  jonsObject?: Maybe<Array<Maybe<JonsObject>>>;
+  numUids?: Maybe<Scalars['Int']['output']>;
+};
+
+
+export type UpdateJonsObjectPayloadJonsObjectArgs = {
+  filter?: InputMaybe<JonsObjectFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order?: InputMaybe<JonsObjectOrder>;
+};
+
 export type UpdateLocationInput = {
   filter: LocationFilter;
   remove?: InputMaybe<LocationPatch>;
@@ -4240,6 +4384,14 @@ export type CreateExampleObjMutationVariables = Exact<{
 
 export type CreateExampleObjMutation = { __typename?: 'Mutation', addExampleObject?: { __typename?: 'AddExampleObjectPayload', exampleObject?: Array<{ __typename?: 'ExampleObject', id: string, someData: string, someTime: any } | null> | null } | null };
 
+export type CreateJonsObjMutationVariables = Exact<{
+  jonStringData: Scalars['String']['input'];
+  someTime: Scalars['DateTime']['input'];
+}>;
+
+
+export type CreateJonsObjMutation = { __typename?: 'Mutation', addJonsObject?: { __typename?: 'AddJonsObjectPayload', numUids?: number | null, jonsObject?: Array<{ __typename?: 'JonsObject', id: string, someData: string, someTime: any } | null> | null } | null };
+
 export type GetDriveOutputStringQueryVariables = Exact<{
   driveOutputsID: Scalars['ID']['input'];
 }>;
@@ -4303,6 +4455,7 @@ export type AddDriveOutputsPresetMutation = { __typename?: 'Mutation', addDriveO
 
 
 export const CreateExampleObjDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateExampleObj"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"inputTime"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"DateTime"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"addExampleObject"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"someData"},"value":{"kind":"StringValue","value":"ohai","block":false}},{"kind":"ObjectField","name":{"kind":"Name","value":"someTime"},"value":{"kind":"Variable","name":{"kind":"Name","value":"inputTime"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"exampleObject"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"someData"}},{"kind":"Field","name":{"kind":"Name","value":"someTime"}}]}}]}}]}}]} as unknown as DocumentNode<CreateExampleObjMutation, CreateExampleObjMutationVariables>;
+export const CreateJonsObjDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateJonsObj"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"jonStringData"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"someTime"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"DateTime"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"addJonsObject"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"someData"},"value":{"kind":"Variable","name":{"kind":"Name","value":"jonStringData"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"someTime"},"value":{"kind":"Variable","name":{"kind":"Name","value":"someTime"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"numUids"}},{"kind":"Field","name":{"kind":"Name","value":"jonsObject"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"someData"}},{"kind":"Field","name":{"kind":"Name","value":"someTime"}}]}}]}}]}}]} as unknown as DocumentNode<CreateJonsObjMutation, CreateJonsObjMutationVariables>;
 export const GetDriveOutputStringDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetDriveOutputString"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"driveOutputsID"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"getDriveOutputsPreset"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"driveOutputsID"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"boolArrayString"}},{"kind":"Field","name":{"kind":"Name","value":"lxEndpoint"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"addr"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"addr"}}]}},{"kind":"Field","name":{"kind":"Name","value":"port"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"port"}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetDriveOutputStringQuery, GetDriveOutputStringQueryVariables>;
 export const GetClockPoint_FifteenSecondRangeDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetClockPoint_FifteenSecondRange"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"min"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"DateTime"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"max"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"DateTime"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"queryClockNodePoint"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"filter"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"timeOfDay"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"between"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"min"},"value":{"kind":"Variable","name":{"kind":"Name","value":"min"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"max"},"value":{"kind":"Variable","name":{"kind":"Name","value":"max"}}}]}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"xid"}},{"kind":"Field","name":{"kind":"Name","value":"timeOfDay"}},{"kind":"Field","name":{"kind":"Name","value":"outputState"}}]}}]}}]} as unknown as DocumentNode<GetClockPoint_FifteenSecondRangeQuery, GetClockPoint_FifteenSecondRangeQueryVariables>;
 export const WheresChuckDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"WheresChuck"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"querySite"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<WheresChuckQuery, WheresChuckQueryVariables>;
