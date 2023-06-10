@@ -183,7 +183,7 @@ type TimeSeries {
 	streamPath: String!
 }
 
-type AutomationClockMeta {
+type AutomationClock {
 	id: ID!
 	clockNodes(filter: ClockNodePointFilter, order: ClockNodePointOrder, first: Int, offset: Int): [ClockNodePoint!]! @hasInverse(field: ownedByClock)
 	clockNodesAggregate(filter: ClockNodePointFilter): ClockNodePointAggregateResult
@@ -192,10 +192,17 @@ type AutomationClockMeta {
 type ClockNodePoint {
 	id: ID!
 	xid: Int! @id
-	ownedByClock(filter: AutomationClockMetaFilter): AutomationClockMeta @hasInverse(field: clockNodes)
+	ownedByClock(filter: AutomationClockFilter): AutomationClock @hasInverse(field: clockNodes)
 	azimuth: Float! @lambda
 	timeOfDay: DateTime! @search
+	oscPath: String!
 	outputState: Int!
+}
+
+type ExampleObject {
+	id: ID!
+	someData: String!
+	someTime: DateTime!
 }
 
 #######################
@@ -464,8 +471,8 @@ input StringHashFilter {
 # Generated Types
 #######################
 
-type AddAutomationClockMetaPayload {
-	automationClockMeta(filter: AutomationClockMetaFilter, first: Int, offset: Int): [AutomationClockMeta]
+type AddAutomationClockPayload {
+	automationClock(filter: AutomationClockFilter, first: Int, offset: Int): [AutomationClock]
 	numUids: Int
 }
 
@@ -506,6 +513,11 @@ type AddDriveOutputsPresetPayload {
 
 type AddEndpointPayload {
 	endpoint(filter: EndpointFilter, first: Int, offset: Int): [Endpoint]
+	numUids: Int
+}
+
+type AddExampleObjectPayload {
+	exampleObject(filter: ExampleObjectFilter, order: ExampleObjectOrder, first: Int, offset: Int): [ExampleObject]
 	numUids: Int
 }
 
@@ -594,7 +606,7 @@ type AddWaterRoutePresetsPayload {
 	numUids: Int
 }
 
-type AutomationClockMetaAggregateResult {
+type AutomationClockAggregateResult {
 	count: Int
 }
 
@@ -610,6 +622,8 @@ type ClockNodePointAggregateResult {
 	xidAvg: Float
 	timeOfDayMin: DateTime
 	timeOfDayMax: DateTime
+	oscPathMin: String
+	oscPathMax: String
 	outputStateMin: Int
 	outputStateMax: Int
 	outputStateSum: Int
@@ -644,8 +658,8 @@ type CropIntentionsListAggregateResult {
 	count: Int
 }
 
-type DeleteAutomationClockMetaPayload {
-	automationClockMeta(filter: AutomationClockMetaFilter, first: Int, offset: Int): [AutomationClockMeta]
+type DeleteAutomationClockPayload {
+	automationClock(filter: AutomationClockFilter, first: Int, offset: Int): [AutomationClock]
 	msg: String
 	numUids: Int
 }
@@ -694,6 +708,12 @@ type DeleteDriveOutputsPresetPayload {
 
 type DeleteEndpointPayload {
 	endpoint(filter: EndpointFilter, first: Int, offset: Int): [Endpoint]
+	msg: String
+	numUids: Int
+}
+
+type DeleteExampleObjectPayload {
+	exampleObject(filter: ExampleObjectFilter, order: ExampleObjectOrder, first: Int, offset: Int): [ExampleObject]
 	msg: String
 	numUids: Int
 }
@@ -816,6 +836,14 @@ type DriveOutputsPresetAggregateResult {
 
 type EndpointAggregateResult {
 	count: Int
+}
+
+type ExampleObjectAggregateResult {
+	count: Int
+	someDataMin: String
+	someDataMax: String
+	someTimeMin: DateTime
+	someTimeMax: DateTime
 }
 
 type GerminationTrayAggregateResult {
@@ -946,8 +974,8 @@ type TimeSeriesAggregateResult {
 	streamPathMax: String
 }
 
-type UpdateAutomationClockMetaPayload {
-	automationClockMeta(filter: AutomationClockMetaFilter, first: Int, offset: Int): [AutomationClockMeta]
+type UpdateAutomationClockPayload {
+	automationClock(filter: AutomationClockFilter, first: Int, offset: Int): [AutomationClock]
 	numUids: Int
 }
 
@@ -988,6 +1016,11 @@ type UpdateDriveOutputsPresetPayload {
 
 type UpdateEndpointPayload {
 	endpoint(filter: EndpointFilter, first: Int, offset: Int): [Endpoint]
+	numUids: Int
+}
+
+type UpdateExampleObjectPayload {
+	exampleObject(filter: ExampleObjectFilter, order: ExampleObjectOrder, first: Int, offset: Int): [ExampleObject]
 	numUids: Int
 }
 
@@ -1084,7 +1117,7 @@ type WaterRoutePresetsAggregateResult {
 # Generated Enums
 #######################
 
-enum AutomationClockMetaHasFilter {
+enum AutomationClockHasFilter {
 	clockNodes
 }
 
@@ -1096,12 +1129,14 @@ enum ClockNodePointHasFilter {
 	xid
 	ownedByClock
 	timeOfDay
+	oscPath
 	outputState
 }
 
 enum ClockNodePointOrderable {
 	xid
 	timeOfDay
+	oscPath
 	outputState
 }
 
@@ -1155,6 +1190,16 @@ enum DriveOutputsPresetOrderable {
 enum EndpointHasFilter {
 	addr
 	port
+}
+
+enum ExampleObjectHasFilter {
+	someData
+	someTime
+}
+
+enum ExampleObjectOrderable {
+	someData
+	someTime
 }
 
 enum GerminationTrayHasFilter {
@@ -1308,7 +1353,7 @@ enum WaterRoutePresetsHasFilter {
 # Generated Inputs
 #######################
 
-input AddAutomationClockMetaInput {
+input AddAutomationClockInput {
 	clockNodes: [ClockNodePointRef!]!
 }
 
@@ -1318,8 +1363,9 @@ input AddChosenDriveOutputPresetInput {
 
 input AddClockNodePointInput {
 	xid: Int!
-	ownedByClock: AutomationClockMetaRef
+	ownedByClock: AutomationClockRef
 	timeOfDay: DateTime!
+	oscPath: String!
 	outputState: Int!
 }
 
@@ -1354,6 +1400,11 @@ input AddDriveOutputsPresetInput {
 input AddEndpointInput {
 	addr: IpAddrRef!
 	port: PortRef!
+}
+
+input AddExampleObjectInput {
+	someData: String!
+	someTime: DateTime!
 }
 
 input AddGerminationTrayInput {
@@ -1450,19 +1501,19 @@ input AddWaterRoutePresetsInput {
 	presets: [DriveOutputsPresetRef!]!
 }
 
-input AutomationClockMetaFilter {
+input AutomationClockFilter {
 	id: [ID!]
-	has: [AutomationClockMetaHasFilter]
-	and: [AutomationClockMetaFilter]
-	or: [AutomationClockMetaFilter]
-	not: AutomationClockMetaFilter
+	has: [AutomationClockHasFilter]
+	and: [AutomationClockFilter]
+	or: [AutomationClockFilter]
+	not: AutomationClockFilter
 }
 
-input AutomationClockMetaPatch {
+input AutomationClockPatch {
 	clockNodes: [ClockNodePointRef!]
 }
 
-input AutomationClockMetaRef {
+input AutomationClockRef {
 	id: ID
 	clockNodes: [ClockNodePointRef!]
 }
@@ -1501,16 +1552,18 @@ input ClockNodePointOrder {
 }
 
 input ClockNodePointPatch {
-	ownedByClock: AutomationClockMetaRef
+	ownedByClock: AutomationClockRef
 	timeOfDay: DateTime
+	oscPath: String
 	outputState: Int
 }
 
 input ClockNodePointRef {
 	id: ID
 	xid: Int
-	ownedByClock: AutomationClockMetaRef
+	ownedByClock: AutomationClockRef
 	timeOfDay: DateTime
+	oscPath: String
 	outputState: Int
 }
 
@@ -1650,6 +1703,31 @@ input EndpointRef {
 	id: ID
 	addr: IpAddrRef
 	port: PortRef
+}
+
+input ExampleObjectFilter {
+	id: [ID!]
+	has: [ExampleObjectHasFilter]
+	and: [ExampleObjectFilter]
+	or: [ExampleObjectFilter]
+	not: ExampleObjectFilter
+}
+
+input ExampleObjectOrder {
+	asc: ExampleObjectOrderable
+	desc: ExampleObjectOrderable
+	then: ExampleObjectOrder
+}
+
+input ExampleObjectPatch {
+	someData: String
+	someTime: DateTime
+}
+
+input ExampleObjectRef {
+	id: ID
+	someData: String
+	someTime: DateTime
 }
 
 input GerminationTrayFilter {
@@ -2030,10 +2108,10 @@ input TimeSeriesRef {
 	streamPath: String
 }
 
-input UpdateAutomationClockMetaInput {
-	filter: AutomationClockMetaFilter!
-	set: AutomationClockMetaPatch
-	remove: AutomationClockMetaPatch
+input UpdateAutomationClockInput {
+	filter: AutomationClockFilter!
+	set: AutomationClockPatch
+	remove: AutomationClockPatch
 }
 
 input UpdateChosenDriveOutputPresetInput {
@@ -2082,6 +2160,12 @@ input UpdateEndpointInput {
 	filter: EndpointFilter!
 	set: EndpointPatch
 	remove: EndpointPatch
+}
+
+input UpdateExampleObjectInput {
+	filter: ExampleObjectFilter!
+	set: ExampleObjectPatch
+	remove: ExampleObjectPatch
 }
 
 input UpdateGerminationTrayInput {
@@ -2272,12 +2356,15 @@ type Query {
 	getTimeSeries(id: ID!): TimeSeries
 	queryTimeSeries(filter: TimeSeriesFilter, order: TimeSeriesOrder, first: Int, offset: Int): [TimeSeries]
 	aggregateTimeSeries(filter: TimeSeriesFilter): TimeSeriesAggregateResult
-	getAutomationClockMeta(id: ID!): AutomationClockMeta
-	queryAutomationClockMeta(filter: AutomationClockMetaFilter, first: Int, offset: Int): [AutomationClockMeta]
-	aggregateAutomationClockMeta(filter: AutomationClockMetaFilter): AutomationClockMetaAggregateResult
+	getAutomationClock(id: ID!): AutomationClock
+	queryAutomationClock(filter: AutomationClockFilter, first: Int, offset: Int): [AutomationClock]
+	aggregateAutomationClock(filter: AutomationClockFilter): AutomationClockAggregateResult
 	getClockNodePoint(id: ID, xid: Int): ClockNodePoint
 	queryClockNodePoint(filter: ClockNodePointFilter, order: ClockNodePointOrder, first: Int, offset: Int): [ClockNodePoint]
 	aggregateClockNodePoint(filter: ClockNodePointFilter): ClockNodePointAggregateResult
+	getExampleObject(id: ID!): ExampleObject
+	queryExampleObject(filter: ExampleObjectFilter, order: ExampleObjectOrder, first: Int, offset: Int): [ExampleObject]
+	aggregateExampleObject(filter: ExampleObjectFilter): ExampleObjectAggregateResult
 }
 
 #######################
@@ -2357,12 +2444,15 @@ type Mutation {
 	addTimeSeries(input: [AddTimeSeriesInput!]!): AddTimeSeriesPayload
 	updateTimeSeries(input: UpdateTimeSeriesInput!): UpdateTimeSeriesPayload
 	deleteTimeSeries(filter: TimeSeriesFilter!): DeleteTimeSeriesPayload
-	addAutomationClockMeta(input: [AddAutomationClockMetaInput!]!): AddAutomationClockMetaPayload
-	updateAutomationClockMeta(input: UpdateAutomationClockMetaInput!): UpdateAutomationClockMetaPayload
-	deleteAutomationClockMeta(filter: AutomationClockMetaFilter!): DeleteAutomationClockMetaPayload
+	addAutomationClock(input: [AddAutomationClockInput!]!): AddAutomationClockPayload
+	updateAutomationClock(input: UpdateAutomationClockInput!): UpdateAutomationClockPayload
+	deleteAutomationClock(filter: AutomationClockFilter!): DeleteAutomationClockPayload
 	addClockNodePoint(input: [AddClockNodePointInput!]!, upsert: Boolean): AddClockNodePointPayload
 	updateClockNodePoint(input: UpdateClockNodePointInput!): UpdateClockNodePointPayload
 	deleteClockNodePoint(filter: ClockNodePointFilter!): DeleteClockNodePointPayload
+	addExampleObject(input: [AddExampleObjectInput!]!): AddExampleObjectPayload
+	updateExampleObject(input: UpdateExampleObjectInput!): UpdateExampleObjectPayload
+	deleteExampleObject(filter: ExampleObjectFilter!): DeleteExampleObjectPayload
 }
 
 #######################

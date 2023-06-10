@@ -21,7 +21,7 @@ udpPort.open();
 
 export function sendMessage(value: number) {
     var msg = {
-        address: "/lx/mixer/master/fader",
+        address: "/lx/output/brightness",
         args: [value]
     };
 

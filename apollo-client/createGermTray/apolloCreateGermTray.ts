@@ -15,13 +15,12 @@ export const createGermTrayEffect = () => {
             query: CreateGermTrayDocument,
             variables:
                 {
-                    xidInput: "GxDEADBEEF2",
+                    xidInput: "0xDEADBEEF2",
                     sitesInput: [
                         {
                             xid: "flie2",
                             signal:
                                 {
-                                    xid: "s0001",
                                     signalDate: "2023-05-10T23:13:56Z",
                                     signalType: SignalType.Germinate
                                 }
@@ -31,8 +30,6 @@ export const createGermTrayEffect = () => {
         })
         .then(({ data }) => {
             console.log(data)
-            const xid = data.addGerminationTray?.germinationTray[0].xid
-            console.log(xid)
         });
 
 }

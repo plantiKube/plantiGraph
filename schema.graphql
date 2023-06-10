@@ -242,11 +242,18 @@ type ClockNodePoint  {
     # .. also functionally derived.
     timeOfDay: DateTime! @search
 
+    oscPath: String! # the OSC path to send to.
+
     # Either a bool (0 == false, any other value == true) or an int.
     # usage of bool for binary outputs .. i.e. solenoids.
     # usage of int for analog outputs .. i.e. PWM.
     outputState: Int!
 }
 
+type ExampleObject {
+    id: ID!
+    someData: String!
+    someTime: DateTime!
+}
 
 

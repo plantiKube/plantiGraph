@@ -78,7 +78,7 @@ export const instantiateNurseryEffect = () => {
         }
     ).then((data) => {
         console.log(data)
-        const generatedId = data.addNursery.nursery["0"].id
+        const generatedId = data.addNursery?.nursery["0"].id
         console.log(generatedId)
     });
 }

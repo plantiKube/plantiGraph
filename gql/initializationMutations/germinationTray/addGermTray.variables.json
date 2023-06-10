@@ -1,11 +1,8 @@
 {
-  "xidInput": "GxDEADBEEF",
   "sitesInput": [
     {
-      "xid": "flie",
       "signal":
       {
-        "xid": "s0001",
         "signalDate": "2023-05-10T23:13:56Z",
         "signalType": "GERMINATE"
       }

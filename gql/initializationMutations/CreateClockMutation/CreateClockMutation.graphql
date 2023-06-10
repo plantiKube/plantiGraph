@@ -1,6 +1,6 @@
 mutation CreateClockMutation ($pointsList:[ClockNodePointRef!]!)
 {
-    addAutomationClockMeta
+    addAutomationClock
     (
         input:
         {
@@ -9,7 +9,7 @@ mutation CreateClockMutation ($pointsList:[ClockNodePointRef!]!)
     )
     {
         numUids
-        automationClockMeta
+        automationClock
         {
             id
             clockNodes

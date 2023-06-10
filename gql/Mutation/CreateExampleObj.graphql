@@ -1,0 +1,16 @@
+mutation CreateExampleObj ($inputTime:DateTime!) {
+    addExampleObject
+    (input:
+    {
+        someData: "ohai"
+        someTime:$inputTime
+    }
+    )
+    {
+        exampleObject {
+            id
+            someData
+            someTime
+        }
+    }
+}

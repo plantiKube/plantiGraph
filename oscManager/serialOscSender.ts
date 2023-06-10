@@ -6,7 +6,7 @@ import {Either} from "fp-ts/Either";
 
 function SendValToAll(val: boolean) {
     const client = new Client('127.0.0.1', 3030);
-    const oscAddress = '/lx/mixer/channel/1/pattern/1/'
+    const oscAddress = '/lx/mixer/channel/sw/pattern/LinearMap/'
     const bundle = new Bundle();
 
     for (let i=0; i<32; i++) {
@@ -19,6 +19,7 @@ function SendValToAll(val: boolean) {
 
 function paramNameByIdx(idx: number) {
     let paramNameMap: string[] = [
+        "0_DELIVERY",
         "PUMP.mod",
         "BORKED.ph",
         "LEFT.1.ph",
@@ -55,10 +56,10 @@ function paramNameByIdx(idx: number) {
     return idx + "_" + paramNameMap[idx];
 }
 export function DriveOscBundle(boolEitherArray: Either<Error, boolean>[]) {
-    const oscAddress = '/lx/mixer/channel/drive/pattern/LinearMap/'
+    const oscAddress = '/lx/mixer/channel/sw/pattern/LinearMap/'
     const bundle = new Bundle();
-    // const client = new Client('127.0.0.1', 3030);
-    const client = new Client('100.126.16.85', 3030);
+    const client = new Client('127.0.0.1', 3030);
+    // const client = new Client('100.126.16.85', 3030);
 
 
 

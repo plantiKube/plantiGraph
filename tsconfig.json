@@ -6,7 +6,9 @@
     "lib": ["es6", "dom"],
     "allowJs": true,
     "outDir": "./dist",
-    "strict": true,
+//    "strict": true,
+    "strict": false,
+
     "esModuleInterop": true,
 
     /* Advanced Options */
@@ -21,7 +23,8 @@
     "typeRoots" : ["./node_modules/@types",
       "./types"
     ],
-    "types": [],
+    "types": ["jest", "node"],
+
     "allowSyntheticDefaultImports": true,
     "experimentalDecorators": true
   },

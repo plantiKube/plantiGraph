@@ -23,7 +23,8 @@ export const createSchedulerNodes = () => {
     const NODES_IN_A_DAY= 24 * 60 * (60/SECONDS_PER_PERIOD); // once every 15 seconds.
     for (let i = 0; i < NODES_IN_A_DAY; i++) {
         let outputState = 0;
-        if (i < 8*60*4) { // 8am ;; 1 sec intervals
+
+        if (i < 8*60*4) { // 8am ;; 15 sec intervals
             outputState = 0;
         } else {
             outputState = 1;

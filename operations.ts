@@ -25,19 +25,19 @@ export type Scalars = {
   Int64: { input: any; output: any; }
 };
 
-export type AddAutomationClockMetaInput = {
+export type AddAutomationClockInput = {
   clockNodes: Array<ClockNodePointRef>;
 };
 
-export type AddAutomationClockMetaPayload = {
-  __typename?: 'AddAutomationClockMetaPayload';
-  automationClockMeta?: Maybe<Array<Maybe<AutomationClockMeta>>>;
+export type AddAutomationClockPayload = {
+  __typename?: 'AddAutomationClockPayload';
+  automationClock?: Maybe<Array<Maybe<AutomationClock>>>;
   numUids?: Maybe<Scalars['Int']['output']>;
 };
 
 
-export type AddAutomationClockMetaPayloadAutomationClockMetaArgs = {
-  filter?: InputMaybe<AutomationClockMetaFilter>;
+export type AddAutomationClockPayloadAutomationClockArgs = {
+  filter?: InputMaybe<AutomationClockFilter>;
   first?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
 };
@@ -60,8 +60,9 @@ export type AddChosenDriveOutputPresetPayloadChosenDriveOutputPresetArgs = {
 };
 
 export type AddClockNodePointInput = {
+  oscPath: Scalars['String']['input'];
   outputState: Scalars['Int']['input'];
-  ownedByClock?: InputMaybe<AutomationClockMetaRef>;
+  ownedByClock?: InputMaybe<AutomationClockRef>;
   timeOfDay: Scalars['DateTime']['input'];
   xid: Scalars['Int']['input'];
 };
@@ -193,6 +194,25 @@ export type AddEndpointPayloadEndpointArgs = {
   filter?: InputMaybe<EndpointFilter>;
   first?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
+};
+
+export type AddExampleObjectInput = {
+  someData: Scalars['String']['input'];
+  someTime: Scalars['DateTime']['input'];
+};
+
+export type AddExampleObjectPayload = {
+  __typename?: 'AddExampleObjectPayload';
+  exampleObject?: Maybe<Array<Maybe<ExampleObject>>>;
+  numUids?: Maybe<Scalars['Int']['output']>;
+};
+
+
+export type AddExampleObjectPayloadExampleObjectArgs = {
+  filter?: InputMaybe<ExampleObjectFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order?: InputMaybe<ExampleObjectOrder>;
 };
 
 export type AddGerminationTrayInput = {
@@ -527,15 +547,15 @@ export type AuthRule = {
   rule?: InputMaybe<Scalars['String']['input']>;
 };
 
-export type AutomationClockMeta = {
-  __typename?: 'AutomationClockMeta';
+export type AutomationClock = {
+  __typename?: 'AutomationClock';
   clockNodes: Array<ClockNodePoint>;
   clockNodesAggregate?: Maybe<ClockNodePointAggregateResult>;
   id: Scalars['ID']['output'];
 };
 
 
-export type AutomationClockMetaClockNodesArgs = {
+export type AutomationClockClockNodesArgs = {
   filter?: InputMaybe<ClockNodePointFilter>;
   first?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
@@ -543,32 +563,32 @@ export type AutomationClockMetaClockNodesArgs = {
 };
 
 
-export type AutomationClockMetaClockNodesAggregateArgs = {
+export type AutomationClockClockNodesAggregateArgs = {
   filter?: InputMaybe<ClockNodePointFilter>;
 };
 
-export type AutomationClockMetaAggregateResult = {
-  __typename?: 'AutomationClockMetaAggregateResult';
+export type AutomationClockAggregateResult = {
+  __typename?: 'AutomationClockAggregateResult';
   count?: Maybe<Scalars['Int']['output']>;
 };
 
-export type AutomationClockMetaFilter = {
-  and?: InputMaybe<Array<InputMaybe<AutomationClockMetaFilter>>>;
-  has?: InputMaybe<Array<InputMaybe<AutomationClockMetaHasFilter>>>;
+export type AutomationClockFilter = {
+  and?: InputMaybe<Array<InputMaybe<AutomationClockFilter>>>;
+  has?: InputMaybe<Array<InputMaybe<AutomationClockHasFilter>>>;
   id?: InputMaybe<Array<Scalars['ID']['input']>>;
-  not?: InputMaybe<AutomationClockMetaFilter>;
-  or?: InputMaybe<Array<InputMaybe<AutomationClockMetaFilter>>>;
+  not?: InputMaybe<AutomationClockFilter>;
+  or?: InputMaybe<Array<InputMaybe<AutomationClockFilter>>>;
 };
 
-export enum AutomationClockMetaHasFilter {
+export enum AutomationClockHasFilter {
   ClockNodes = 'clockNodes'
 }
 
-export type AutomationClockMetaPatch = {
+export type AutomationClockPatch = {
   clockNodes?: InputMaybe<Array<ClockNodePointRef>>;
 };
 
-export type AutomationClockMetaRef = {
+export type AutomationClockRef = {
   clockNodes?: InputMaybe<Array<ClockNodePointRef>>;
   id?: InputMaybe<Scalars['ID']['input']>;
 };
@@ -614,20 +634,23 @@ export type ClockNodePoint = {
   __typename?: 'ClockNodePoint';
   azimuth: Scalars['Float']['output'];
   id: Scalars['ID']['output'];
+  oscPath: Scalars['String']['output'];
   outputState: Scalars['Int']['output'];
-  ownedByClock?: Maybe<AutomationClockMeta>;
+  ownedByClock?: Maybe<AutomationClock>;
   timeOfDay: Scalars['DateTime']['output'];
   xid: Scalars['Int']['output'];
 };
 
 
 export type ClockNodePointOwnedByClockArgs = {
-  filter?: InputMaybe<AutomationClockMetaFilter>;
+  filter?: InputMaybe<AutomationClockFilter>;
 };
 
 export type ClockNodePointAggregateResult = {
   __typename?: 'ClockNodePointAggregateResult';
   count?: Maybe<Scalars['Int']['output']>;
+  oscPathMax?: Maybe<Scalars['String']['output']>;
+  oscPathMin?: Maybe<Scalars['String']['output']>;
   outputStateAvg?: Maybe<Scalars['Float']['output']>;
   outputStateMax?: Maybe<Scalars['Int']['output']>;
   outputStateMin?: Maybe<Scalars['Int']['output']>;
@@ -651,6 +674,7 @@ export type ClockNodePointFilter = {
 };
 
 export enum ClockNodePointHasFilter {
+  OscPath = 'oscPath',
   OutputState = 'outputState',
   OwnedByClock = 'ownedByClock',
   TimeOfDay = 'timeOfDay',
@@ -664,21 +688,24 @@ export type ClockNodePointOrder = {
 };
 
 export enum ClockNodePointOrderable {
+  OscPath = 'oscPath',
   OutputState = 'outputState',
   TimeOfDay = 'timeOfDay',
   Xid = 'xid'
 }
 
 export type ClockNodePointPatch = {
+  oscPath?: InputMaybe<Scalars['String']['input']>;
   outputState?: InputMaybe<Scalars['Int']['input']>;
-  ownedByClock?: InputMaybe<AutomationClockMetaRef>;
+  ownedByClock?: InputMaybe<AutomationClockRef>;
   timeOfDay?: InputMaybe<Scalars['DateTime']['input']>;
 };
 
 export type ClockNodePointRef = {
   id?: InputMaybe<Scalars['ID']['input']>;
+  oscPath?: InputMaybe<Scalars['String']['input']>;
   outputState?: InputMaybe<Scalars['Int']['input']>;
-  ownedByClock?: InputMaybe<AutomationClockMetaRef>;
+  ownedByClock?: InputMaybe<AutomationClockRef>;
   timeOfDay?: InputMaybe<Scalars['DateTime']['input']>;
   xid?: InputMaybe<Scalars['Int']['input']>;
 };
@@ -883,16 +910,16 @@ export type DateTimeRange = {
   min: Scalars['DateTime']['input'];
 };
 
-export type DeleteAutomationClockMetaPayload = {
-  __typename?: 'DeleteAutomationClockMetaPayload';
-  automationClockMeta?: Maybe<Array<Maybe<AutomationClockMeta>>>;
+export type DeleteAutomationClockPayload = {
+  __typename?: 'DeleteAutomationClockPayload';
+  automationClock?: Maybe<Array<Maybe<AutomationClock>>>;
   msg?: Maybe<Scalars['String']['output']>;
   numUids?: Maybe<Scalars['Int']['output']>;
 };
 
 
-export type DeleteAutomationClockMetaPayloadAutomationClockMetaArgs = {
-  filter?: InputMaybe<AutomationClockMetaFilter>;
+export type DeleteAutomationClockPayloadAutomationClockArgs = {
+  filter?: InputMaybe<AutomationClockFilter>;
   first?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
 };
@@ -1012,6 +1039,21 @@ export type DeleteEndpointPayloadEndpointArgs = {
   filter?: InputMaybe<EndpointFilter>;
   first?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
+};
+
+export type DeleteExampleObjectPayload = {
+  __typename?: 'DeleteExampleObjectPayload';
+  exampleObject?: Maybe<Array<Maybe<ExampleObject>>>;
+  msg?: Maybe<Scalars['String']['output']>;
+  numUids?: Maybe<Scalars['Int']['output']>;
+};
+
+
+export type DeleteExampleObjectPayloadExampleObjectArgs = {
+  filter?: InputMaybe<ExampleObjectFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order?: InputMaybe<ExampleObjectOrder>;
 };
 
 export type DeleteGerminationTrayPayload = {
@@ -1440,6 +1482,57 @@ export type EndpointRef = {
   port?: InputMaybe<PortRef>;
 };
 
+export type ExampleObject = {
+  __typename?: 'ExampleObject';
+  id: Scalars['ID']['output'];
+  someData: Scalars['String']['output'];
+  someTime: Scalars['DateTime']['output'];
+};
+
+export type ExampleObjectAggregateResult = {
+  __typename?: 'ExampleObjectAggregateResult';
+  count?: Maybe<Scalars['Int']['output']>;
+  someDataMax?: Maybe<Scalars['String']['output']>;
+  someDataMin?: Maybe<Scalars['String']['output']>;
+  someTimeMax?: Maybe<Scalars['DateTime']['output']>;
+  someTimeMin?: Maybe<Scalars['DateTime']['output']>;
+};
+
+export type ExampleObjectFilter = {
+  and?: InputMaybe<Array<InputMaybe<ExampleObjectFilter>>>;
+  has?: InputMaybe<Array<InputMaybe<ExampleObjectHasFilter>>>;
+  id?: InputMaybe<Array<Scalars['ID']['input']>>;
+  not?: InputMaybe<ExampleObjectFilter>;
+  or?: InputMaybe<Array<InputMaybe<ExampleObjectFilter>>>;
+};
+
+export enum ExampleObjectHasFilter {
+  SomeData = 'someData',
+  SomeTime = 'someTime'
+}
+
+export type ExampleObjectOrder = {
+  asc?: InputMaybe<ExampleObjectOrderable>;
+  desc?: InputMaybe<ExampleObjectOrderable>;
+  then?: InputMaybe<ExampleObjectOrder>;
+};
+
+export enum ExampleObjectOrderable {
+  SomeData = 'someData',
+  SomeTime = 'someTime'
+}
+
+export type ExampleObjectPatch = {
+  someData?: InputMaybe<Scalars['String']['input']>;
+  someTime?: InputMaybe<Scalars['DateTime']['input']>;
+};
+
+export type ExampleObjectRef = {
+  id?: InputMaybe<Scalars['ID']['input']>;
+  someData?: InputMaybe<Scalars['String']['input']>;
+  someTime?: InputMaybe<Scalars['DateTime']['input']>;
+};
+
 export type FloatFilter = {
   between?: InputMaybe<FloatRange>;
   eq?: InputMaybe<Scalars['Float']['input']>;
@@ -1817,7 +1910,7 @@ export type MultiPolygonRef = {
 
 export type Mutation = {
   __typename?: 'Mutation';
-  addAutomationClockMeta?: Maybe<AddAutomationClockMetaPayload>;
+  addAutomationClock?: Maybe<AddAutomationClockPayload>;
   addChosenDriveOutputPreset?: Maybe<AddChosenDriveOutputPresetPayload>;
   addClockNodePoint?: Maybe<AddClockNodePointPayload>;
   addCrop?: Maybe<AddCropPayload>;
@@ -1826,6 +1919,7 @@ export type Mutation = {
   addDrawer?: Maybe<AddDrawerPayload>;
   addDriveOutputsPreset?: Maybe<AddDriveOutputsPresetPayload>;
   addEndpoint?: Maybe<AddEndpointPayload>;
+  addExampleObject?: Maybe<AddExampleObjectPayload>;
   addGerminationTray?: Maybe<AddGerminationTrayPayload>;
   addGrowPlate?: Maybe<AddGrowPlatePayload>;
   addIpAddr?: Maybe<AddIpAddrPayload>;
@@ -1843,7 +1937,7 @@ export type Mutation = {
   addSite?: Maybe<AddSitePayload>;
   addTimeSeries?: Maybe<AddTimeSeriesPayload>;
   addWaterRoutePresets?: Maybe<AddWaterRoutePresetsPayload>;
-  deleteAutomationClockMeta?: Maybe<DeleteAutomationClockMetaPayload>;
+  deleteAutomationClock?: Maybe<DeleteAutomationClockPayload>;
   deleteChosenDriveOutputPreset?: Maybe<DeleteChosenDriveOutputPresetPayload>;
   deleteClockNodePoint?: Maybe<DeleteClockNodePointPayload>;
   deleteCrop?: Maybe<DeleteCropPayload>;
@@ -1852,6 +1946,7 @@ export type Mutation = {
   deleteDrawer?: Maybe<DeleteDrawerPayload>;
   deleteDriveOutputsPreset?: Maybe<DeleteDriveOutputsPresetPayload>;
   deleteEndpoint?: Maybe<DeleteEndpointPayload>;
+  deleteExampleObject?: Maybe<DeleteExampleObjectPayload>;
   deleteGerminationTray?: Maybe<DeleteGerminationTrayPayload>;
   deleteGrowPlate?: Maybe<DeleteGrowPlatePayload>;
   deleteIpAddr?: Maybe<DeleteIpAddrPayload>;
@@ -1869,7 +1964,7 @@ export type Mutation = {
   deleteSite?: Maybe<DeleteSitePayload>;
   deleteTimeSeries?: Maybe<DeleteTimeSeriesPayload>;
   deleteWaterRoutePresets?: Maybe<DeleteWaterRoutePresetsPayload>;
-  updateAutomationClockMeta?: Maybe<UpdateAutomationClockMetaPayload>;
+  updateAutomationClock?: Maybe<UpdateAutomationClockPayload>;
   updateChosenDriveOutputPreset?: Maybe<UpdateChosenDriveOutputPresetPayload>;
   updateClockNodePoint?: Maybe<UpdateClockNodePointPayload>;
   updateCrop?: Maybe<UpdateCropPayload>;
@@ -1878,6 +1973,7 @@ export type Mutation = {
   updateDrawer?: Maybe<UpdateDrawerPayload>;
   updateDriveOutputsPreset?: Maybe<UpdateDriveOutputsPresetPayload>;
   updateEndpoint?: Maybe<UpdateEndpointPayload>;
+  updateExampleObject?: Maybe<UpdateExampleObjectPayload>;
   updateGerminationTray?: Maybe<UpdateGerminationTrayPayload>;
   updateGrowPlate?: Maybe<UpdateGrowPlatePayload>;
   updateIpAddr?: Maybe<UpdateIpAddrPayload>;
@@ -1898,8 +1994,8 @@ export type Mutation = {
 };
 
 
-export type MutationAddAutomationClockMetaArgs = {
-  input: Array<AddAutomationClockMetaInput>;
+export type MutationAddAutomationClockArgs = {
+  input: Array<AddAutomationClockInput>;
 };
 
 
@@ -1941,6 +2037,11 @@ export type MutationAddDriveOutputsPresetArgs = {
 
 export type MutationAddEndpointArgs = {
   input: Array<AddEndpointInput>;
+};
+
+
+export type MutationAddExampleObjectArgs = {
+  input: Array<AddExampleObjectInput>;
 };
 
 
@@ -2029,8 +2130,8 @@ export type MutationAddWaterRoutePresetsArgs = {
 };
 
 
-export type MutationDeleteAutomationClockMetaArgs = {
-  filter: AutomationClockMetaFilter;
+export type MutationDeleteAutomationClockArgs = {
+  filter: AutomationClockFilter;
 };
 
 
@@ -2071,6 +2172,11 @@ export type MutationDeleteDriveOutputsPresetArgs = {
 
 export type MutationDeleteEndpointArgs = {
   filter: EndpointFilter;
+};
+
+
+export type MutationDeleteExampleObjectArgs = {
+  filter: ExampleObjectFilter;
 };
 
 
@@ -2159,8 +2265,8 @@ export type MutationDeleteWaterRoutePresetsArgs = {
 };
 
 
-export type MutationUpdateAutomationClockMetaArgs = {
-  input: UpdateAutomationClockMetaInput;
+export type MutationUpdateAutomationClockArgs = {
+  input: UpdateAutomationClockInput;
 };
 
 
@@ -2201,6 +2307,11 @@ export type MutationUpdateDriveOutputsPresetArgs = {
 
 export type MutationUpdateEndpointArgs = {
   input: UpdateEndpointInput;
+};
+
+
+export type MutationUpdateExampleObjectArgs = {
+  input: UpdateExampleObjectInput;
 };
 
 
@@ -2585,7 +2696,7 @@ export type PortRef = {
 
 export type Query = {
   __typename?: 'Query';
-  aggregateAutomationClockMeta?: Maybe<AutomationClockMetaAggregateResult>;
+  aggregateAutomationClock?: Maybe<AutomationClockAggregateResult>;
   aggregateChosenDriveOutputPreset?: Maybe<ChosenDriveOutputPresetAggregateResult>;
   aggregateClockNodePoint?: Maybe<ClockNodePointAggregateResult>;
   aggregateCrop?: Maybe<CropAggregateResult>;
@@ -2594,6 +2705,7 @@ export type Query = {
   aggregateDrawer?: Maybe<DrawerAggregateResult>;
   aggregateDriveOutputsPreset?: Maybe<DriveOutputsPresetAggregateResult>;
   aggregateEndpoint?: Maybe<EndpointAggregateResult>;
+  aggregateExampleObject?: Maybe<ExampleObjectAggregateResult>;
   aggregateGerminationTray?: Maybe<GerminationTrayAggregateResult>;
   aggregateGrowPlate?: Maybe<GrowPlateAggregateResult>;
   aggregateIpAddr?: Maybe<IpAddrAggregateResult>;
@@ -2611,12 +2723,13 @@ export type Query = {
   aggregateSite?: Maybe<SiteAggregateResult>;
   aggregateTimeSeries?: Maybe<TimeSeriesAggregateResult>;
   aggregateWaterRoutePresets?: Maybe<WaterRoutePresetsAggregateResult>;
-  getAutomationClockMeta?: Maybe<AutomationClockMeta>;
+  getAutomationClock?: Maybe<AutomationClock>;
   getChosenDriveOutputPreset?: Maybe<ChosenDriveOutputPreset>;
   getClockNodePoint?: Maybe<ClockNodePoint>;
   getCrop?: Maybe<Crop>;
   getDriveOutputsPreset?: Maybe<DriveOutputsPreset>;
   getEndpoint?: Maybe<Endpoint>;
+  getExampleObject?: Maybe<ExampleObject>;
   getGerminationTray?: Maybe<GerminationTray>;
   getModule?: Maybe<Module>;
   getModuleMap?: Maybe<ModuleMap>;
@@ -2629,7 +2742,7 @@ export type Query = {
   getSite?: Maybe<Site>;
   getTimeSeries?: Maybe<TimeSeries>;
   getWaterRoutePresets?: Maybe<WaterRoutePresets>;
-  queryAutomationClockMeta?: Maybe<Array<Maybe<AutomationClockMeta>>>;
+  queryAutomationClock?: Maybe<Array<Maybe<AutomationClock>>>;
   queryChosenDriveOutputPreset?: Maybe<Array<Maybe<ChosenDriveOutputPreset>>>;
   queryClockNodePoint?: Maybe<Array<Maybe<ClockNodePoint>>>;
   queryCrop?: Maybe<Array<Maybe<Crop>>>;
@@ -2638,6 +2751,7 @@ export type Query = {
   queryDrawer?: Maybe<Array<Maybe<Drawer>>>;
   queryDriveOutputsPreset?: Maybe<Array<Maybe<DriveOutputsPreset>>>;
   queryEndpoint?: Maybe<Array<Maybe<Endpoint>>>;
+  queryExampleObject?: Maybe<Array<Maybe<ExampleObject>>>;
   queryGerminationTray?: Maybe<Array<Maybe<GerminationTray>>>;
   queryGrowPlate?: Maybe<Array<Maybe<GrowPlate>>>;
   queryIpAddr?: Maybe<Array<Maybe<IpAddr>>>;
@@ -2658,8 +2772,8 @@ export type Query = {
 };
 
 
-export type QueryAggregateAutomationClockMetaArgs = {
-  filter?: InputMaybe<AutomationClockMetaFilter>;
+export type QueryAggregateAutomationClockArgs = {
+  filter?: InputMaybe<AutomationClockFilter>;
 };
 
 
@@ -2700,6 +2814,11 @@ export type QueryAggregateDriveOutputsPresetArgs = {
 
 export type QueryAggregateEndpointArgs = {
   filter?: InputMaybe<EndpointFilter>;
+};
+
+
+export type QueryAggregateExampleObjectArgs = {
+  filter?: InputMaybe<ExampleObjectFilter>;
 };
 
 
@@ -2788,7 +2907,7 @@ export type QueryAggregateWaterRoutePresetsArgs = {
 };
 
 
-export type QueryGetAutomationClockMetaArgs = {
+export type QueryGetAutomationClockArgs = {
   id: Scalars['ID']['input'];
 };
 
@@ -2815,6 +2934,11 @@ export type QueryGetDriveOutputsPresetArgs = {
 
 
 export type QueryGetEndpointArgs = {
+  id: Scalars['ID']['input'];
+};
+
+
+export type QueryGetExampleObjectArgs = {
   id: Scalars['ID']['input'];
 };
 
@@ -2879,8 +3003,8 @@ export type QueryGetWaterRoutePresetsArgs = {
 };
 
 
-export type QueryQueryAutomationClockMetaArgs = {
-  filter?: InputMaybe<AutomationClockMetaFilter>;
+export type QueryQueryAutomationClockArgs = {
+  filter?: InputMaybe<AutomationClockFilter>;
   first?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
 };
@@ -2944,6 +3068,14 @@ export type QueryQueryEndpointArgs = {
   filter?: InputMaybe<EndpointFilter>;
   first?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
+};
+
+
+export type QueryQueryExampleObjectArgs = {
+  filter?: InputMaybe<ExampleObjectFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order?: InputMaybe<ExampleObjectOrder>;
 };
 
 
@@ -3517,21 +3649,21 @@ export type TimeSeriesRef = {
   streamPath?: InputMaybe<Scalars['String']['input']>;
 };
 
-export type UpdateAutomationClockMetaInput = {
-  filter: AutomationClockMetaFilter;
-  remove?: InputMaybe<AutomationClockMetaPatch>;
-  set?: InputMaybe<AutomationClockMetaPatch>;
+export type UpdateAutomationClockInput = {
+  filter: AutomationClockFilter;
+  remove?: InputMaybe<AutomationClockPatch>;
+  set?: InputMaybe<AutomationClockPatch>;
 };
 
-export type UpdateAutomationClockMetaPayload = {
-  __typename?: 'UpdateAutomationClockMetaPayload';
-  automationClockMeta?: Maybe<Array<Maybe<AutomationClockMeta>>>;
+export type UpdateAutomationClockPayload = {
+  __typename?: 'UpdateAutomationClockPayload';
+  automationClock?: Maybe<Array<Maybe<AutomationClock>>>;
   numUids?: Maybe<Scalars['Int']['output']>;
 };
 
 
-export type UpdateAutomationClockMetaPayloadAutomationClockMetaArgs = {
-  filter?: InputMaybe<AutomationClockMetaFilter>;
+export type UpdateAutomationClockPayloadAutomationClockArgs = {
+  filter?: InputMaybe<AutomationClockFilter>;
   first?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
 };
@@ -3691,6 +3823,26 @@ export type UpdateEndpointPayloadEndpointArgs = {
   filter?: InputMaybe<EndpointFilter>;
   first?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
+};
+
+export type UpdateExampleObjectInput = {
+  filter: ExampleObjectFilter;
+  remove?: InputMaybe<ExampleObjectPatch>;
+  set?: InputMaybe<ExampleObjectPatch>;
+};
+
+export type UpdateExampleObjectPayload = {
+  __typename?: 'UpdateExampleObjectPayload';
+  exampleObject?: Maybe<Array<Maybe<ExampleObject>>>;
+  numUids?: Maybe<Scalars['Int']['output']>;
+};
+
+
+export type UpdateExampleObjectPayloadExampleObjectArgs = {
+  filter?: InputMaybe<ExampleObjectFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order?: InputMaybe<ExampleObjectOrder>;
 };
 
 export type UpdateGerminationTrayInput = {
@@ -4081,6 +4233,13 @@ export type TwoNums = {
   two: Scalars['Int']['input'];
 };
 
+export type CreateExampleObjMutationVariables = Exact<{
+  inputTime: Scalars['DateTime']['input'];
+}>;
+
+
+export type CreateExampleObjMutation = { __typename?: 'Mutation', addExampleObject?: { __typename?: 'AddExampleObjectPayload', exampleObject?: Array<{ __typename?: 'ExampleObject', id: string, someData: string, someTime: any } | null> | null } | null };
+
 export type GetDriveOutputStringQueryVariables = Exact<{
   driveOutputsID: Scalars['ID']['input'];
 }>;
@@ -4106,7 +4265,7 @@ export type CreateClockMutationMutationVariables = Exact<{
 }>;
 
 
-export type CreateClockMutationMutation = { __typename?: 'Mutation', addAutomationClockMeta?: { __typename?: 'AddAutomationClockMetaPayload', numUids?: number | null, automationClockMeta?: Array<{ __typename?: 'AutomationClockMeta', id: string, clockNodes: Array<{ __typename?: 'ClockNodePoint', xid: number, outputState: number }> } | null> | null } | null };
+export type CreateClockMutationMutation = { __typename?: 'Mutation', addAutomationClock?: { __typename?: 'AddAutomationClockPayload', numUids?: number | null, automationClock?: Array<{ __typename?: 'AutomationClock', id: string, clockNodes: Array<{ __typename?: 'ClockNodePoint', xid: number, outputState: number }> } | null> | null } | null };
 
 export type InstallTwoModulesMutationVariables = Exact<{
   moduleInput: Scalars['String']['input'];
@@ -4143,10 +4302,11 @@ export type AddDriveOutputsPresetMutationVariables = Exact<{
 export type AddDriveOutputsPresetMutation = { __typename?: 'Mutation', addDriveOutputsPreset?: { __typename?: 'AddDriveOutputsPresetPayload', driveOutputsPreset?: Array<{ __typename?: 'DriveOutputsPreset', id: string, boolArrayString: string, lxEndpoint: { __typename?: 'Endpoint', addr: { __typename?: 'IpAddr', addr: string }, port: { __typename?: 'Port', port: number } } } | null> | null } | null };
 
 
+export const CreateExampleObjDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateExampleObj"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"inputTime"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"DateTime"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"addExampleObject"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"someData"},"value":{"kind":"StringValue","value":"ohai","block":false}},{"kind":"ObjectField","name":{"kind":"Name","value":"someTime"},"value":{"kind":"Variable","name":{"kind":"Name","value":"inputTime"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"exampleObject"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"someData"}},{"kind":"Field","name":{"kind":"Name","value":"someTime"}}]}}]}}]}}]} as unknown as DocumentNode<CreateExampleObjMutation, CreateExampleObjMutationVariables>;
 export const GetDriveOutputStringDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetDriveOutputString"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"driveOutputsID"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"getDriveOutputsPreset"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"driveOutputsID"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"boolArrayString"}},{"kind":"Field","name":{"kind":"Name","value":"lxEndpoint"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"addr"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"addr"}}]}},{"kind":"Field","name":{"kind":"Name","value":"port"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"port"}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetDriveOutputStringQuery, GetDriveOutputStringQueryVariables>;
 export const GetClockPoint_FifteenSecondRangeDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetClockPoint_FifteenSecondRange"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"min"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"DateTime"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"max"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"DateTime"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"queryClockNodePoint"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"filter"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"timeOfDay"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"between"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"min"},"value":{"kind":"Variable","name":{"kind":"Name","value":"min"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"max"},"value":{"kind":"Variable","name":{"kind":"Name","value":"max"}}}]}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"xid"}},{"kind":"Field","name":{"kind":"Name","value":"timeOfDay"}},{"kind":"Field","name":{"kind":"Name","value":"outputState"}}]}}]}}]} as unknown as DocumentNode<GetClockPoint_FifteenSecondRangeQuery, GetClockPoint_FifteenSecondRangeQueryVariables>;
 export const WheresChuckDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"WheresChuck"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"querySite"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<WheresChuckQuery, WheresChuckQueryVariables>;
-export const CreateClockMutationDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateClockMutation"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"pointsList"}},"type":{"kind":"NonNullType","type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ClockNodePointRef"}}}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"addAutomationClockMeta"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"clockNodes"},"value":{"kind":"Variable","name":{"kind":"Name","value":"pointsList"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"numUids"}},{"kind":"Field","name":{"kind":"Name","value":"automationClockMeta"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"clockNodes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"xid"}},{"kind":"Field","name":{"kind":"Name","value":"outputState"}}]}}]}}]}}]}}]} as unknown as DocumentNode<CreateClockMutationMutation, CreateClockMutationMutationVariables>;
+export const CreateClockMutationDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateClockMutation"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"pointsList"}},"type":{"kind":"NonNullType","type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ClockNodePointRef"}}}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"addAutomationClock"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"clockNodes"},"value":{"kind":"Variable","name":{"kind":"Name","value":"pointsList"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"numUids"}},{"kind":"Field","name":{"kind":"Name","value":"automationClock"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"clockNodes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"xid"}},{"kind":"Field","name":{"kind":"Name","value":"outputState"}}]}}]}}]}}]}}]} as unknown as DocumentNode<CreateClockMutationMutation, CreateClockMutationMutationVariables>;
 export const InstallTwoModulesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"InstallTwoModules"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"moduleInput"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"addModuleMap"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"modules"},"value":{"kind":"ListValue","values":[{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"instantiationTemplateUsed"},"value":{"kind":"EnumValue","value":"DWC_12in_NutrientMixA"}},{"kind":"ObjectField","name":{"kind":"Name","value":"shelves"},"value":{"kind":"ListValue","values":[{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"verticalClearanceHeightToNextShelf"},"value":{"kind":"IntValue","value":"13"}},{"kind":"ObjectField","name":{"kind":"Name","value":"sites"},"value":{"kind":"ListValue","values":[{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"occupant"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"cropName"},"value":{"kind":"StringValue","value":"someCrop","block":false}},{"kind":"ObjectField","name":{"kind":"Name","value":"repeater"},"value":{"kind":"BooleanValue","value":true}},{"kind":"ObjectField","name":{"kind":"Name","value":"nutrientType"},"value":{"kind":"StringValue","value":"0.3:A|0.7:B","block":false}},{"kind":"ObjectField","name":{"kind":"Name","value":"germinatedDate"},"value":{"kind":"StringValue","value":"2023-05-09T02:45:48Z","block":false}}]}}]}]}}]}]}}]}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"moduleMap"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modules"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"shelves"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"sites"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"occupant"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"cropName"}},{"kind":"Field","name":{"kind":"Name","value":"germinatedDate"}}]}}]}}]}}]}}]}}]}}]}}]} as unknown as DocumentNode<InstallTwoModulesMutation, InstallTwoModulesMutationVariables>;
 export const InstantiateCropIntentionsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"InstantiateCropIntentions"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"addCropIntentionsList"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"cropIntentions"},"value":{"kind":"ListValue","values":[{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"crop"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"name"},"value":{"kind":"StringValue","value":"arugi","block":false}},{"kind":"ObjectField","name":{"kind":"Name","value":"required_module_type"},"value":{"kind":"StringValue","value":"nutA","block":false}},{"kind":"ObjectField","name":{"kind":"Name","value":"repeater"},"value":{"kind":"BooleanValue","value":true}},{"kind":"ObjectField","name":{"kind":"Name","value":"days_harvestable"},"value":{"kind":"IntValue","value":"5"}},{"kind":"ObjectField","name":{"kind":"Name","value":"days_from_transfer_to_first_harvest"},"value":{"kind":"IntValue","value":"6"}}]}},{"kind":"ObjectField","name":{"kind":"Name","value":"harvestPerWeek"},"value":{"kind":"IntValue","value":"3"}}]}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"numUids"}},{"kind":"Field","name":{"kind":"Name","value":"cropIntentionsList"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"cropIntentions"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"crop"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"required_module_type"}},{"kind":"Field","name":{"kind":"Name","value":"repeater"}}]}}]}}]}}]}}]}}]} as unknown as DocumentNode<InstantiateCropIntentionsMutation, InstantiateCropIntentionsMutationVariables>;
 export const CreateGermTrayDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"createGermTray"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"xidInput"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"sitesInput"}},"type":{"kind":"NonNullType","type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"SiteRef"}}}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"addGerminationTray"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"sites"},"value":{"kind":"Variable","name":{"kind":"Name","value":"sitesInput"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"germinationTray"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"sites"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"signal"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"signalDate"}}]}}]}}]}}]}}]}}]} as unknown as DocumentNode<CreateGermTrayMutation, CreateGermTrayMutationVariables>;
