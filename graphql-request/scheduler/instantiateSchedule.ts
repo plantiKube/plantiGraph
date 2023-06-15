@@ -45,7 +45,7 @@ export const createSchedulerNodes = () => {
         }
     ).then((data) => {
         console.log(data)
-        console.log(data.addAutomationClockMeta.automationClockMeta["0"].id)
+        console.log(data.addAutomationClock.automationClock["0"].id)
     });
 }
 

@@ -19,7 +19,8 @@
     "old-subscription-client-js": "node subscriptions-transport-ws/test.js",
     "SUBSCRIBE_to_OSC__outputDrivesPreset": "ts-node subscriptions-transport-ws/proxy_outputDrivesPreset_to_OSC.ts",
     "TEST_osc_stream": "ts-node --transpile-only oscManager/oscStream.ts ",
-    "TEST_clock_nodes": "ts-node --transpile-only graphql-request/scheduler/instantiateSchedule.ts"
+    "TEST_clock_nodes": "ts-node --transpile-only graphql-request/scheduler/instantiateSchedule.ts",
+    "runSchedulerDaemon": "ts-node --transpile-only graphql-request/scheduler/growLightsDaemonSched.ts"
   },
   "dependencies": {
     "@apollo/client": "^3.7.14",
