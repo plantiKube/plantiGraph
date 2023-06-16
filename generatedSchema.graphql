@@ -84,6 +84,12 @@ type Shelf {
 	sitesAggregate(filter: SiteFilter): SiteAggregateResult
 }
 
+type FlattenedSiteArray {
+	id: ID!
+	sites(filter: SiteFilter, first: Int, offset: Int): [Site!]!
+	sitesAggregate(filter: SiteFilter): SiteAggregateResult
+}
+
 type Site {
 	id: ID!
 	signal(filter: SignalFilter): Signal
@@ -208,7 +214,7 @@ type ExampleObject {
 type JonsObject {
 	id: ID!
 	someData: String!
-	someTime: DateTime!
+	someTime: DateTime! @search
 }
 
 #######################
@@ -527,6 +533,11 @@ type AddExampleObjectPayload {
 	numUids: Int
 }
 
+type AddFlattenedSiteArrayPayload {
+	flattenedSiteArray(filter: FlattenedSiteArrayFilter, first: Int, offset: Int): [FlattenedSiteArray]
+	numUids: Int
+}
+
 type AddGerminationTrayPayload {
 	germinationTray(filter: GerminationTrayFilter, first: Int, offset: Int): [GerminationTray]
 	numUids: Int
@@ -729,6 +740,12 @@ type DeleteExampleObjectPayload {
 	numUids: Int
 }
 
+type DeleteFlattenedSiteArrayPayload {
+	flattenedSiteArray(filter: FlattenedSiteArrayFilter, first: Int, offset: Int): [FlattenedSiteArray]
+	msg: String
+	numUids: Int
+}
+
 type DeleteGerminationTrayPayload {
 	germinationTray(filter: GerminationTrayFilter, first: Int, offset: Int): [GerminationTray]
 	msg: String
@@ -861,6 +878,10 @@ type ExampleObjectAggregateResult {
 	someDataMax: String
 	someTimeMin: DateTime
 	someTimeMax: DateTime
+}
+
+type FlattenedSiteArrayAggregateResult {
+	count: Int
 }
 
 type GerminationTrayAggregateResult {
@@ -1049,6 +1070,11 @@ type UpdateExampleObjectPayload {
 	numUids: Int
 }
 
+type UpdateFlattenedSiteArrayPayload {
+	flattenedSiteArray(filter: FlattenedSiteArrayFilter, first: Int, offset: Int): [FlattenedSiteArray]
+	numUids: Int
+}
+
 type UpdateGerminationTrayPayload {
 	germinationTray(filter: GerminationTrayFilter, first: Int, offset: Int): [GerminationTray]
 	numUids: Int
@@ -1230,6 +1256,10 @@ enum ExampleObjectHasFilter {
 enum ExampleObjectOrderable {
 	someData
 	someTime
+}
+
+enum FlattenedSiteArrayHasFilter {
+	sites
 }
 
 enum GerminationTrayHasFilter {
@@ -1445,6 +1475,10 @@ input AddEndpointInput {
 input AddExampleObjectInput {
 	someData: String!
 	someTime: DateTime!
+}
+
+input AddFlattenedSiteArrayInput {
+	sites: [SiteRef!]!
 }
 
 input AddGerminationTrayInput {
@@ -1775,6 +1809,23 @@ input ExampleObjectRef {
 	someTime: DateTime
 }
 
+input FlattenedSiteArrayFilter {
+	id: [ID!]
+	has: [FlattenedSiteArrayHasFilter]
+	and: [FlattenedSiteArrayFilter]
+	or: [FlattenedSiteArrayFilter]
+	not: FlattenedSiteArrayFilter
+}
+
+input FlattenedSiteArrayPatch {
+	sites: [SiteRef!]
+}
+
+input FlattenedSiteArrayRef {
+	id: ID
+	sites: [SiteRef!]
+}
+
 input GerminationTrayFilter {
 	id: [ID!]
 	has: [GerminationTrayHasFilter]
@@ -1836,6 +1887,7 @@ input IpAddrRef {
 
 input JonsObjectFilter {
 	id: [ID!]
+	someTime: DateTimeFilter
 	has: [JonsObjectHasFilter]
 	and: [JonsObjectFilter]
 	or: [JonsObjectFilter]
@@ -2238,6 +2290,12 @@ input UpdateExampleObjectInput {
 	remove: ExampleObjectPatch
 }
 
+input UpdateFlattenedSiteArrayInput {
+	filter: FlattenedSiteArrayFilter!
+	set: FlattenedSiteArrayPatch
+	remove: FlattenedSiteArrayPatch
+}
+
 input UpdateGerminationTrayInput {
 	filter: GerminationTrayFilter!
 	set: GerminationTrayPatch
@@ -2389,6 +2447,9 @@ type Query {
 	getShelf(id: ID!): Shelf
 	queryShelf(filter: ShelfFilter, order: ShelfOrder, first: Int, offset: Int): [Shelf]
 	aggregateShelf(filter: ShelfFilter): ShelfAggregateResult
+	getFlattenedSiteArray(id: ID!): FlattenedSiteArray
+	queryFlattenedSiteArray(filter: FlattenedSiteArrayFilter, first: Int, offset: Int): [FlattenedSiteArray]
+	aggregateFlattenedSiteArray(filter: FlattenedSiteArrayFilter): FlattenedSiteArrayAggregateResult
 	getSite(id: ID!): Site
 	querySite(filter: SiteFilter, first: Int, offset: Int): [Site]
 	aggregateSite(filter: SiteFilter): SiteAggregateResult
@@ -2475,6 +2536,9 @@ type Mutation {
 	addShelf(input: [AddShelfInput!]!): AddShelfPayload
 	updateShelf(input: UpdateShelfInput!): UpdateShelfPayload
 	deleteShelf(filter: ShelfFilter!): DeleteShelfPayload
+	addFlattenedSiteArray(input: [AddFlattenedSiteArrayInput!]!): AddFlattenedSiteArrayPayload
+	updateFlattenedSiteArray(input: UpdateFlattenedSiteArrayInput!): UpdateFlattenedSiteArrayPayload
+	deleteFlattenedSiteArray(filter: FlattenedSiteArrayFilter!): DeleteFlattenedSiteArrayPayload
 	addSite(input: [AddSiteInput!]!): AddSitePayload
 	updateSite(input: UpdateSiteInput!): UpdateSitePayload
 	deleteSite(filter: SiteFilter!): DeleteSitePayload

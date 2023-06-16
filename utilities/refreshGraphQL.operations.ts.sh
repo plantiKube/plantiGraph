@@ -8,4 +8,5 @@ echo .. got it.
 echo
 echo Now generating the typescript operations.ts
 echo
-graphql-codegen --config codegen.yml
+#graphql-codegen --config codegen.yml
+npm run codegen

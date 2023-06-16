@@ -18,7 +18,6 @@ export const createGermTrayEffect = () => {
                     xidInput: "0xDEADBEEF2",
                     sitesInput: [
                         {
-                            xid: "flie2",
                             signal:
                                 {
                                     signalDate: "2023-05-10T23:13:56Z",

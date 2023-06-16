@@ -215,6 +215,23 @@ export type AddExampleObjectPayloadExampleObjectArgs = {
   order?: InputMaybe<ExampleObjectOrder>;
 };
 
+export type AddFlattenedSiteArrayInput = {
+  sites: Array<SiteRef>;
+};
+
+export type AddFlattenedSiteArrayPayload = {
+  __typename?: 'AddFlattenedSiteArrayPayload';
+  flattenedSiteArray?: Maybe<Array<Maybe<FlattenedSiteArray>>>;
+  numUids?: Maybe<Scalars['Int']['output']>;
+};
+
+
+export type AddFlattenedSiteArrayPayloadFlattenedSiteArrayArgs = {
+  filter?: InputMaybe<FlattenedSiteArrayFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+};
+
 export type AddGerminationTrayInput = {
   sites: Array<SiteRef>;
 };
@@ -1075,6 +1092,20 @@ export type DeleteExampleObjectPayloadExampleObjectArgs = {
   order?: InputMaybe<ExampleObjectOrder>;
 };
 
+export type DeleteFlattenedSiteArrayPayload = {
+  __typename?: 'DeleteFlattenedSiteArrayPayload';
+  flattenedSiteArray?: Maybe<Array<Maybe<FlattenedSiteArray>>>;
+  msg?: Maybe<Scalars['String']['output']>;
+  numUids?: Maybe<Scalars['Int']['output']>;
+};
+
+
+export type DeleteFlattenedSiteArrayPayloadFlattenedSiteArrayArgs = {
+  filter?: InputMaybe<FlattenedSiteArrayFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+};
+
 export type DeleteGerminationTrayPayload = {
   __typename?: 'DeleteGerminationTrayPayload';
   germinationTray?: Maybe<Array<Maybe<GerminationTray>>>;
@@ -1567,6 +1598,51 @@ export type ExampleObjectRef = {
   someTime?: InputMaybe<Scalars['DateTime']['input']>;
 };
 
+export type FlattenedSiteArray = {
+  __typename?: 'FlattenedSiteArray';
+  id: Scalars['ID']['output'];
+  sites: Array<Site>;
+  sitesAggregate?: Maybe<SiteAggregateResult>;
+};
+
+
+export type FlattenedSiteArraySitesArgs = {
+  filter?: InputMaybe<SiteFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+};
+
+
+export type FlattenedSiteArraySitesAggregateArgs = {
+  filter?: InputMaybe<SiteFilter>;
+};
+
+export type FlattenedSiteArrayAggregateResult = {
+  __typename?: 'FlattenedSiteArrayAggregateResult';
+  count?: Maybe<Scalars['Int']['output']>;
+};
+
+export type FlattenedSiteArrayFilter = {
+  and?: InputMaybe<Array<InputMaybe<FlattenedSiteArrayFilter>>>;
+  has?: InputMaybe<Array<InputMaybe<FlattenedSiteArrayHasFilter>>>;
+  id?: InputMaybe<Array<Scalars['ID']['input']>>;
+  not?: InputMaybe<FlattenedSiteArrayFilter>;
+  or?: InputMaybe<Array<InputMaybe<FlattenedSiteArrayFilter>>>;
+};
+
+export enum FlattenedSiteArrayHasFilter {
+  Sites = 'sites'
+}
+
+export type FlattenedSiteArrayPatch = {
+  sites?: InputMaybe<Array<SiteRef>>;
+};
+
+export type FlattenedSiteArrayRef = {
+  id?: InputMaybe<Scalars['ID']['input']>;
+  sites?: InputMaybe<Array<SiteRef>>;
+};
+
 export type FloatFilter = {
   between?: InputMaybe<FloatRange>;
   eq?: InputMaybe<Scalars['Float']['input']>;
@@ -1789,6 +1865,7 @@ export type JonsObjectFilter = {
   id?: InputMaybe<Array<Scalars['ID']['input']>>;
   not?: InputMaybe<JonsObjectFilter>;
   or?: InputMaybe<Array<InputMaybe<JonsObjectFilter>>>;
+  someTime?: InputMaybe<DateTimeFilter>;
 };
 
 export enum JonsObjectHasFilter {
@@ -2005,6 +2082,7 @@ export type Mutation = {
   addDriveOutputsPreset?: Maybe<AddDriveOutputsPresetPayload>;
   addEndpoint?: Maybe<AddEndpointPayload>;
   addExampleObject?: Maybe<AddExampleObjectPayload>;
+  addFlattenedSiteArray?: Maybe<AddFlattenedSiteArrayPayload>;
   addGerminationTray?: Maybe<AddGerminationTrayPayload>;
   addGrowPlate?: Maybe<AddGrowPlatePayload>;
   addIpAddr?: Maybe<AddIpAddrPayload>;
@@ -2033,6 +2111,7 @@ export type Mutation = {
   deleteDriveOutputsPreset?: Maybe<DeleteDriveOutputsPresetPayload>;
   deleteEndpoint?: Maybe<DeleteEndpointPayload>;
   deleteExampleObject?: Maybe<DeleteExampleObjectPayload>;
+  deleteFlattenedSiteArray?: Maybe<DeleteFlattenedSiteArrayPayload>;
   deleteGerminationTray?: Maybe<DeleteGerminationTrayPayload>;
   deleteGrowPlate?: Maybe<DeleteGrowPlatePayload>;
   deleteIpAddr?: Maybe<DeleteIpAddrPayload>;
@@ -2061,6 +2140,7 @@ export type Mutation = {
   updateDriveOutputsPreset?: Maybe<UpdateDriveOutputsPresetPayload>;
   updateEndpoint?: Maybe<UpdateEndpointPayload>;
   updateExampleObject?: Maybe<UpdateExampleObjectPayload>;
+  updateFlattenedSiteArray?: Maybe<UpdateFlattenedSiteArrayPayload>;
   updateGerminationTray?: Maybe<UpdateGerminationTrayPayload>;
   updateGrowPlate?: Maybe<UpdateGrowPlatePayload>;
   updateIpAddr?: Maybe<UpdateIpAddrPayload>;
@@ -2130,6 +2210,11 @@ export type MutationAddEndpointArgs = {
 
 export type MutationAddExampleObjectArgs = {
   input: Array<AddExampleObjectInput>;
+};
+
+
+export type MutationAddFlattenedSiteArrayArgs = {
+  input: Array<AddFlattenedSiteArrayInput>;
 };
 
 
@@ -2273,6 +2358,11 @@ export type MutationDeleteExampleObjectArgs = {
 };
 
 
+export type MutationDeleteFlattenedSiteArrayArgs = {
+  filter: FlattenedSiteArrayFilter;
+};
+
+
 export type MutationDeleteGerminationTrayArgs = {
   filter: GerminationTrayFilter;
 };
@@ -2410,6 +2500,11 @@ export type MutationUpdateEndpointArgs = {
 
 export type MutationUpdateExampleObjectArgs = {
   input: UpdateExampleObjectInput;
+};
+
+
+export type MutationUpdateFlattenedSiteArrayArgs = {
+  input: UpdateFlattenedSiteArrayInput;
 };
 
 
@@ -2809,6 +2904,7 @@ export type Query = {
   aggregateDriveOutputsPreset?: Maybe<DriveOutputsPresetAggregateResult>;
   aggregateEndpoint?: Maybe<EndpointAggregateResult>;
   aggregateExampleObject?: Maybe<ExampleObjectAggregateResult>;
+  aggregateFlattenedSiteArray?: Maybe<FlattenedSiteArrayAggregateResult>;
   aggregateGerminationTray?: Maybe<GerminationTrayAggregateResult>;
   aggregateGrowPlate?: Maybe<GrowPlateAggregateResult>;
   aggregateIpAddr?: Maybe<IpAddrAggregateResult>;
@@ -2834,6 +2930,7 @@ export type Query = {
   getDriveOutputsPreset?: Maybe<DriveOutputsPreset>;
   getEndpoint?: Maybe<Endpoint>;
   getExampleObject?: Maybe<ExampleObject>;
+  getFlattenedSiteArray?: Maybe<FlattenedSiteArray>;
   getGerminationTray?: Maybe<GerminationTray>;
   getJonsObject?: Maybe<JonsObject>;
   getModule?: Maybe<Module>;
@@ -2857,6 +2954,7 @@ export type Query = {
   queryDriveOutputsPreset?: Maybe<Array<Maybe<DriveOutputsPreset>>>;
   queryEndpoint?: Maybe<Array<Maybe<Endpoint>>>;
   queryExampleObject?: Maybe<Array<Maybe<ExampleObject>>>;
+  queryFlattenedSiteArray?: Maybe<Array<Maybe<FlattenedSiteArray>>>;
   queryGerminationTray?: Maybe<Array<Maybe<GerminationTray>>>;
   queryGrowPlate?: Maybe<Array<Maybe<GrowPlate>>>;
   queryIpAddr?: Maybe<Array<Maybe<IpAddr>>>;
@@ -2925,6 +3023,11 @@ export type QueryAggregateEndpointArgs = {
 
 export type QueryAggregateExampleObjectArgs = {
   filter?: InputMaybe<ExampleObjectFilter>;
+};
+
+
+export type QueryAggregateFlattenedSiteArrayArgs = {
+  filter?: InputMaybe<FlattenedSiteArrayFilter>;
 };
 
 
@@ -3050,6 +3153,11 @@ export type QueryGetEndpointArgs = {
 
 
 export type QueryGetExampleObjectArgs = {
+  id: Scalars['ID']['input'];
+};
+
+
+export type QueryGetFlattenedSiteArrayArgs = {
   id: Scalars['ID']['input'];
 };
 
@@ -3192,6 +3300,13 @@ export type QueryQueryExampleObjectArgs = {
   first?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
   order?: InputMaybe<ExampleObjectOrder>;
+};
+
+
+export type QueryQueryFlattenedSiteArrayArgs = {
+  filter?: InputMaybe<FlattenedSiteArrayFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
 };
 
 
@@ -3967,6 +4082,25 @@ export type UpdateExampleObjectPayloadExampleObjectArgs = {
   first?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
   order?: InputMaybe<ExampleObjectOrder>;
+};
+
+export type UpdateFlattenedSiteArrayInput = {
+  filter: FlattenedSiteArrayFilter;
+  remove?: InputMaybe<FlattenedSiteArrayPatch>;
+  set?: InputMaybe<FlattenedSiteArrayPatch>;
+};
+
+export type UpdateFlattenedSiteArrayPayload = {
+  __typename?: 'UpdateFlattenedSiteArrayPayload';
+  flattenedSiteArray?: Maybe<Array<Maybe<FlattenedSiteArray>>>;
+  numUids?: Maybe<Scalars['Int']['output']>;
+};
+
+
+export type UpdateFlattenedSiteArrayPayloadFlattenedSiteArrayArgs = {
+  filter?: InputMaybe<FlattenedSiteArrayFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
 };
 
 export type UpdateGerminationTrayInput = {
