@@ -1,7 +1,5 @@
 import {
-    CreateGermTrayDocument,
-    CreateGermTrayMutation,
-    CreateGermTrayMutationVariables, GerminationTray, GerminationTrayRef,
+    GerminationTrayRef,
     InstantiateNurseryDocument,
     InstantiateNurseryMutation, InstantiateNurseryMutationVariables,
     SignalType, SiteRef,
@@ -11,7 +9,7 @@ import {pipe} from "fp-ts/function";
 import * as A from 'fp-ts/lib/Array'
 
 
-function ExpandSiteRef(i: number): SiteRef {
+export function ExpandSiteRef(i: number): SiteRef {
     console.log(i)
     return {
         signal: {
