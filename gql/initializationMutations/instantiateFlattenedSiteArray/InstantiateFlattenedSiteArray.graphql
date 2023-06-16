@@ -1,0 +1,14 @@
+mutation InstantiateFlattenedSiteArray($sites: [SiteRef!]!) {
+    addFlattenedSiteArray(input: { sites: $sites }) {
+        flattenedSiteArray {
+            id
+            sites {
+                id
+                signal {
+                    signalType
+                    signalDate
+                }
+            }
+        }
+    }
+}
