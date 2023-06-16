@@ -22,17 +22,18 @@ export const instantiateFlattenedSiteArray = () => {
     // )
 
     const numElements = 26;
-    const desiredSitesPipe: Array<SiteRef> = pipe(
+    const siteRefs: Array<SiteRef> = pipe(
         Array(numElements).fill(null).map((_, i) => i), // Create an array of length numElements with values from 0 to numElements - 1
         A.map(ExpandSiteRef)
     );
 
-    console.log(desiredSitesPipe);
+    console.log(siteRefs);
 
     /* THE QUERY */
     client.request<InstantiateFlattenedSiteArrayMutation, InstantiateFlattenedSiteArrayMutationVariables>(InstantiateFlattenedSiteArrayDocument,
         {
-            sites: sitesArrayArray
+            // sites: sitesArrayArray
+            sites: siteRefs
 
             // "sites": [
             //     {
