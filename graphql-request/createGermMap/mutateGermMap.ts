@@ -4,7 +4,7 @@ import {
     WheresChuckDocument,
     WheresChuckQuery,
     WheresChuckQueryVariables
-} from "../operations";
+} from "../../operations";
 import {GraphQLClient} from "graphql-request";
 
 

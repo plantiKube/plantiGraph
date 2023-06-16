@@ -1,6 +1,6 @@
 import fetch from "cross-fetch";
 import { GraphQLClient } from "graphql-request";
-import {WheresChuckDocument, WheresChuckQuery, WheresChuckQueryVariables} from "../operations";
+import {WheresChuckDocument, WheresChuckQuery, WheresChuckQueryVariables} from "../../operations";
 
 
 

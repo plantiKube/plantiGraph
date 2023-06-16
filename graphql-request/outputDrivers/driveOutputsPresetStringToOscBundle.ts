@@ -4,15 +4,12 @@ import {
     DriveOutputsPresetHasFilter,
     GetDriveOutputStringDocument,
     GetDriveOutputStringQuery, GetDriveOutputStringQueryVariables,
-    GetIntentionListDocument,
-    GetIntentionListQuery,
-    GetIntentionListQueryVariables, ModuleType
-} from "../operations";
+} from "../../operations";
 
 import { pipe } from "fp-ts/function";
-import {fnBuildGermMap} from "./functionalModules/buildGermMap";
-import {decodeBits} from "../fn/DeserializeStringToBoolArray";
-import {DriveOscBundle} from "../oscManager/serialOscSender";
+import {fnBuildGermMap} from "../functionalModules/buildGermMap";
+import {decodeBits} from "../../fn/DeserializeStringToBoolArray";
+import {DriveOscBundle} from "../../oscManager/serialOscSender";
 
 
 
