@@ -5,7 +5,7 @@ import {
     InstantiateNurseryDocument,
     InstantiateNurseryMutation, InstantiateNurseryMutationVariables,
     SignalType, SiteRef,
-} from "../../operations";
+} from "../../../operations";
 import {GraphQLClient} from "graphql-request";
 import {pipe} from "fp-ts/function";
 import * as A from 'fp-ts/lib/Array'

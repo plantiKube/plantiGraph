@@ -96,6 +96,12 @@ type Shelf {
     parentModule: Module @hasInverse(field: shelves)
 }
 
+type FlattenedSiteArray {
+    id: ID!
+
+    sites: [Site!]!
+}
+
 type Site {
     id: ID!
 

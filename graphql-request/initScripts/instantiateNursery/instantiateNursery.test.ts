@@ -1,5 +1,5 @@
 import {ExpandGerminationBool, instantiateNurseryEffect} from "./instantiateNursery";
-import {GerminationTray, GerminationTrayRef} from "../../operations";
+import {GerminationTray, GerminationTrayRef} from "../../../operations";
 
 describe('instantiateNursery runs', function () {
     it('caninstantiate', function () {
