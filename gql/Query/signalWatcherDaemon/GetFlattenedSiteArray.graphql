@@ -2,6 +2,8 @@ query GetFlattenedSiteArray($id:ID!){
     getFlattenedSiteArray(id:$id){
         id
         sites {
+            id
+            uuid
             signal {
                 id
                 signalDate

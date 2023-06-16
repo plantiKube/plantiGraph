@@ -36,7 +36,7 @@ client.request({
 
         console.log('Drive String: ', outputDriveString);
 
-        DriveOscBundle(decodeBits(outputDriveString));
+        DriveOscBundle("/lx/mixer/channel/sw/pattern/LinearMap/", decodeBits(outputDriveString));
     },
     error(err: Error) {
         console.error('Error occurred: ', err);

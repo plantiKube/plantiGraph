@@ -55,8 +55,8 @@ function paramNameByIdx(idx: number) {
         ];
     return idx + "_" + paramNameMap[idx];
 }
-export function DriveOscBundle(boolEitherArray: Either<Error, boolean>[]) {
-    const oscAddress = '/lx/mixer/channel/sw/pattern/LinearMap/'
+export function DriveOscBundle(oscAddress: String, boolEitherArray: Either<Error, boolean>[]) {
+    // const oscAddress = '/lx/mixer/channel/sw/pattern/LinearMap/'
     const bundle = new Bundle();
     const client = new Client('127.0.0.1', 3030);
     // const client = new Client('100.126.16.85', 3030);
@@ -68,7 +68,8 @@ export function DriveOscBundle(boolEitherArray: Either<Error, boolean>[]) {
             console.log(boolEither.left)
         }
         else {
-            let oscTarget: string = oscAddress + paramNameByIdx(idx);
+            // let oscTarget: string = oscAddress + paramNameByIdx(idx);
+            let oscTarget: string = oscAddress + idx.toString();
             console.log(oscTarget);
             bundle.append(new Bundle([oscTarget, boolEither.right]));
         }

@@ -27,8 +27,6 @@ export const instantiateFlattenedSiteArray = () => {
         A.map(ExpandSiteRef)
     );
 
-    console.log(siteRefs);
-
     /* THE QUERY */
     client.request<InstantiateFlattenedSiteArrayMutation, InstantiateFlattenedSiteArrayMutationVariables>(InstantiateFlattenedSiteArrayDocument,
         {
@@ -45,8 +43,8 @@ export const instantiateFlattenedSiteArray = () => {
             // ]
         }
         ).then((data) => {
-        console.log(data)
-        let oneFlattenedSiteID = data.addFlattenedSiteArray.flattenedSiteArray["0"].id;
-        console.log(oneFlattenedSiteID)
+            console.log(data)
+            let oneFlattenedSiteID = data.addFlattenedSiteArray.flattenedSiteArray["0"].id;
+            console.log(oneFlattenedSiteID)
     });
 }

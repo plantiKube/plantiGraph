@@ -105,6 +105,7 @@ type FlattenedSiteArray {
 type Site {
     id: ID!
 
+    uuid: Int
     signal: Signal
     occupant: Plant @hasInverse(field: location)
 }

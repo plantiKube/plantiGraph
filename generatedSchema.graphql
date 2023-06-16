@@ -78,7 +78,7 @@ enum NutrientMix {
 
 type Shelf {
 	id: ID!
-	sites(filter: SiteFilter, first: Int, offset: Int): [Site]
+	sites(filter: SiteFilter, order: SiteOrder, first: Int, offset: Int): [Site]
 	verticalClearanceHeightToNextShelf: Int!
 	parentModule(filter: ModuleFilter): Module @hasInverse(field: shelves)
 	sitesAggregate(filter: SiteFilter): SiteAggregateResult
@@ -86,12 +86,13 @@ type Shelf {
 
 type FlattenedSiteArray {
 	id: ID!
-	sites(filter: SiteFilter, first: Int, offset: Int): [Site!]!
+	sites(filter: SiteFilter, order: SiteOrder, first: Int, offset: Int): [Site!]!
 	sitesAggregate(filter: SiteFilter): SiteAggregateResult
 }
 
 type Site {
 	id: ID!
+	uuid: Int
 	signal(filter: SignalFilter): Signal
 	occupant(filter: PlantFilter): Plant @hasInverse(field: location)
 }
@@ -139,7 +140,7 @@ type Nursery {
 
 type GerminationTray {
 	id: ID!
-	sites(filter: SiteFilter, first: Int, offset: Int): [Site!]!
+	sites(filter: SiteFilter, order: SiteOrder, first: Int, offset: Int): [Site!]!
 	sitesAggregate(filter: SiteFilter): SiteAggregateResult
 }
 
@@ -614,7 +615,7 @@ type AddSignalTablePayload {
 }
 
 type AddSitePayload {
-	site(filter: SiteFilter, first: Int, offset: Int): [Site]
+	site(filter: SiteFilter, order: SiteOrder, first: Int, offset: Int): [Site]
 	numUids: Int
 }
 
@@ -837,7 +838,7 @@ type DeleteSignalTablePayload {
 }
 
 type DeleteSitePayload {
-	site(filter: SiteFilter, first: Int, offset: Int): [Site]
+	site(filter: SiteFilter, order: SiteOrder, first: Int, offset: Int): [Site]
 	msg: String
 	numUids: Int
 }
@@ -1012,6 +1013,10 @@ type SignalTableAggregateResult {
 
 type SiteAggregateResult {
 	count: Int
+	uuidMin: Int
+	uuidMax: Int
+	uuidSum: Int
+	uuidAvg: Float
 }
 
 type TimeSeriesAggregateResult {
@@ -1151,7 +1156,7 @@ type UpdateSignalTablePayload {
 }
 
 type UpdateSitePayload {
-	site(filter: SiteFilter, first: Int, offset: Int): [Site]
+	site(filter: SiteFilter, order: SiteOrder, first: Int, offset: Int): [Site]
 	numUids: Int
 }
 
@@ -1401,8 +1406,13 @@ enum SignalTableHasFilter {
 }
 
 enum SiteHasFilter {
+	uuid
 	signal
 	occupant
+}
+
+enum SiteOrderable {
+	uuid
 }
 
 enum TimeSeriesHasFilter {
@@ -1566,6 +1576,7 @@ input AddSignalTableInput {
 }
 
 input AddSiteInput {
+	uuid: Int
 	signal: SignalRef
 	occupant: PlantRef
 }
@@ -2192,13 +2203,21 @@ input SiteFilter {
 	not: SiteFilter
 }
 
+input SiteOrder {
+	asc: SiteOrderable
+	desc: SiteOrderable
+	then: SiteOrder
+}
+
 input SitePatch {
+	uuid: Int
 	signal: SignalRef
 	occupant: PlantRef
 }
 
 input SiteRef {
 	id: ID
+	uuid: Int
 	signal: SignalRef
 	occupant: PlantRef
 }
@@ -2451,7 +2470,7 @@ type Query {
 	queryFlattenedSiteArray(filter: FlattenedSiteArrayFilter, first: Int, offset: Int): [FlattenedSiteArray]
 	aggregateFlattenedSiteArray(filter: FlattenedSiteArrayFilter): FlattenedSiteArrayAggregateResult
 	getSite(id: ID!): Site
-	querySite(filter: SiteFilter, first: Int, offset: Int): [Site]
+	querySite(filter: SiteFilter, order: SiteOrder, first: Int, offset: Int): [Site]
 	aggregateSite(filter: SiteFilter): SiteAggregateResult
 	getPlant(id: ID!): Plant
 	queryPlant(filter: PlantFilter, order: PlantOrder, first: Int, offset: Int): [Plant]

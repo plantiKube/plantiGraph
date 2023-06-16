@@ -6,8 +6,6 @@ import {
     GetDriveOutputStringQuery, GetDriveOutputStringQueryVariables,
 } from "../../../operations";
 
-import { pipe } from "fp-ts/function";
-import {fnBuildGermMap} from "../functionalModules/buildGermMap";
 import {decodeBits} from "../../../fn/DeserializeStringToBoolArray";
 import {DriveOscBundle} from "../../../oscManager/serialOscSender";
 
@@ -31,6 +29,6 @@ export const GetDriveOutputsString = () => {
 
             // alright.. deserialize the string and send it out over OSC.
             const boolEitherArray = decodeBits(data.getDriveOutputsPreset.boolArrayString);
-            DriveOscBundle(boolEitherArray);
+            DriveOscBundle("/lx/mixer/channel/sw/pattern/LinearMap/", boolEitherArray);
         });
 }
