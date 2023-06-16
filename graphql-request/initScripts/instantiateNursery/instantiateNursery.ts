@@ -7,17 +7,7 @@ import {
 import {GraphQLClient} from "graphql-request";
 import {pipe} from "fp-ts/function";
 import * as A from 'fp-ts/lib/Array'
-
-
-export function ExpandSiteRef(i: number): SiteRef {
-    console.log(i)
-    return {
-        signal: {
-            signalDate: "2023-05-10T23:13:56Z",
-            signalType: SignalType.Transfer
-        }
-    }
-}
+import {ExpandSiteRef} from "../../functionalModules/helpers/helpers";
 
 export function ExpandGerminationBool(signal: boolean): GerminationTrayRef {
     // expand out the sites
