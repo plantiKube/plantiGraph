@@ -1,7 +1,7 @@
 query GetFlattenedSiteArray($id:ID!){
     getFlattenedSiteArray(id:$id){
         id
-        sites {
+        sites(order:{asc: uuid}) {
             id
             uuid
             signal {

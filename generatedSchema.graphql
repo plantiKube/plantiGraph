@@ -86,7 +86,7 @@ type Shelf {
 
 type FlattenedSiteArray {
 	id: ID!
-	sites(filter: SiteFilter, order: SiteOrder, first: Int, offset: Int): [Site!]!
+	sites(filter: SiteFilter, order: SiteOrder, first: Int, offset: Int): [Site!]! @hasInverse(field: parentArray)
 	sitesAggregate(filter: SiteFilter): SiteAggregateResult
 }
 
@@ -95,6 +95,7 @@ type Site {
 	uuid: Int
 	signal(filter: SignalFilter): Signal
 	occupant(filter: PlantFilter): Plant @hasInverse(field: location)
+	parentArray(filter: FlattenedSiteArrayFilter): FlattenedSiteArray @hasInverse(field: sites)
 }
 
 type Plant {
@@ -1409,6 +1410,7 @@ enum SiteHasFilter {
 	uuid
 	signal
 	occupant
+	parentArray
 }
 
 enum SiteOrderable {
@@ -1579,6 +1581,7 @@ input AddSiteInput {
 	uuid: Int
 	signal: SignalRef
 	occupant: PlantRef
+	parentArray: FlattenedSiteArrayRef
 }
 
 input AddTimeSeriesInput {
@@ -2213,6 +2216,7 @@ input SitePatch {
 	uuid: Int
 	signal: SignalRef
 	occupant: PlantRef
+	parentArray: FlattenedSiteArrayRef
 }
 
 input SiteRef {
@@ -2220,6 +2224,7 @@ input SiteRef {
 	uuid: Int
 	signal: SignalRef
 	occupant: PlantRef
+	parentArray: FlattenedSiteArrayRef
 }
 
 input TimeSeriesFilter {
