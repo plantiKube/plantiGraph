@@ -12,6 +12,7 @@ export const instantiateFlattenedSiteArray = () => {
 
     /* SETUP */
     const client = new GraphQLClient("http://localhost:8080/graphql", {fetch});
+    // const client = new GraphQLClient("http://localhost:8088/graphql", {fetch});
 
     /* FP DATA SETUP */
     const sitesArrayArray: Array<SiteRef> = [ExpandSiteRef(0), ExpandSiteRef(1)]
@@ -23,7 +24,9 @@ export const instantiateFlattenedSiteArray = () => {
 
     const numElements = 26;
     const siteRefs: Array<SiteRef> = pipe(
-        Array(numElements).fill(null).map((_, i) => i), // Create an array of length numElements with values from 0 to numElements - 1
+        Array(numElements)
+            .fill(null)
+            .map((_, i) => i), // Create an array of length numElements with values from 0 to numElements - 1
         A.map(ExpandSiteRef)
     );
 
@@ -48,3 +51,5 @@ export const instantiateFlattenedSiteArray = () => {
             console.log(oneFlattenedSiteID)
     });
 }
+
+

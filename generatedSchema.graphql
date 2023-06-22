@@ -45,6 +45,7 @@ enum SignalType {
 	GERMINATE
 	TRANSFER
 	HARVEST
+	NONE
 }
 
 type ModuleMap {
@@ -92,8 +93,9 @@ type FlattenedSiteArray {
 
 type Site {
 	id: ID!
-	uuid: Int
+	uuid: Int! @id
 	signal(filter: SignalFilter): Signal
+	halPresence: Boolean
 	occupant(filter: PlantFilter): Plant @hasInverse(field: location)
 	parentArray(filter: FlattenedSiteArrayFilter): FlattenedSiteArray @hasInverse(field: sites)
 }
@@ -201,7 +203,6 @@ type ClockNodePoint {
 	id: ID!
 	xid: Int! @id
 	ownedByClock(filter: AutomationClockFilter): AutomationClock @hasInverse(field: clockNodes)
-	azimuth: Float! @lambda
 	timeOfDay: DateTime! @search
 	oscPath: String!
 	outputState: Int!
@@ -1409,6 +1410,7 @@ enum SignalTableHasFilter {
 enum SiteHasFilter {
 	uuid
 	signal
+	halPresence
 	occupant
 	parentArray
 }
@@ -1578,8 +1580,9 @@ input AddSignalTableInput {
 }
 
 input AddSiteInput {
-	uuid: Int
+	uuid: Int!
 	signal: SignalRef
+	halPresence: Boolean
 	occupant: PlantRef
 	parentArray: FlattenedSiteArrayRef
 }
@@ -2200,6 +2203,7 @@ input SignalTableRef {
 
 input SiteFilter {
 	id: [ID!]
+	uuid: IntFilter
 	has: [SiteHasFilter]
 	and: [SiteFilter]
 	or: [SiteFilter]
@@ -2213,8 +2217,8 @@ input SiteOrder {
 }
 
 input SitePatch {
-	uuid: Int
 	signal: SignalRef
+	halPresence: Boolean
 	occupant: PlantRef
 	parentArray: FlattenedSiteArrayRef
 }
@@ -2223,6 +2227,7 @@ input SiteRef {
 	id: ID
 	uuid: Int
 	signal: SignalRef
+	halPresence: Boolean
 	occupant: PlantRef
 	parentArray: FlattenedSiteArrayRef
 }
@@ -2474,7 +2479,7 @@ type Query {
 	getFlattenedSiteArray(id: ID!): FlattenedSiteArray
 	queryFlattenedSiteArray(filter: FlattenedSiteArrayFilter, first: Int, offset: Int): [FlattenedSiteArray]
 	aggregateFlattenedSiteArray(filter: FlattenedSiteArrayFilter): FlattenedSiteArrayAggregateResult
-	getSite(id: ID!): Site
+	getSite(id: ID, uuid: Int): Site
 	querySite(filter: SiteFilter, order: SiteOrder, first: Int, offset: Int): [Site]
 	aggregateSite(filter: SiteFilter): SiteAggregateResult
 	getPlant(id: ID!): Plant
@@ -2563,7 +2568,7 @@ type Mutation {
 	addFlattenedSiteArray(input: [AddFlattenedSiteArrayInput!]!): AddFlattenedSiteArrayPayload
 	updateFlattenedSiteArray(input: UpdateFlattenedSiteArrayInput!): UpdateFlattenedSiteArrayPayload
 	deleteFlattenedSiteArray(filter: FlattenedSiteArrayFilter!): DeleteFlattenedSiteArrayPayload
-	addSite(input: [AddSiteInput!]!): AddSitePayload
+	addSite(input: [AddSiteInput!]!, upsert: Boolean): AddSitePayload
 	updateSite(input: UpdateSiteInput!): UpdateSitePayload
 	deleteSite(filter: SiteFilter!): DeleteSitePayload
 	addPlant(input: [AddPlantInput!]!): AddPlantPayload

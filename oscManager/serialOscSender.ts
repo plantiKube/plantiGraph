@@ -70,7 +70,7 @@ export function DriveOscBundle(oscAddress: String, boolEitherArray: Either<Error
         else {
             // let oscTarget: string = oscAddress + paramNameByIdx(idx);
             let oscTarget: string = oscAddress + idx.toString();
-            console.log(oscTarget);
+            // console.log(oscTarget);
             bundle.append(new Bundle([oscTarget, boolEither.right]));
         }
     }

@@ -522,10 +522,11 @@ export type AddSignalTablePayloadSignalTableArgs = {
 };
 
 export type AddSiteInput = {
+  halPresence?: InputMaybe<Scalars['Boolean']['input']>;
   occupant?: InputMaybe<PlantRef>;
   parentArray?: InputMaybe<FlattenedSiteArrayRef>;
   signal?: InputMaybe<SignalRef>;
-  uuid?: InputMaybe<Scalars['Int']['input']>;
+  uuid: Scalars['Int']['input'];
 };
 
 export type AddSitePayload = {
@@ -671,7 +672,6 @@ export type ChosenDriveOutputPresetRef = {
 
 export type ClockNodePoint = {
   __typename?: 'ClockNodePoint';
-  azimuth: Scalars['Float']['output'];
   id: Scalars['ID']['output'];
   oscPath: Scalars['String']['output'];
   outputState: Scalars['Int']['output'];
@@ -2301,6 +2301,7 @@ export type MutationAddSignalTableArgs = {
 
 export type MutationAddSiteArgs = {
   input: Array<AddSiteInput>;
+  upsert?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 
@@ -3219,7 +3220,8 @@ export type QueryGetSignalTableArgs = {
 
 
 export type QueryGetSiteArgs = {
-  id: Scalars['ID']['input'];
+  id?: InputMaybe<Scalars['ID']['input']>;
+  uuid?: InputMaybe<Scalars['Int']['input']>;
 };
 
 
@@ -3727,16 +3729,18 @@ export type SignalTableRef = {
 export enum SignalType {
   Germinate = 'GERMINATE',
   Harvest = 'HARVEST',
+  None = 'NONE',
   Transfer = 'TRANSFER'
 }
 
 export type Site = {
   __typename?: 'Site';
+  halPresence?: Maybe<Scalars['Boolean']['output']>;
   id: Scalars['ID']['output'];
   occupant?: Maybe<Plant>;
   parentArray?: Maybe<FlattenedSiteArray>;
   signal?: Maybe<Signal>;
-  uuid?: Maybe<Scalars['Int']['output']>;
+  uuid: Scalars['Int']['output'];
 };
 
 
@@ -3769,9 +3773,11 @@ export type SiteFilter = {
   id?: InputMaybe<Array<Scalars['ID']['input']>>;
   not?: InputMaybe<SiteFilter>;
   or?: InputMaybe<Array<InputMaybe<SiteFilter>>>;
+  uuid?: InputMaybe<IntFilter>;
 };
 
 export enum SiteHasFilter {
+  HalPresence = 'halPresence',
   Occupant = 'occupant',
   ParentArray = 'parentArray',
   Signal = 'signal',
@@ -3789,13 +3795,14 @@ export enum SiteOrderable {
 }
 
 export type SitePatch = {
+  halPresence?: InputMaybe<Scalars['Boolean']['input']>;
   occupant?: InputMaybe<PlantRef>;
   parentArray?: InputMaybe<FlattenedSiteArrayRef>;
   signal?: InputMaybe<SignalRef>;
-  uuid?: InputMaybe<Scalars['Int']['input']>;
 };
 
 export type SiteRef = {
+  halPresence?: InputMaybe<Scalars['Boolean']['input']>;
   id?: InputMaybe<Scalars['ID']['input']>;
   occupant?: InputMaybe<PlantRef>;
   parentArray?: InputMaybe<FlattenedSiteArrayRef>;
@@ -4587,7 +4594,7 @@ export type GetFlattenedSiteArrayQueryVariables = Exact<{
 }>;
 
 
-export type GetFlattenedSiteArrayQuery = { __typename?: 'Query', getFlattenedSiteArray?: { __typename?: 'FlattenedSiteArray', id: string, sites: Array<{ __typename?: 'Site', id: string, uuid?: number | null, signal?: { __typename?: 'Signal', id: string, signalDate: any, signalType: SignalType } | null }> } | null };
+export type GetFlattenedSiteArrayQuery = { __typename?: 'Query', getFlattenedSiteArray?: { __typename?: 'FlattenedSiteArray', id: string, sites: Array<{ __typename?: 'Site', id: string, uuid: number, signal?: { __typename?: 'Signal', id: string, signalDate: any, signalType: SignalType } | null }> } | null };
 
 export type CreateClockMutationMutationVariables = Exact<{
   pointsList: Array<ClockNodePointRef> | ClockNodePointRef;
@@ -4648,6 +4655,6 @@ export const CreateClockMutationDocument = {"kind":"Document","definitions":[{"k
 export const InstallTwoModulesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"InstallTwoModules"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"moduleInput"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"addModuleMap"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"modules"},"value":{"kind":"ListValue","values":[{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"instantiationTemplateUsed"},"value":{"kind":"EnumValue","value":"DWC_12in_NutrientMixA"}},{"kind":"ObjectField","name":{"kind":"Name","value":"shelves"},"value":{"kind":"ListValue","values":[{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"verticalClearanceHeightToNextShelf"},"value":{"kind":"IntValue","value":"13"}},{"kind":"ObjectField","name":{"kind":"Name","value":"sites"},"value":{"kind":"ListValue","values":[{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"occupant"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"cropName"},"value":{"kind":"StringValue","value":"someCrop","block":false}},{"kind":"ObjectField","name":{"kind":"Name","value":"repeater"},"value":{"kind":"BooleanValue","value":true}},{"kind":"ObjectField","name":{"kind":"Name","value":"nutrientType"},"value":{"kind":"StringValue","value":"0.3:A|0.7:B","block":false}},{"kind":"ObjectField","name":{"kind":"Name","value":"germinatedDate"},"value":{"kind":"StringValue","value":"2023-05-09T02:45:48Z","block":false}}]}}]}]}}]}]}}]}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"moduleMap"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modules"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"shelves"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"sites"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"occupant"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"cropName"}},{"kind":"Field","name":{"kind":"Name","value":"germinatedDate"}}]}}]}}]}}]}}]}}]}}]}}]} as unknown as DocumentNode<InstallTwoModulesMutation, InstallTwoModulesMutationVariables>;
 export const InstantiateCropIntentionsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"InstantiateCropIntentions"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"addCropIntentionsList"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"cropIntentions"},"value":{"kind":"ListValue","values":[{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"crop"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"name"},"value":{"kind":"StringValue","value":"arugi","block":false}},{"kind":"ObjectField","name":{"kind":"Name","value":"required_module_type"},"value":{"kind":"StringValue","value":"nutA","block":false}},{"kind":"ObjectField","name":{"kind":"Name","value":"repeater"},"value":{"kind":"BooleanValue","value":true}},{"kind":"ObjectField","name":{"kind":"Name","value":"days_harvestable"},"value":{"kind":"IntValue","value":"5"}},{"kind":"ObjectField","name":{"kind":"Name","value":"days_from_transfer_to_first_harvest"},"value":{"kind":"IntValue","value":"6"}}]}},{"kind":"ObjectField","name":{"kind":"Name","value":"harvestPerWeek"},"value":{"kind":"IntValue","value":"3"}}]}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"numUids"}},{"kind":"Field","name":{"kind":"Name","value":"cropIntentionsList"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"cropIntentions"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"crop"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"required_module_type"}},{"kind":"Field","name":{"kind":"Name","value":"repeater"}}]}}]}}]}}]}}]}}]} as unknown as DocumentNode<InstantiateCropIntentionsMutation, InstantiateCropIntentionsMutationVariables>;
 export const CreateGermTrayDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"createGermTray"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"xidInput"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"sitesInput"}},"type":{"kind":"NonNullType","type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"SiteRef"}}}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"addGerminationTray"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"sites"},"value":{"kind":"Variable","name":{"kind":"Name","value":"sitesInput"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"germinationTray"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"sites"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"signal"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"signalDate"}}]}}]}}]}}]}}]}}]} as unknown as DocumentNode<CreateGermTrayMutation, CreateGermTrayMutationVariables>;
-export const InstantiateFlattenedSiteArrayDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"InstantiateFlattenedSiteArray"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"sites"}},"type":{"kind":"NonNullType","type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"SiteRef"}}}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"addFlattenedSiteArray"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"sites"},"value":{"kind":"Variable","name":{"kind":"Name","value":"sites"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"flattenedSiteArray"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"sites"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"signal"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"signalType"}},{"kind":"Field","name":{"kind":"Name","value":"signalDate"}}]}}]}}]}}]}}]}}]} as unknown as DocumentNode<InstantiateFlattenedSiteArrayMutation, InstantiateFlattenedSiteArrayMutationVariables>;
+export const InstantiateFlattenedSiteArrayDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"InstantiateFlattenedSiteArray"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"sites"}},"type":{"kind":"NonNullType","type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"SiteRef"}}}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"addFlattenedSiteArray"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"sites"},"value":{"kind":"Variable","name":{"kind":"Name","value":"sites"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"flattenedSiteArray"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"sites"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"order"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"asc"},"value":{"kind":"EnumValue","value":"uuid"}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"signal"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"signalType"}},{"kind":"Field","name":{"kind":"Name","value":"signalDate"}}]}}]}}]}}]}}]}}]} as unknown as DocumentNode<InstantiateFlattenedSiteArrayMutation, InstantiateFlattenedSiteArrayMutationVariables>;
 export const InstantiateNurseryDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"InstantiateNursery"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"germTraysArray"}},"type":{"kind":"NonNullType","type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"GerminationTrayRef"}}}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"addNursery"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"GerminationTrays"},"value":{"kind":"Variable","name":{"kind":"Name","value":"germTraysArray"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nursery"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"GerminationTrays"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"sites"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"signal"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"signalType"}}]}}]}}]}}]}}]}}]}}]} as unknown as DocumentNode<InstantiateNurseryMutation, InstantiateNurseryMutationVariables>;
 export const AddDriveOutputsPresetDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"AddDriveOutputsPreset"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"driveOutputSerialString"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"addDriveOutputsPreset"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"lxEndpoint"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"addr"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"addr"},"value":{"kind":"StringValue","value":"192.168.1.251","block":false}}]}},{"kind":"ObjectField","name":{"kind":"Name","value":"port"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"port"},"value":{"kind":"IntValue","value":"3030"}}]}}]}},{"kind":"ObjectField","name":{"kind":"Name","value":"boolArrayString"},"value":{"kind":"Variable","name":{"kind":"Name","value":"driveOutputSerialString"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"driveOutputsPreset"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"boolArrayString"}},{"kind":"Field","name":{"kind":"Name","value":"lxEndpoint"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"addr"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"addr"}}]}},{"kind":"Field","name":{"kind":"Name","value":"port"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"port"}}]}}]}}]}}]}}]}}]} as unknown as DocumentNode<AddDriveOutputsPresetMutation, AddDriveOutputsPresetMutationVariables>;

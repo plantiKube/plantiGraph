@@ -14,7 +14,10 @@ export function ExpandSiteRef(i: number): SiteRef {
     else {
         return {
             uuid: i,
-            signal: null
+            signal: {
+                signalDate: "2023-05-10T23:13:56Z",
+                signalType: SignalType.None
+            }
         }
     }
 }

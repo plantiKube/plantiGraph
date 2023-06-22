@@ -20,7 +20,8 @@
     "SUBSCRIBE_to_OSC__outputDrivesPreset": "ts-node subscriptions-transport-ws/proxy_outputDrivesPreset_to_OSC.ts",
     "TEST_osc_stream": "ts-node --transpile-only oscManager/oscStream.ts ",
     "TEST_clock_nodes": "ts-node --transpile-only graphql-request/scheduler/instantiateSchedule.ts",
-    "runSchedulerDaemon": "ts-node --transpile-only graphql-request/scheduler/growLightsDaemonSched.ts"
+    "runSchedulerDaemon": "ts-node --transpile-only graphql-request/scheduler/growLightsDaemonSched.ts",
+    "FlattenedSiteArrayDaemon": "ts-node --transpile-only graphql-request/outputDrivers/signalWatchDaemon/GetFlattenedSiteArray.ts"
   },
   "dependencies": {
     "@apollo/client": "^3.7.14",
@@ -32,6 +33,7 @@
     "graphql": "^16.6.0",
     "graphql-codegen": "^0.4.0",
     "graphql-request": "^6.1.0",
+    "mqtt": "^4.3.7",
     "node-osc": "^8.0.11",
     "osc": "^2.4.4",
     "sacn": "^4.3.0"

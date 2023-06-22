@@ -55,6 +55,7 @@ enum SignalType {
     GERMINATE
     TRANSFER
     HARVEST
+    NONE
 }
 
 type ModuleMap {
@@ -105,8 +106,9 @@ type FlattenedSiteArray {
 type Site {
     id: ID!
 
-    uuid: Int
+    uuid: Int!
     signal: Signal
+    halPresence: Boolean
     occupant: Plant @hasInverse(field: location)
 
     parentArray: FlattenedSiteArray @hasInverse(field:sites)
@@ -245,7 +247,7 @@ type ClockNodePoint  {
 
     # radians along arc (out of 2*pi)
     # this is functionally derived from the number of nodes in the parent clock.
-    azimuth: Float! @lambda
+#    azimuth: Float! @lambda
 
     # the time of day this point correlates to.
     # .. also functionally derived.
